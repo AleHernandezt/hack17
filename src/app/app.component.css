@@ -1,3 +1,13 @@
-body{
-  background-color: #f5f5f5;
+.outlet{
+
+  animation: fadeIn .6s ease-in; /* Cambia la duración y el tipo de easing si es necesario */
+
+}
+@keyframes fadeIn {
+  0% {
+      opacity: 0; /* Comienza completamente transparente */
+  }
+  100% {
+      opacity: 1; /* Termina completamente opaco */
+  }
 }
