@@ -1,7 +1,7 @@
 .container {
   padding-left: 26px;
   padding-right: 26px;
-  margin-top: 4%;
+  margin-top: 3%;
   width: 100%;
 }
 
@@ -11,20 +11,20 @@
 
 .tableWrapper {
   overflow-x: auto;
-  max-height: 90vh;
+  max-height: 87vh;
 }
 
 .tableContainer {
   display: inline-block;
   min-width: 100%;
-  padding: 16px;
+  padding: 16px 0 12px 0;
 
 }
 
 table {
   min-width: 100%;
   border-collapse: collapse;
-  margin-bottom: 16px;
+  margin-bottom: 2px;
   background-color: rgb(228, 228, 228);
   padding: 5px;
   border-radius: 20px;
@@ -47,10 +47,7 @@ td {
 }
 
 .actions {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   gap: 5px;
 }
 
