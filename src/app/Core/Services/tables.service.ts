@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-    
+import { Tables } from '../Interfaces/tables';
+
 @Injectable()
 export class TablesService {
-    getTablesMini() {
+    getTablesMini() : Promise<Tables[]> {
       throw new Error('Method not implemented.');
     }
     getProductsData() {

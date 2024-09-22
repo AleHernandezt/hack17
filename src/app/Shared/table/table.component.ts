@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-table',
   standalone: true,
   imports: [
-    TableModule, ToastModule, CommonModule, TagModule, DropdownModule, 
+    TableModule, ToastModule, CommonModule, TagModule, DropdownModule,
     ButtonModule, InputTextModule, FormsModule
   ],
   providers: [MessageService, TablesService],
@@ -32,7 +32,7 @@ export class TableComponent implements OnInit {
   clonedTables: { [s: string]: Tables } = {};
 
   constructor(private tablesService: TablesService, private messageService: MessageService) {}
-  //? No se que hacer con este .then
+  // (resolved)? No se que hacer con este .then, altoque rey era un error de typeo
   async ngOnInit() {
     this.tablesService.getTablesMini().then((data: Tables[]) => {
       this.tables = data;

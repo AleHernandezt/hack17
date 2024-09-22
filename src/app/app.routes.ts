@@ -9,10 +9,10 @@ export const routes: Routes = [
     //     path: 'dashboardDonor',
     //     loadComponent: () => import('./Views//Donor/dashboard-donor/dashboard-donor.component')
     //   },
-    //   {
-    //     path: 'patient',
-    //     loadComponent: () => import('./Views/Admin/Patient/patient-form/patient-form.component')
-    //   },
+      {
+         path: 'paciente',
+        loadComponent: () => import('./Views/Admin/form-paciente/form-paciente.component')
+      },
     //   {
     //     path: 'patientTable',
     //     loadComponent: () => import('./Views/Admin/Patient/patient-table/patient-table.component')
