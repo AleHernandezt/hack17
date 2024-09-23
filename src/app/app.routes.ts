@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    {
+    /*{
         path: '',
         loadComponent: () => import('./Authentication/login/login.component')
-    },
+    },*/
     {
         path: 'dashboardAdmin',
         loadComponent: () => import('./Views/Admin/dash-admin/dash-admin.component')

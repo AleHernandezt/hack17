@@ -6,7 +6,8 @@ import { BtnComponent } from "../../Shared/btn/btn.component";
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
-import { AuthService } from './auth.service';
+
+import { AuthService } from '../../Core/Services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ import { AuthService } from './auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export default class LoginComponent {
   email: string = '';
   password: string = '';
 
