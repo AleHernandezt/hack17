@@ -25,9 +25,15 @@ export class Side2Component implements OnInit {
                 icon: 'pi pi-file',
                 items: [
                     {
-                        label: 'Tratamientos',
+                        label: 'Paciente',
                         icon: 'pi pi-file',
-                        command: () => this.navigateToRoute('/dashboardAdmin')
+                        items: [
+                            {
+                                label: 'Tratamientos',
+                                icon: 'pi pi-file',
+                                command: () => this.navigateToRoute('/dashboardAdmin')
+                            },
+                        ]
                     },
                     {
                         label: 'Comunidades',
@@ -38,11 +44,6 @@ export class Side2Component implements OnInit {
                         label: 'Patologia',
                         icon: 'pi pi-file',
                         command: () => this.navigateToRoute('/gestionComunidad')
-                    },
-                    {
-                        label: 'Paciente',
-                        icon: 'pi pi-file',
-                        command: () => this.navigateToRoute('/gestionCategoria')
                     },
                     {
                         label: 'Entrega',
