@@ -1,0 +1,10 @@
+<main class="wrapper">
+  <h2>Selecciona un Paciente</h2>
+  <div class="cards-cont">
+    <app-card-pacientes
+      *ngFor="let patient of pacientes"
+      [pacient]="patient"
+      (click)="seleccionarPaciente(patient)"
+    ></app-card-pacientes>
+  </div>
+</main>

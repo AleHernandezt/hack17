@@ -1,0 +1,28 @@
+.wrapper {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-direction: column;
+  max-height: 95vh;
+
+}
+
+.cards-cont{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: 55px;
+  align-items: start;
+  overflow-y: scroll;
+  padding: 15px;
+  max-height: 90vh;
+}
+
+@media (min-width: 1300px) {
+
+
+  .card{
+    min-width: 290px;
+    max-width: 290px;
+  }
+}

@@ -1,13 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resumen-medicina.component";
+import { CommonModule } from '@angular/common';
+import { TreatmentService } from '../../../Core/Services/treatment.service';
 
 @Component({
   selector: 'app-resumen-tratamiento',
   standalone: true,
-  imports: [ResumenMedicinaComponent],
+  imports: [ResumenMedicinaComponent, CommonModule],
   templateUrl: './resumen-tratamiento.component.html',
   styleUrl: './resumen-tratamiento.component.css'
 })
 export class ResumenTratamientoComponent {
+
+
+  treatment: any = {};
+
+  constructor(private treatmentService: TreatmentService) {}
+
+  ngOnInit() {
+    this.treatmentService.getTreatment().subscribe(data => {
+      this.treatment = data;
+    });
+  }
+
+  onMedicineDeleted(medicineId: string) {
+    //eliminación de medicina
+    this.treatmentService.removeMedication(medicineId);
+  }
+
+  onQuantityIncreased(medicineId: string) {
+    //aumento de cantidad
+    this.treatmentService.increaseMedicationQuantity(medicineId);
+  }
+
+  onQuantityDecreased(medicineId: string) {
+    //disminución de cantidad
+    this.treatmentService.decreaseMedicationQuantity(medicineId);
+  }
+
 
 }

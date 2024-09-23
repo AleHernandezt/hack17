@@ -5,20 +5,25 @@
     <p class="empty-message">El Tratamiento está vacío</p>
 
     <div class="treatment-details">
+      <p>Nombre: {{ treatment.patientName }}</p>
 
-      <p>Nombre: carlos</p>
-
-      <app-resumen-medicina></app-resumen-medicina>
-
-
+      <ng-container *ngFor="let medicine of treatment.medications">
+        <app-resumen-medicina
+          [medicine]="medicine"
+          (medicineDeleted)="onMedicineDeleted($event)"
+          (quantityIncreased)="onQuantityIncreased($event)"
+          (quantityDecreased)="onQuantityDecreased($event)">
+        </app-resumen-medicina>
+      </ng-container>
     </div>
 
-    <form action="handleSubmit" class="treatment-form">
+    <form class="treatment-form">
       <input
         type="text"
         placeholder="Observaciones"
         class="name-input"
         name="name"
+
       />
       <input
         type="submit"

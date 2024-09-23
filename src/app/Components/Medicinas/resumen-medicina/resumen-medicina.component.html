@@ -1,19 +1,20 @@
 <div class="medicine-card">
   <div class="medicine-content">
     <div class="medicine-header">
-      <p class="medicine-name">acetaminofen marca asasasasalivet 500mg</p>
-      <button type="button" class="delete-button" onclick="deleteMedicine(medicineId)">
+      <p class="medicine-name">{{ medicine.name }}</p>
+      <button type="button" class="delete-button" (click)="deleteMedicine()">
         &times;
       </button>
     </div>
 
     <div class="medicine-quantity-controls">
-      <button type="button" class="decrease-button" onclick="decreaseQuantity(medicineId)" disabled="false">
+      <button type="button" class="decrease-button" (click)="decreaseQuantity()" [disabled]="medicine.quantity <= 0">
         -
       </button>
-      <p class="medicine-quantity">1</p>
-      <button type="button" class="increase-button" onclick="increaseQuantity(medicineId)" disabled="false">
+      <p class="medicine-quantity">{{ medicine.quantity }}</p>
+      <button type="button" class="increase-button" (click)="increaseQuantity()">
         +
       </button>
+    </div>
   </div>
 </div>

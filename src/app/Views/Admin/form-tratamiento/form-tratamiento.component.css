@@ -1,6 +1,7 @@
 .cont{
   display: flex;
-
+  justify-content: flex-end;
+  gap: 20px;
 }
 
 .wrapper {
@@ -38,10 +39,9 @@
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
-  .wrapper {
-    flex: 1;
-    height: 100vh;
-    overflow-y: auto;
+@media (min-width: 1500px) {
+
+  .cont{
+    gap: 80px;
   }
 }
