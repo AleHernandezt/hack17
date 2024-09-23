@@ -4,11 +4,12 @@ import { ListaPacientesComponent } from "../../../Components/Paciente/lista-paci
 import { TreatmentService } from '../../../Core/Services/treatment.service';
 import { ListaMedicinasComponent } from "../../../Components/Medicinas/lista-medicinas/lista-medicinas.component";
 import { CommonModule } from '@angular/common';
+import { H1Component } from '../../../Shared/h1/h1.component';
 
 @Component({
   selector: 'app-form-tratamiento',
   standalone: true,
-  imports: [ResumenTratamientoComponent, ListaPacientesComponent, ListaMedicinasComponent, CommonModule],
+  imports: [H1Component, ResumenTratamientoComponent, ListaPacientesComponent, ListaMedicinasComponent, CommonModule],
   templateUrl: './form-tratamiento.component.html',
   styleUrls: ['./form-tratamiento.component.css']
 })

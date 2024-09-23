@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { BtnComponent } from "../../../Shared/btn/btn.component";
 import { TableComponent } from "../../../Shared/table/table.component";
 import { Table2Component } from "../../../Shared/table2/table2.component";
-
+import { H1Component } from '../../../Shared/h1/h1.component';
 @Component({
   selector: 'app-gestion-categoria',
   standalone: true,
-  imports: [BtnComponent, TableComponent, Table2Component],
+  imports: [H1Component, BtnComponent, TableComponent, Table2Component],
   templateUrl: './gestion-categoria.component.html',
   styleUrls: ['./gestion-categoria.component.css']
 })
