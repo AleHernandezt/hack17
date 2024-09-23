@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
 })
 export class CardMedicamentoComponent {
   @Input()
-  pacient : any
+  medicine : any
 }

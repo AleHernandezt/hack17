@@ -1,9 +1,9 @@
 <main class="wrapper">
   <div class="header-cont">
-    <h2>Selecciona un Paciente</h2>
+    <h2>Selecciona Las Medicinas</h2>
     <div>
       <app-search-bar-input
-        placeholder="Insertar Cedula"
+        placeholder="Insertar Nombre"
         (search)="realizarBusqueda($event)"
         (clean)="limpiarBusqueda()"
       ></app-search-bar-input>
@@ -12,9 +12,9 @@
 
   <div class="cards-cont">
     <app-card-medicamento
-      *ngFor="let patient of (filteredPatients.length ? filteredPatients : pacientes)"
-      [pacient]="patient"
-      (click)="seleccionarPaciente(patient)"
+      *ngFor="let medicine of (filteredMedicines.length ? filteredMedicines : medications)"
+      [medicine]="medicine"
+      (click)="seleccionarMedicina(medicine)"
     ></app-card-medicamento>
   </div>
 </main>

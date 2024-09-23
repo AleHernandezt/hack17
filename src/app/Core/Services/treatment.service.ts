@@ -9,8 +9,7 @@ export class TreatmentService {
     patientId: '',
     patientName: '',
     medications: [
-      { id: 'med1', name: 'Aspirin', quantity: 2 },
-      { id: 'med2', name: 'Ibuprofen', quantity: 1 }
+
     ]
   });
 
@@ -33,15 +32,33 @@ export class TreatmentService {
 
   public addMedication(id: string, name: string, quantity: number): void {
     const currentTreatment = this.treatment.getValue();
-    const newMedications = [...currentTreatment.medications, { id, name, quantity }];
+
+    const existingMedicationIndex = currentTreatment.medications.findIndex((med : any) => med.id === id);
+
+    let newMedications;
+
+    if (existingMedicationIndex !== -1) {
+        const existingMedication = currentTreatment.medications[existingMedicationIndex];
+        existingMedication.quantity += quantity;
+
+
+        newMedications = [
+            ...currentTreatment.medications.slice(0, existingMedicationIndex),
+            existingMedication,
+            ...currentTreatment.medications.slice(existingMedicationIndex + 1)
+        ];
+    } else {
+
+        newMedications = [...currentTreatment.medications, { id, name, quantity }];
+    }
 
     const newTreatment = {
-      ...currentTreatment,
-      medications: newMedications
+        ...currentTreatment,
+        medications: newMedications
     };
 
     this.updateTreatment(newTreatment);
-  }
+}
 
   public removeMedication(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();

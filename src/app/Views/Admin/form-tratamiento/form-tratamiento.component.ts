@@ -31,4 +31,8 @@ export default class FormTratamientoComponent implements OnInit {
     this.treatmentService.updatePatient(paciente.cedula, paciente.nombre)
   }
 
+  onMedicinaSeleccionada(medicina : {name : string; id : string}){
+    this.treatmentService.addMedication(medicina.id, medicina.name, 1)
+  }
+
 }

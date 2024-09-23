@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resumen-medicina.component";
 import { CommonModule } from '@angular/common';
 import { TreatmentService } from '../../../Core/Services/treatment.service';
+import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
 
 @Component({
   selector: 'app-resumen-tratamiento',
   standalone: true,
-  imports: [ResumenMedicinaComponent, CommonModule],
+  imports: [ResumenMedicinaComponent, CommonModule, ResumenPacienteComponent],
   templateUrl: './resumen-tratamiento.component.html',
   styleUrl: './resumen-tratamiento.component.css'
 })
@@ -38,5 +39,13 @@ export class ResumenTratamientoComponent {
     this.treatmentService.decreaseMedicationQuantity(medicineId);
   }
 
+  deletePatient(){
+    const id= '';
+    const name= ''
+    this.treatmentService.updatePatient(id,name)
 
+  }
 }
+
+
+

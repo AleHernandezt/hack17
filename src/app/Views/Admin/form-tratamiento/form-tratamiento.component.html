@@ -1,10 +1,13 @@
-<app-h1 title="Crear Tratamiento"></app-h1>
+
 <div class="cont">
 
   <app-lista-pacientes
     *ngIf="!treatment.patientId"
     (pacienteSeleccionado)="onPacienteSeleccionado($event)"
   ></app-lista-pacientes>
-  <app-lista-medicinas *ngIf="treatment.patientId"></app-lista-medicinas>
+  <app-lista-medicinas
+    *ngIf="treatment.patientId"
+    (medicinaSeleccionada)="onMedicinaSeleccionada($event)"
+  ></app-lista-medicinas>
   <app-resumen-tratamiento></app-resumen-tratamiento>
 </div>
