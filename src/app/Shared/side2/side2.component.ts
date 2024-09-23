@@ -3,7 +3,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { Router } from '@angular/router'; // Import the Router service
+import { Router } from '@angular/router'; 
 
 @Component({
     selector: 'app-side2',
@@ -53,38 +53,6 @@ export class Side2Component implements OnInit {
 
                 ]
             },
-            // {
-            //     label: 'Patologia',
-            //     icon: 'pi pi-image',
-            //     items: [
-            //         {
-            //             label: 'Option 1',
-            //             icon: 'pi pi-image',
-            //             command: () => this.navigateToRoute('/gestionComunidad')
-            //         },
-            //         {
-            //             label: 'Option 2',
-            //             icon: 'pi pi-image',
-            //             command: () => this.navigateToRoute('/gestionCategoria')
-            //         }
-            //     ]
-            // },
-            // {
-            //     label: 'Tratamientos',
-            //     icon: 'pi pi-cloud',
-            //     items: [
-            //         {
-            //             label: 'Option 1',
-            //             icon: 'pi pi-cloud',
-            //             command: () => this.navigateToRoute('/gestionFundacion')
-            //         },
-            //         {
-            //             label: 'Option 2',
-            //             icon: 'pi pi-cloud',
-            //             command: () => this.navigateToRoute('/route6')
-            //         }
-            //     ]
-            // },
 
             {
                 label: 'Medicamentos',

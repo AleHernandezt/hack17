@@ -1,8 +1,8 @@
-<form class="container">
-    <app-card [title]="'Inicia Sesion'">
-        <p>Inicia Sesion con tu email y contraseña.</p>
-        <app-input-email></app-input-email>
-        <app-input-password></app-input-password>
-        <app-btn label="Iniciar Sesion"></app-btn>
+<form class="container" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <app-card [title]="'Inicia Sesión'">
+        <p>Inicia Sesión con tu email y contraseña.</p>
+        <app-input-email [(ngModel)]="email" name="email" required email></app-input-email>
+        <app-input-password [(ngModel)]="password" name="password" required></app-input-password>
+        <app-btn label="Iniciar Sesión" [disabled]="!loginForm.valid"></app-btn>
     </app-card>
 </form>
