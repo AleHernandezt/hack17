@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.search-bar {
+  width: 70vw; /* 70% of the viewport width */
+  max-width: 70vw; /* to prevent it from growing beyond 70% */
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+app-btn {
+  margin-right: 10px;
+}

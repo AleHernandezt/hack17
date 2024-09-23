@@ -6,7 +6,7 @@ export const routes: Routes = [
         loadComponent: () => import('./Authentication/login/login.component')
     },*/
     {
-        path: 'dashboardAdmin',
+        path: '',
         loadComponent: () => import('./Views/Admin/dash-admin/dash-admin.component')
     },
     //   {

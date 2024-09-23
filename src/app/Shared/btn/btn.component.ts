@@ -11,12 +11,14 @@ import { Router } from '@angular/router';
 })
 export class BtnComponent {
   @Input() label: string = 'Botón';
-  @Input() disabled: boolean = false;  // Agrega esta línea
+  @Input() disabled: boolean = false;
+  @Input() route: string = ''; // Agregamos una propiedad de entrada para la ruta
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   handleClick() {
-    // Aquí puedes manejar la lógica para formularios o navegación
-    this.router.navigate(['/ruta-destino']);
+    if (this.route) {
+      this.router.navigate([this.route]); // Navegamos a la ruta pasada como parámetro
+    }
   }
 }
