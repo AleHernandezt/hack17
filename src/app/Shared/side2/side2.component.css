@@ -1,3 +1,18 @@
-p-button{
+p-button {
   position: sticky;
+}
+
+.p-sidebar {
+  width: 300px;
+  position: relative;
+}
+
+.logout-button {
+  width: 80%;
+  padding: 1rem;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }

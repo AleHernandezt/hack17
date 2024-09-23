@@ -1,10 +1,8 @@
 <div class="card flex justify-content-center">
-    <p-sidebar [(visible)]="sidebarVisible">
-        <h3>Sidebar</h3>
-        <div class="card flex justify-content-center">
-            <p-panelMenu [model]="items" styleClass="w-full md:w-20rem" />
-        </div>
-        
+    <p-sidebar [(visible)]="sidebarVisible" class="p-sidebar">
+        <h3>Bienvenido, Nombre</h3>
+        <p-panelMenu [model]="items" class="p-panelMenu" ></p-panelMenu>
+        <button pButton type="button" (click)="logout()" label="Logout" icon="pi pi-sign-out" class="logout-button p-m-2"></button>
     </p-sidebar>
-    <p-button (onClick)="sidebarVisible = true" icon="pi pi-arrow-right" />
+    <p-button (onClick)="sidebarVisible = true" icon="pi pi-arrow-right" class="btn-sidebar" />
 </div>
