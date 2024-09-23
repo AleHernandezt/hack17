@@ -31,5 +31,9 @@ export const routes: Routes = [
         path: 'gestionFundacion',
         loadComponent: () => import('./Views/Admin/gestion-fundacion/gestion-fundacion.component')
     },
+    {
+      path: 'tratamiento',
+      loadComponent: () => import('./Views/Admin/form-tratamiento/form-tratamiento.component')
+  },
 
 ];

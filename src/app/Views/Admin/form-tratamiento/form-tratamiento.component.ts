@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { ResumenTratamientoComponent } from "../../../Components/Tratamientos/resumen-tratamiento/resumen-tratamiento.component";
 
 @Component({
-  selector: 'app-form-medicina',
+  selector: 'app-form-tratamiento',
   standalone: true,
   imports: [ResumenTratamientoComponent],
-  templateUrl: './form-medicina.component.html',
-  styleUrl: './form-medicina.component.css'
+  templateUrl: './form-tratamiento.component.html',
+  styleUrl: './form-tratamiento.component.css'
 })
-export default class FormMedicinaComponent {
+export default class FormTratamientoComponent {
 
 }

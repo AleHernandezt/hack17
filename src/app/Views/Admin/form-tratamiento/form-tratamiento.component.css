@@ -1,0 +1,16 @@
+.cont{
+  display: flex;
+
+}
+
+.wrapper {
+  padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}
