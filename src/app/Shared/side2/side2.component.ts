@@ -38,17 +38,17 @@ export class Side2Component implements OnInit {
                     {
                         label: 'Comunidades',
                         icon: 'pi pi-file',
-                        command: () => this.navigateToRoute('/paciente')
+                        command: () => this.navigateToRoute('/gestionComunidad')
                     },
                     {
                         label: 'Patologia',
                         icon: 'pi pi-file',
-                        command: () => this.navigateToRoute('/gestionComunidad')
+                        command: () => this.navigateToRoute('/gestionCategoria')
                     },
                     {
                         label: 'Entrega',
                         icon: 'pi pi-desktop',
-                        command: () => this.navigateToRoute('/route8')
+                        command: () => this.navigateToRoute('/gestionFundacion')
                     },
 
                 ]

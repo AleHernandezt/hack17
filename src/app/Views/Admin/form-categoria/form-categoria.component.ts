@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './form-categoria.component.html',
   styleUrl: './form-categoria.component.css'
 })
-export class FormCategoriaComponent {
+export default class FormCategoriaComponent {
 
 }

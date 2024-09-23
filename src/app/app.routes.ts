@@ -13,31 +13,45 @@ export const routes: Routes = [
     //     path: 'dashboardDonor',
     //     loadComponent: () => import('./Views//Donor/dashboard-donor/dashboard-donor.component')
     //   },
-      {
-         path: 'paciente',
+    {
+        path: 'crearCategoria',
+        loadComponent: () => import('./Views/Admin/form-categoria/form-categoria.component')
+    },
+
+    {
+        path: 'crearComunidad',
+        loadComponent: () => import('./Views/Admin/form-comunidad/form-comunidad.component')
+    },
+
+    {
+        path: 'crearMedicina',
+        loadComponent: () => import('./Views/Admin/form-medicina/form-medicina.component')
+    },
+    {
+        path: 'crearPaciente',
         loadComponent: () => import('./Views/Admin/form-paciente/form-paciente.component')
-      },
+    },
+    {
+        path: 'crearTratamiento',
+        loadComponent: () => import('./Views/Admin/form-tratamiento/form-tratamiento.component')
+    },
+
     //   {
     //     path: 'patientTable',
     //     loadComponent: () => import('./Views/Admin/Patient/patient-table/patient-table.component')
     //   },
+    {
+        path: 'gestionCategoria',
+        loadComponent: () => import('./Views/Admin/gestion-categoria/gestion-categoria.component')
+    },
     {
         path: 'gestionComunidad',
         loadComponent: () => import('./Views/Admin/gestion-comunidad/gestion-comunidad.component')
     },
 
     {
-        path: 'gestionCategoria',
-        loadComponent: () => import('./Views/Admin/gestion-categoria/gestion-categoria.component')
-    },
-
-    {
         path: 'gestionFundacion',
         loadComponent: () => import('./Views/Admin/gestion-fundacion/gestion-fundacion.component')
     },
-    {
-      path: 'tratamiento',
-      loadComponent: () => import('./Views/Admin/form-tratamiento/form-tratamiento.component')
-  },
 
 ];

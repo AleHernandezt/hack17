@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './form-comunidad.component.html',
   styleUrl: './form-comunidad.component.css'
 })
-export class FormComunidadComponent {
+export default class FormComunidadComponent {
 
 }
