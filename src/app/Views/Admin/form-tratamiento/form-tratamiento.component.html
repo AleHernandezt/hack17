@@ -1,5 +1,5 @@
 <div class="cont">
-  <!-- Renderizar lista de pacientes solo si treatment.patientId no es truthy -->
+
   <app-lista-pacientes
     *ngIf="!treatment.patientId"
     (pacienteSeleccionado)="onPacienteSeleccionado($event)"
