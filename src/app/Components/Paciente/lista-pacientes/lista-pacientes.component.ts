@@ -1,22 +1,17 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CardPacientesComponent } from "../card-pacientes/card-pacientes.component";
 import { CommonModule } from '@angular/common';
+import { SearchBarInputComponent } from "../../../Shared/search-bar-input/search-bar-input.component";
 
 @Component({
   selector: 'app-lista-pacientes',
   standalone: true,
-  imports: [CardPacientesComponent, CommonModule],
+  imports: [CardPacientesComponent, CommonModule, SearchBarInputComponent],
   templateUrl: './lista-pacientes.component.html',
   styleUrl: './lista-pacientes.component.css'
 })
 export class ListaPacientesComponent {
 
-
-  @Output() pacienteSeleccionado = new EventEmitter<{ nombre: string; cedula: string }>();
-
-  seleccionarPaciente(paciente: { nombre: string; cedula: string }) {
-    this.pacienteSeleccionado.emit(paciente);
-  }
 
   pacientes = [
     { nombre: 'Juan Pérez', cedula: '001-1234567-1' },
@@ -42,9 +37,28 @@ export class ListaPacientesComponent {
     { nombre: 'Samuel López', cedula: '001-1234567-4' }
   ];
 
-  onPacienteSeleccionado(paciente: { nombre: string; cedula: string }) {
+  filteredPatients : any = []
 
+
+  @Output() pacienteSeleccionado = new EventEmitter<{ nombre: string; cedula: string }>();
+
+  seleccionarPaciente(paciente: { nombre: string; cedula: string }) {
+    this.pacienteSeleccionado.emit(paciente);
   }
+
+  realizarBusqueda(busqueda: string) {
+    this.filteredPatients = this.pacientes.filter(paciente =>
+      paciente.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    );
+  }
+
+  limpiarBusqueda() {
+    this.filteredPatients = [];
+  }
+
+
+
+
 
 
 }

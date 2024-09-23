@@ -6,8 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class TreatmentService {
   public treatment: BehaviorSubject<any> = new BehaviorSubject<any>({
-    patientId: 'test-patient-id',
-    patientName: 'John Doe',
+    patientId: '',
+    patientName: '',
     medications: [
       { id: 'med1', name: 'Aspirin', quantity: 2 },
       { id: 'med2', name: 'Ibuprofen', quantity: 1 }

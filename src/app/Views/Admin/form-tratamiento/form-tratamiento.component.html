@@ -1,9 +1,9 @@
 <div class="cont">
+  <!-- Renderizar lista de pacientes solo si treatment.patientId no es truthy -->
   <app-lista-pacientes
-  (pacienteSeleccionado)="onPacienteSeleccionado($event)"
+    *ngIf="!treatment.patientId"
+    (pacienteSeleccionado)="onPacienteSeleccionado($event)"
   ></app-lista-pacientes>
+  <app-lista-medicinas *ngIf="treatment.patientId"></app-lista-medicinas>
   <app-resumen-tratamiento></app-resumen-tratamiento>
 </div>
-
-
-
