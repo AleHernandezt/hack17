@@ -1,6 +1,8 @@
 <app-h1 title="Crear Comunidad"></app-h1>
 <app-card title="Crear Comunidad">
-  <app-input-text [label]="'Nombre de la comunidad'"></app-input-text>
-  <app-input-number [label]="'numero de '"></app-input-number>
-  <app-btn label="Crear"></app-btn>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-input-text [label]="'Nombre de la comunidad'" formControlName="nombre"></app-input-text>
+    <app-input-number [label]="'numero de '" formControlName="numero"></app-input-number>
+    <app-btn label="Crear" type="submit"></app-btn>
+  </form>
 </app-card>
