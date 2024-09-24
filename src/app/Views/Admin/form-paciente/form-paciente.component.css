@@ -65,3 +65,10 @@ border: 2px solid yellow;
   font-size: large;
   color: white;
 }
+
+.cardd{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
