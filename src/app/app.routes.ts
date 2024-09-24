@@ -42,7 +42,7 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/gestion-comunidad/gestion-comunidad.component')
     },
 
-    {
+    {   // !esta no esta siendo mostrada
         path: 'gestionFundacion',
         loadComponent: () => import('./Views/Admin/gestion-fundacion/gestion-fundacion.component')
     },
@@ -54,6 +54,8 @@ export const routes: Routes = [
         path: 'gestionPaciente',
         loadComponent: () => import('./Views/Admin/gestion-paciente/gestion-paciente.component')
     },
+
+    //! esta no esta siendo mostrada
     {
         path: 'gestionPatologia',
         loadComponent: () => import('./Views/Admin/gestion-patologia/gestion-patologia.component')
@@ -70,7 +72,6 @@ export const routes: Routes = [
         path: 'MedicamentosSalidaOtro',
         loadComponent: () => import('./Views/Admin/medicamentos-salida-otro/medicamentos-salida-otro.component')
     },
-
 
 
 
