@@ -9,10 +9,7 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./Views/Admin/dash-admin/dash-admin.component')
     },
-    //   {
-    //     path: 'dashboardDonor',
-    //     loadComponent: () => import('./Views//Donor/dashboard-donor/dashboard-donor.component')
-    //   },
+
     {
         path: 'crearCategoria',
         loadComponent: () => import('./Views/Admin/form-categoria/form-categoria.component')
@@ -36,10 +33,6 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/form-tratamiento/form-tratamiento.component')
     },
 
-    //   {
-    //     path: 'patientTable',
-    //     loadComponent: () => import('./Views/Admin/Patient/patient-table/patient-table.component')
-    //   },
     {
         path: 'gestionCategoria',
         loadComponent: () => import('./Views/Admin/gestion-categoria/gestion-categoria.component')
@@ -49,9 +42,50 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/gestion-comunidad/gestion-comunidad.component')
     },
 
-    {
+    {   // !esta no esta siendo mostrada
         path: 'gestionFundacion',
         loadComponent: () => import('./Views/Admin/gestion-fundacion/gestion-fundacion.component')
+    },
+    {
+        path: 'gestionEntrega',
+        loadComponent: () => import('./Views/Admin/gestion-entrega/gestion-entrega.component')
+    },
+    {
+        path: 'gestionPaciente',
+        loadComponent: () => import('./Views/Admin/gestion-paciente/gestion-paciente.component')
+    },
+
+    //! esta no esta siendo mostrada
+    {
+        path: 'gestionPatologia',
+        loadComponent: () => import('./Views/Admin/gestion-patologia/gestion-patologia.component')
+    },
+    {
+        path: 'medicamentosEntrada',
+        loadComponent: () => import('./Views/Admin/medicamentos-entrada/medicamentos-entrada.component')
+    },
+    {
+        path: 'MedicamentosSalidaDonacion',
+        loadComponent: () => import('./Views/Admin/medicamentos-salida-donacion/medicamentos-salida-donacion.component')
+    },
+    {
+        path: 'MedicamentosSalidaOtro',
+        loadComponent: () => import('./Views/Admin/medicamentos-salida-otro/medicamentos-salida-otro.component')
+    },
+
+
+
+    {
+        path: 'DasboardAdmin',
+        loadComponent: () => import('./Views/Admin/dash-admin/dash-admin.component')
+    },
+    {
+        path: 'DashboardDoner',
+        loadComponent: () => import('./Views/Doner/dasboard-doner/dasboard-doner.component')
+    },
+    {
+        path: 'CrearDonante',
+        loadComponent: () => import('./Views/Doner/form-donante/form-donante.component')
     },
 
 ];
