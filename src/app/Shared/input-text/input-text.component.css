@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+p-floatLabel {
+  padding: 1rem;
+}
+
+input {
+  padding: 1rem;
+}
