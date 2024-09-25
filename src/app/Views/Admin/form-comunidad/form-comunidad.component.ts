@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { CardComponent } from "../../../Shared/card/card.component";
 import { InputTextComponent } from "../../../Shared/input-text/input-text.component";
 import { BtnComponent } from "../../../Shared/btn/btn.component";
 import { InputNumberComponent } from "../../../Shared/input-number/input-number.component";
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from "@angular/router";
+import { ComunidadService } from '../../../Core/Services/comunidad.service';
+import { Comunidad } from '../../../Core/Interfaces/comunidad.interface';
+import { HttpClientModule } from '@angular/common/http'; // Importamos HttpClientModule
 
 @Component({
   selector: 'app-form-comunidad',
@@ -16,26 +20,43 @@ import { ReactiveFormsModule } from '@angular/forms';
     InputTextComponent,
     BtnComponent,
     InputNumberComponent,
-    ReactiveFormsModule 
-  ],  templateUrl: './form-comunidad.component.html',
+    ReactiveFormsModule,
+    HttpClientModule
+  ],
+  template: `
+    <app-h1 title="Crear Comunidad"></app-h1>
+    <app-card title="Crear Comunidad">
+      <div class="container">
+        <form [formGroup]="userForm">
+          <app-input-text label="Nombre" formControlName="name"></app-input-text>
+          <app-input-text label="Descripción" formControlName="description" type="textarea"></app-input-text>
+          <app-btn (click)="onSaveComunidad()">Crear</app-btn>
+        </form>
+      </div>
+    </app-card>
+  `,
   styleUrls: ['./form-comunidad.component.css']
 })
 export default class FormComunidadComponent {
-  form: FormGroup;
-
-  constructor() {
-    this.form = new FormGroup({
-      nombre: new FormControl('', Validators.required),
-      numero: new FormControl('', Validators.required)
-    });
+  constructor(){
+    alert('asdf')
   }
+  private ComunidadService = inject(ComunidadService);
+  private Navigation = inject(Router);
 
-  onSubmit() {
-    if (this.form.valid) {
-      console.log('Form submitted:', this.form.value);
-      // Call your API or perform any other action here
-    } else {
-      console.log('Form invalid:', this.form);
-    }
+  userForm: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    description: new FormControl(''),
+  });
+
+  onSaveComunidad() {
+    console.log(this.userForm.value);
+
+    this.ComunidadService.createComunidad(this.userForm.value).subscribe({
+      next: (resp: any) => {
+        console.log(resp)
+        this.Navigation.navigateByUrl('/gestionComunidades');
+      }
+    })
   }
 }

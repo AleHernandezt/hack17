@@ -42,7 +42,7 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/gestion-comunidad/gestion-comunidad.component')
     },
 
-    {   // !esta no esta siendo mostrada
+    {   // ?esta no esta siendo mostrada
         path: 'gestionFundacion',
         loadComponent: () => import('./Views/Admin/gestion-fundacion/gestion-fundacion.component')
     },
