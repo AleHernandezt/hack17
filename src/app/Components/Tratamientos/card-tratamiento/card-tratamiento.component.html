@@ -1,0 +1,12 @@
+
+<div class="card">
+  <p>Cédula: {{ treatment?.id }}</p>
+  <p>Observaciones: {{ treatment?.observation }}</p>
+  <p>Estado: {{ translateStatus(treatment?.status) }}</p>
+  <p>Medicamentos:</p>
+  <ul>
+    <li *ngFor="let medication of treatment?.medications">
+      Medicamento ID: {{ medication.medication_id }}, Cantidad: {{ medication.quantity }}
+    </li>
+  </ul>
+</div>

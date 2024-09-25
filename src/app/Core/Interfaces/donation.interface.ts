@@ -1,19 +1,20 @@
 export interface DonationInterface {
   idDonation?: number;
-  donationTypeId : number;
-  donationType: string,
-  fundationId : number,
+  description: string
+  category_id : number;
+  name: string,
+  charity_id : string
+  charityName : string,
   medications :
   [
     {
       medicationId: string,
-      donationId : number,
+      medicationName: string,
       quantity : number,
       expireDate : Date
     }
   ]
   fechaDonacion?: Date;
-  updatedAt?: Date;
 }
 
 
