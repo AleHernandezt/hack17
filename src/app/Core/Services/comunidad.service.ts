@@ -1,26 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Comunidad } from '../Interfaces/comunidad.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComunidadService {
 
-  private apiUrl = 'localhost:3000/api/community/';
+  private apiUrl = 'localhost:3000/api/community/create'; // Replace with your API URL
 
   constructor(private http: HttpClient) { }
 
-  getComunidadId(id: number) {
-    return this.http.get<Comunidad>(`${this.apiUrl}/${id}`);
+  createComunidad(comunidad: Comunidad): Observable<any> {
+    return this.http.post(this.apiUrl, comunidad);
   }
-
-  createComunidad(comunidad: Comunidad) {
-    return this.http.post<Comunidad>(this.apiUrl, comunidad);
-  }
-
-  updateComunidad(id: number, comunidad: Comunidad) {
-    return this.http.put<Comunidad>(`${this.apiUrl}/${id}`, comunidad);
-  }
-
 }

@@ -1,59 +1,46 @@
-import { Component, inject } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { H1Component } from '../../../Shared/h1/h1.component';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Comunidad } from '../../../Core/Interfaces/comunidad.interface';
+import { ComunidadService } from '../../../Core/Services/comunidad.service';
 import { CardComponent } from "../../../Shared/card/card.component";
+import { H1Component } from "../../../Shared/h1/h1.component";
 import { InputTextComponent } from "../../../Shared/input-text/input-text.component";
 import { BtnComponent } from "../../../Shared/btn/btn.component";
-import { InputNumberComponent } from "../../../Shared/input-number/input-number.component";
-import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from "@angular/router";
-import { ComunidadService } from '../../../Core/Services/comunidad.service';
-import { Comunidad } from '../../../Core/Interfaces/comunidad.interface';
-import { HttpClientModule } from '@angular/common/http'; // Importamos HttpClientModule
 
 @Component({
   selector: 'app-form-comunidad',
   standalone: true,
-  imports: [
-    H1Component,
-    CardComponent,
-    InputTextComponent,
-    BtnComponent,
-    InputNumberComponent,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  template: `
-    <app-h1 title="Crear Comunidad"></app-h1>
-    <app-card title="Crear Comunidad">
-      <div class="container">
-        <form [formGroup]="userForm">
-          <app-input-text label="Nombre" formControlName="name"></app-input-text>
-          <app-input-text label="Descripción" formControlName="description" type="textarea"></app-input-text>
-          <app-btn (click)="onSaveComunidad()">Crear</app-btn>
-        </form>
-      </div>
-    </app-card>
-  `,
+  imports: [ReactiveFormsModule, CardComponent, H1Component, BtnComponent, InputTextComponent],
+  templateUrl: './form-comunidad.component.html',
   styleUrls: ['./form-comunidad.component.css']
 })
 export default class FormComunidadComponent {
-  private ComunidadService = inject(ComunidadService);
-  private Navigation = inject(Router);
+  form: FormGroup<any> = this.formBuilder.group({}); // Initialize the form group
 
-  userForm: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    description: new FormControl(''),
-  });
+  constructor(private formBuilder: FormBuilder, private comunidadService: ComunidadService) { }
 
-  onSaveComunidad() {
-    console.log(this.userForm.value);
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      region: ['', Validators.required]
+    });
+  }
 
-    this.ComunidadService.createComunidad(this.userForm.value).subscribe({
-      next: (resp: any) => {
-        console.log(resp)
-        this.Navigation.navigateByUrl('/gestionComunidades');
-      }
-    })
+  createComunidad(): void {
+    if (this.form.valid) {
+      const comunidad: Comunidad = {
+        name: this.form.get('name')?.value,
+        description: this.form.get('description')?.value,
+        id: 0
+      };
+      this.comunidadService.createComunidad(comunidad).subscribe((response: any) => {
+        console.log(response); // Log the response from the API
+        // Handle success response
+      }, (error: any) => {
+        console.error(error); // Log the error
+        // Handle error response
+      });
+    }
   }
 }
