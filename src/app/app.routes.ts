@@ -58,6 +58,20 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/gestion-paciente/gestion-paciente.component')
     },
 
+    {
+        path: 'gestionMedicamentos',
+        loadComponent: () => import('./Views/Admin/medicamentos/medicamentos.component')
+    },
+
+    {
+        path: 'gestionDevoluciones',
+        loadComponent: () => import('./Views/Admin/devoluciones/devoluciones.component')
+    },
+    {
+        path: 'gestionPatologias',
+        loadComponent: () => import('./Views/Admin/patologias/patologias.component')
+    },
+
     //! esta no esta siendo mostrada
     {
         path: 'gestionPatologia',

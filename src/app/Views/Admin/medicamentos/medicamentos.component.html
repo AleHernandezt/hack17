@@ -1,0 +1,11 @@
+<app-h1 title="Medicamentos"></app-h1>
+<div class="horizontal">
+  <app-btn [label]="'Crear Medicamento'" [route]="'/crearMedicamento'"></app-btn>
+  <app-searchbar></app-searchbar>  
+</div>
+<app-table2
+  [items]="medicamentos"
+  (edit)="editMedicamento($event)"
+  (delete)="deleteMedicamento($event)"
+>
+</app-table2>

@@ -36,14 +36,20 @@ export class Side2Component implements OnInit {
                         command: () => this.navigateToRoute('/gestionComunidad')
                     },
                     {
-                        label: 'Patologia',
+                        label: 'Categoria',
                         icon: 'pi pi-file',
                         command: () => this.navigateToRoute('/gestionCategoria')
                     },
                     {
-                        label: 'Entrega',
-                        icon: 'pi pi-desktop',
-                        command: () => this.navigateToRoute('/gestionEntrega')
+                        label: 'Patologia',
+                        icon: 'pi pi-file',
+                        command: () => this.navigateToRoute('/gestionPatologia')
+                    },
+                    {
+                        label: 'Devoluciones',
+                        icon: 'pi pi-file',
+                        command: () => this.navigateToRoute('/gestionDevoluciones')
+
                     },
 
                 ]
@@ -53,6 +59,11 @@ export class Side2Component implements OnInit {
                 label: 'Medicamentos',
                 icon: 'pi pi-mobile',
                 items: [
+                    {
+                        label: 'General',
+                        icon: 'pi pi-file',
+                        command: () => this.navigateToRoute('/gestionMedicamentos')
+                    },
                     {
                         label: 'Entrada',
                         icon: 'pi pi-mobile',

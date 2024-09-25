@@ -1,2 +1,12 @@
 <app-h1 title="Gestion Paciente"></app-h1>
-<p>gestion-paciente works!</p>
+<app-h1 title="Pacientes"></app-h1>
+<div class="horizontal">
+  <app-btn [label]="'Crear Paciente'" [route]="'/crearPaciente'"></app-btn>
+  <app-searchbar></app-searchbar>  
+</div>
+<app-table2
+  [items]="pacientes"
+  (edit)="editPaciente($event)"
+  (delete)="deletePaciente($event)"
+>
+</app-table2>
