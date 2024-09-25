@@ -1,2 +1,12 @@
-<app-h1 title="Gestion Patologia"></app-h1>
-<p>gestion-patologia works!</p>
+<app-h1 title="Patologías"></app-h1>
+<div class="horizontal">
+  <app-btn [label]="'Crear Patología'" [route]="'/crearPatologia'"></app-btn>
+  <app-searchbar></app-searchbar>  
+</div>
+<app-table2
+  [items]="patologias"
+  (edit)="editPatologia($event)"
+  (delete)="deletePatologia($event)"
+>
+</app-table2>
+
