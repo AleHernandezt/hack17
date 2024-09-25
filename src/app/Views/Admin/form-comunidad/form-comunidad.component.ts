@@ -38,9 +38,6 @@ import { HttpClientModule } from '@angular/common/http'; // Importamos HttpClien
   styleUrls: ['./form-comunidad.component.css']
 })
 export default class FormComunidadComponent {
-  constructor(){
-    alert('asdf')
-  }
   private ComunidadService = inject(ComunidadService);
   private Navigation = inject(Router);
 
