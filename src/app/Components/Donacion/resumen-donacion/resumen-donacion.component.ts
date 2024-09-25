@@ -1,47 +1,57 @@
 import { Component } from '@angular/core';
-import { TreatmentService } from '../../../Core/Services/treatment.service';
+import { DonationService } from '../../../Core/Services/donation.service';
 import { ResumenTratamientoComponent } from "../../Tratamientos/resumen-tratamiento/resumen-tratamiento.component";
 import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resumen-medicina.component";
 import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
 import { CommonModule } from '@angular/common';
+import { ResumenDonanteComponent } from "../../Donante/resumen-donante/resumen-donante.component";
+import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-resumen-donacion',
   standalone: true,
-  imports: [ResumenTratamientoComponent, ResumenMedicinaComponent, ResumenPacienteComponent, CommonModule],
+  imports: [ResumenTratamientoComponent, ResumenMedicinaComponent, ResumenPacienteComponent, CommonModule, ResumenDonanteComponent],
   templateUrl: './resumen-donacion.component.html',
-  styleUrl: './resumen-donacion.component.css'
+  styleUrls: ['./resumen-donacion.component.css']
 })
 export class ResumenDonacionComponent {
-  treatment: any = {};
+  donation: DonationInterface | null = null;
+  private donationSubscription: Subscription |null = null;
 
-  constructor(private treatmentService: TreatmentService) {}
+  constructor(private donationService: DonationService) {}
 
   ngOnInit() {
-    this.treatmentService.getTreatment().subscribe(data => {
-      this.treatment = data;
+    this.donationSubscription = this.donationService.getDonation().subscribe(data => {
+      this.donation = data;
     });
   }
 
-  onMedicineDeleted(medicineId: string) {
-    //eliminación de medicina
-    this.treatmentService.removeMedication(medicineId);
+  ngOnDestroy() {
+
+    if (this.donationSubscription) {
+      this.donationSubscription.unsubscribe();
+    }
   }
 
-  onQuantityIncreased(medicineId: string) {
-    //aumento de cantidad
-    this.treatmentService.increaseMedicationQuantity(medicineId);
+  onMedicineDeleted(medicineId: number) {
+    // Eliminación de medicina
+    this.donationService.removeMedication(medicineId);
   }
 
-  onQuantityDecreased(medicineId: string) {
-    //disminución de cantidad
-    this.treatmentService.decreaseMedicationQuantity(medicineId);
+  onQuantityIncreased(medicineId: number) {
+    // Aumento de cantidad
+    this.donationService.increaseMedicationQuantity(medicineId);
   }
 
-  deletePatient(){
-    const id= '';
-    const name= ''
-    this.treatmentService.updatePatient(id,name)
+  onQuantityDecreased(medicineId: number) {
+    // Disminución de cantidad
+    this.donationService.decreaseMedicationQuantity(medicineId);
+  }
 
+  deleteCharity() {
+    const id = 0;
+    const name = '';
+    this.donationService.updateCharity(id, name);
   }
 }

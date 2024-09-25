@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
 
 @Component({
   selector: 'app-card-donante',

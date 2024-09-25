@@ -1,31 +1,31 @@
 <aside class="sidebar">
-  <h1 class="title">Crear Tratamiento</h1>
+  <h1 class="title">Crear Donacion</h1>
 
   <div class="treatment-container">
-    <p *ngIf="!treatment.patientId && treatment.medications.length === 0" class="empty-message">
-      El Tratamiento está vacío
+    <p *ngIf="!donation?.charity_id && !donation?.medications" class="empty-message">
+      La donacion está vacía
     </p>
 
-    <div *ngIf="treatment.patientId || treatment.medications.length > 0" class="treatment-details">
-      <app-resumen-paciente
-        [paciente]="{ patientName: treatment.patientName, patientId: treatment.patientId }"
-        (deletePatient)="deletePatient()"
-      ></app-resumen-paciente>
+    <div *ngIf="donation?.charity_id || donation?.medications?.length" class="treatment-details">
+      <app-resumen-donante
+        [donante]="{charityId: donation?.charity_id!, charityName : donation?.charityName!}"
+        (deleteCharity)="deleteCharity()"
+      ></app-resumen-donante>
 
-      <ng-container *ngFor="let medicine of treatment.medications">
+      <ng-container *ngFor="let medicine of donation?.medications">
         <app-resumen-medicina
           [medicine]="medicine"
-          (medicineDeleted)="onMedicineDeleted($event)"
-          (quantityIncreased)="onQuantityIncreased($event)"
-          (quantityDecreased)="onQuantityDecreased($event)">
+          (medicineDeleted)="onMedicineDeleted(+$event)"
+          (quantityIncreased)="onQuantityIncreased(+$event)"
+          (quantityDecreased)="onQuantityDecreased(+$event)">
         </app-resumen-medicina>
       </ng-container>
     </div>
 
-    <form class="treatment-form" *ngIf="treatment.patientId && treatment.medications && treatment.medications.length > 0">
+    <form class="treatment-form" *ngIf="donation?.charity_id  && donation?.medications && donation?.medications?.length">
       <input
         type="text"
-        placeholder="Observaciones"
+        placeholder="Descripcion"
         class="name-input"
         name="name"
       />

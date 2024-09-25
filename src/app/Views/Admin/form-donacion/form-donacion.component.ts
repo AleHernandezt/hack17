@@ -2,28 +2,39 @@ import { Component } from '@angular/core';
 import { ListaMedicinasComponent } from "../../../Components/Medicinas/lista-medicinas/lista-medicinas.component";
 import { ListaDonanteComponent } from "../../../Components/Donante/lista-donante/lista-donante.component";
 import { ResumenDonacionComponent } from "../../../Components/Donacion/resumen-donacion/resumen-donacion.component";
+import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
+import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
+import { DonationService } from '../../../Core/Services/donation.service';
+import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-donacion',
   standalone: true,
-  imports: [ListaMedicinasComponent, ListaDonanteComponent, ResumenDonacionComponent],
+  imports: [ListaMedicinasComponent, ListaDonanteComponent, ResumenDonacionComponent, CommonModule],
   templateUrl: './form-donacion.component.html',
-  styleUrl: './form-donacion.component.css'
+  styleUrls: ['./form-donacion.component.css']
 })
-export class FormDonacionComponent {
-  treatment: any = {};
+export default class FormDonacionComponent {
+  donation: DonationInterface | null = null;
 
-  constructor() {}
+  constructor(private donationService: DonationService) {
+
+  }
 
   ngOnInit() {
-
+    this.donationService.getDonation().subscribe(donation => {
+      this.donation = donation;
+    });
   }
 
   onDonanteSeleccionado(charity: CharityInterface) {
-
+    this.donationService.updateCharity(charity.id!, charity.description);
   }
 
-  onMedicinaSeleccionada(medicina : {name : string; id : string}){
-
+  onMedicinaSeleccionada(medicina: {id : string, name : string}) {
+    // Agrega la medicina seleccionada al servicio
+    this.donationService.addMedication(+medicina.id!, medicina.name, 1);
+    console.log(this.donationService.donation.getValue())
   }
 }

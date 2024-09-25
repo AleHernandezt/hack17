@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { SearchBarInputComponent } from "../../../Shared/search-bar-input/search-bar-input.component";
 import { CardDonanteComponent } from "../card-donante/card-donante.component";
+import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lista-donante',
   standalone: true,
-  imports: [SearchBarInputComponent, CardDonanteComponent],
+  imports: [SearchBarInputComponent, CardDonanteComponent, CommonModule],
   templateUrl: './lista-donante.component.html',
   styleUrl: './lista-donante.component.css'
 })
@@ -136,8 +138,8 @@ export class ListaDonanteComponent {
 
   @Output() donanteSeleccionado = new EventEmitter<CharityInterface>();
 
-  seleccionarDonante(paciente: CharityInterface) {
-    this.donanteSeleccionado.emit(paciente);
+  seleccionarDonante(charity: CharityInterface) {
+    this.donanteSeleccionado.emit(charity);
   }
 
   realizarBusqueda(busqueda: string) {

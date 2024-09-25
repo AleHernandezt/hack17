@@ -32,7 +32,10 @@ export const routes: Routes = [
         path: 'crearTratamiento',
         loadComponent: () => import('./Views/Admin/form-tratamiento/form-tratamiento.component')
     },
-
+    {
+        path: 'crearDonacion',
+        loadComponent: () => import('./Views/Admin/form-donacion/form-donacion.component')
+    },
     {
         path: 'gestionCategoria',
         loadComponent: () => import('./Views/Admin/gestion-categoria/gestion-categoria.component')

@@ -1,4 +1,4 @@
-interface CharityInterface {
+export interface CharityInterface {
   id?: number;
   razon_social: string;
   description: string;
