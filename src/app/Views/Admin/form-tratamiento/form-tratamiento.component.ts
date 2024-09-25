@@ -5,6 +5,9 @@ import { TreatmentService } from '../../../Core/Services/treatment.service';
 import { ListaMedicinasComponent } from "../../../Components/Medicinas/lista-medicinas/lista-medicinas.component";
 import { CommonModule } from '@angular/common';
 import { H1Component } from '../../../Shared/h1/h1.component';
+import { PatientInterface } from '../../../Core/Interfaces/patient.interface';
+import { TreatmentInterface } from '../../../Core/Interfaces/treatment.interface';
+import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
 
 @Component({
   selector: 'app-form-tratamiento',
@@ -15,7 +18,7 @@ import { H1Component } from '../../../Shared/h1/h1.component';
 })
 export default class FormTratamientoComponent implements OnInit {
 
-  treatment: any = {};
+  treatment: TreatmentInterface | null = null;
 
   constructor(private treatmentService: TreatmentService) {}
 
@@ -23,16 +26,14 @@ export default class FormTratamientoComponent implements OnInit {
     this.treatmentService.getTreatment().subscribe(data => {
       this.treatment = data;
     });
-
-    console.log(this.treatment)
   }
 
-  onPacienteSeleccionado(paciente: { nombre: string; cedula: string }) {
-    this.treatmentService.updatePatient(paciente.cedula, paciente.nombre)
+  onPacienteSeleccionado(paciente: PatientInterface) {
+    this.treatmentService.updatePatient(paciente.id!)
   }
 
-  onMedicinaSeleccionada(medicina : {name : string; id : string}){
-    this.treatmentService.addMedication(medicina.id, medicina.name, 1)
+  onMedicinaSeleccionada(medicina : MedicationInterface){
+    this.treatmentService.addMedication(medicina.id!, medicina.name, 1)
   }
 
 }

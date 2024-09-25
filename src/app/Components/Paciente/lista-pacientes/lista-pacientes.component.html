@@ -12,7 +12,7 @@
 
   <div class="cards-cont">
     <app-card-pacientes
-      *ngFor="let patient of (filteredPatients.length ? filteredPatients : pacientes)"
+      *ngFor="let patient of (filteredPatients!.length ? filteredPatients : pacientes)"
       [pacient]="patient"
       (click)="seleccionarPaciente(patient)"
     ></app-card-pacientes>

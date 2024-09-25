@@ -40,9 +40,8 @@ export class ResumenTratamientoComponent {
   }
 
   deletePatient(){
-    const id= '';
-    const name= ''
-    this.treatmentService.updatePatient(id,name)
+    const id= 0;
+    this.treatmentService.updatePatient(id)
 
   }
 }

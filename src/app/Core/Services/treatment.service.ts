@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TreatmentInterface } from '../Interfaces/treatment.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TreatmentService {
-  public treatment: BehaviorSubject<any> = new BehaviorSubject<any>({
-    patientId: '',
-    patientName: '',
-    medications: [
-
+  public treatment: BehaviorSubject<TreatmentInterface> = new BehaviorSubject<TreatmentInterface>({
+    patient_id: 0,
+    observation: "",
+    medications:[
     ]
   });
 
@@ -21,35 +21,34 @@ export class TreatmentService {
     this.treatment.next(newTreatment);
   }
 
-  public updatePatient(id: string, name: string): void {
+  public updatePatient(id: number): void {
     const newTreatment = {
       ...this.treatment.getValue(),
-      patientId: id,
-      patientName: name
+      patientId: id
     };
     this.updateTreatment(newTreatment);
   }
 
-  public addMedication(id: string, name: string, quantity: number): void {
+  public addMedication(id: number, name: string, quantity: number): void {
     const currentTreatment = this.treatment.getValue();
 
-    const existingMedicationIndex = currentTreatment.medications.findIndex((med : any) => med.id === id);
+    const existingMedicationIndex = currentTreatment.medications!.findIndex((med : any) => med.id === id);
 
     let newMedications;
 
     if (existingMedicationIndex !== -1) {
-        const existingMedication = currentTreatment.medications[existingMedicationIndex];
+        const existingMedication = currentTreatment.medications![existingMedicationIndex];
         existingMedication.quantity += quantity;
 
 
         newMedications = [
-            ...currentTreatment.medications.slice(0, existingMedicationIndex),
+            ...currentTreatment.medications!.slice(0, existingMedicationIndex),
             existingMedication,
-            ...currentTreatment.medications.slice(existingMedicationIndex + 1)
+            ...currentTreatment.medications!.slice(existingMedicationIndex + 1)
         ];
     } else {
 
-        newMedications = [...currentTreatment.medications, { id, name, quantity }];
+        newMedications = [...currentTreatment.medications!, { id, name, quantity }];
     }
 
     const newTreatment = {
@@ -62,7 +61,7 @@ export class TreatmentService {
 
   public removeMedication(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();
-    const newMedications = currentTreatment.medications.filter(( med : any) => med.id !== medicineId);
+    const newMedications = currentTreatment.medications!.filter(( med : any) => med.id !== medicineId);
 
     const newTreatment = {
       ...currentTreatment,
@@ -74,7 +73,7 @@ export class TreatmentService {
 
   public increaseMedicationQuantity(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();
-    const newMedications = currentTreatment.medications.map((medication : any) => {
+    const newMedications = currentTreatment.medications!.map((medication : any) => {
       if (medication.id === medicineId) {
         return { ...medication, quantity: medication.quantity + 1 };
       }
@@ -92,7 +91,7 @@ export class TreatmentService {
   public decreaseMedicationQuantity(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();
 
-    const newMedications = currentTreatment.medications.map((medication: any) => {
+    const newMedications = currentTreatment.medications!.map((medication: any) => {
         if (medication.id === medicineId) {
             return { ...medication, quantity: Math.max(medication.quantity - 1, 0) };
         }

@@ -13,27 +13,27 @@
       ></app-resumen-donante>
 
       <ng-container *ngFor="let medicine of donation?.medications">
-        <app-resumen-medicina
+        <app-card-medicamento-with-date
           [medicine]="medicine"
           (medicineDeleted)="onMedicineDeleted(+$event)"
           (quantityIncreased)="onQuantityIncreased(+$event)"
-          (quantityDecreased)="onQuantityDecreased(+$event)">
-        </app-resumen-medicina>
+          (quantityDecreased)="onQuantityDecreased(+$event)"
+          (dateChanged)="onDateChanged(+$event.id, $event.newDate)"
+        >
+
+        </app-card-medicamento-with-date>
       </ng-container>
     </div>
 
-    <form class="treatment-form" *ngIf="donation?.charity_id  && donation?.medications && donation?.medications?.length">
+    <form class="treatment-form" *ngIf="donation?.charity_id && donation?.medications && donation?.medications?.length" (ngSubmit)="submitForm($event, descriptionInput)">
       <input
         type="text"
-        placeholder="Descripcion"
+        placeholder="Descripción"
         class="name-input"
         name="name"
+        #descriptionInput
       />
-      <input
-        type="submit"
-        class="submit-button"
-        value="Confirmar Tratamiento"
-      />
+      <button type="submit" class="submit-button">Confirmar Tratamiento</button>
     </form>
   </div>
 </aside>

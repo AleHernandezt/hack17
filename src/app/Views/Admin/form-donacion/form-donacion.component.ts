@@ -32,9 +32,9 @@ export default class FormDonacionComponent {
     this.donationService.updateCharity(charity.id!, charity.description);
   }
 
-  onMedicinaSeleccionada(medicina: {id : string, name : string}) {
-    // Agrega la medicina seleccionada al servicio
-    this.donationService.addMedication(+medicina.id!, medicina.name, 1);
+  onMedicinaSeleccionada(medicina: MedicationInterface) {
+    console.log(medicina.id)
+    this.donationService.addMedication(medicina.id!, medicina.name, 1);
     console.log(this.donationService.donation.getValue())
   }
 }

@@ -26,13 +26,13 @@ export class DonationService {
     this.donation.next(newDonation);
   }
 
-  public updateCharity(id: number, name: string): void {  // Reintroducido charityName
+  public updateCharity(id: number, name: string): void {
     const currentDonation = this.donation.getValue();
 
     const newDonation: DonationInterface = {
       ...currentDonation,
       charity_id: id,
-      charityName: name,  // Agregado
+      charityName: name,
     };
 
     this.updateDonation(newDonation);
@@ -40,6 +40,8 @@ export class DonationService {
 
   public addMedication(id: number, name: string, quantity: number): void {
     const currentDonation = this.donation.getValue();
+
+    console.log(id, name, quantity)
 
     const existingMedicationIndex = currentDonation.medications?.findIndex((med) => med.id === id);
 

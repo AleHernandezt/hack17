@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { ResumenDonanteComponent } from "../../Donante/resumen-donante/resumen-donante.component";
 import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
 import { Subscription } from 'rxjs';
+import { CardMedicamentoWithDateComponent } from "../../Medicinas/card-medicamento-with-date/card-medicamento-with-date.component";
 
 @Component({
   selector: 'app-resumen-donacion',
   standalone: true,
-  imports: [ResumenTratamientoComponent, ResumenMedicinaComponent, ResumenPacienteComponent, CommonModule, ResumenDonanteComponent],
+  imports: [ResumenTratamientoComponent, ResumenMedicinaComponent, ResumenPacienteComponent, CommonModule, ResumenDonanteComponent, CardMedicamentoWithDateComponent],
   templateUrl: './resumen-donacion.component.html',
   styleUrls: ['./resumen-donacion.component.css']
 })
@@ -49,9 +50,22 @@ export class ResumenDonacionComponent {
     this.donationService.decreaseMedicationQuantity(medicineId);
   }
 
+  onDateChanged(medicineId : number, newDate: Date){
+    this.donationService.updateMedicationExpireDate(medicineId, newDate)
+    console.log(this.donationService.donation.getValue())
+  }
+
   deleteCharity() {
     const id = 0;
     const name = '';
     this.donationService.updateCharity(id, name);
+  }
+
+  submitForm(event: Event, descriptionInput: HTMLInputElement): void {
+    event.preventDefault();
+
+    const description = descriptionInput.value;
+
+    console.log('Descripción:', description);
   }
 }

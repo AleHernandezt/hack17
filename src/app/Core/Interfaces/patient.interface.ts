@@ -10,12 +10,12 @@ export interface PatientInterface {
   address: string;
   gender: string;
   status: "active" | "inactive" | "deleted";
-  pathologies?:[
+  pathologies?:
       {
           id_pathology:number;
           description:string
-      }
-  ]
+      }[]
+
   createdAt?: Date;
   updatedAt?: Date;
 }

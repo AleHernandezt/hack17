@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { SearchBarInputComponent } from "../../../Shared/search-bar-input/search-bar-input.component";
 import { CardMedicamentoComponent } from "../card-medicamento/card-medicamento.component";
 import { CommonModule } from '@angular/common';
+import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
 
 @Component({
   selector: 'app-lista-medicinas',
@@ -14,22 +15,22 @@ export class ListaMedicinasComponent {
 
 
   medications = [
-    { id: 'med1', name: 'Aspirin'},
-    { id: 'med2', name: 'Ibuprofen'},
-    { id: 'med3', name: 'acetamino'},
-    { id: 'med4', name: 'atamel'},
-    { id: 'med5', name: 'cerelac'},
-    { id: 'med6', name: 'alegra'},
-    { id: 'med7', name: 'cetirizina',},
-    { id: 'med8', name: 'bisoprolol'}
+    { id: '1', name: 'Aspirin'},
+    { id: '2', name: 'Ibuprofen'},
+    { id: '3', name: 'acetamino'},
+    { id: '4', name: 'atamel'},
+    { id: '5', name: 'cerelac'},
+    { id: '6', name: 'alegra'},
+    { id: '7', name: 'cetirizina',},
+    { id: '8', name: 'bisoprolol'}
   ]
 
   filteredMedicines : any = []
 
 
-  @Output() medicinaSeleccionada = new EventEmitter<{ name: string; id: string }>();
+  @Output() medicinaSeleccionada = new EventEmitter<MedicationInterface>();
 
-  seleccionarMedicina(Medicina: { name: string; id: string }) {
+  seleccionarMedicina(Medicina: MedicationInterface) {
     this.medicinaSeleccionada.emit(Medicina);
   }
 
