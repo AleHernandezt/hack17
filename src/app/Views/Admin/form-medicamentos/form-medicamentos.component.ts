@@ -1,3 +1,5 @@
+// 
+
 import { Component } from '@angular/core';
 import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +17,6 @@ export default class FormMedicamentosComponent {
     name: '',
     quantity: 0
   };
-  id = 101;
 
   constructor(private ngZone: NgZone) { }
 
@@ -25,11 +26,7 @@ export default class FormMedicamentosComponent {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        id: this.id,
-        name: this.medicamento.name,
-        quantity: this.medicamento.quantity
-      })
+      body: JSON.stringify(this.medicamento)
     })
       .then((response) => response.json())
       .then((json) => {
@@ -42,7 +39,6 @@ export default class FormMedicamentosComponent {
             name: '',
             quantity: 0
           };
-          this.id++; // Incrementar el ID para la próxima solicitud
         }
       })
       .catch((error) => {
