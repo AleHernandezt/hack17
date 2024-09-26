@@ -5,7 +5,7 @@ import { ResumenDonacionComponent } from "../../../Components/Donacion/resumen-d
 import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
 import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
 import { DonationService } from '../../../Core/Services/donation.service';
-import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
+import { PostDonationInterface } from '../../../Core/Interfaces/donation.interface';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./form-donacion.component.css']
 })
 export default class FormDonacionComponent {
-  donation: DonationInterface | null = null;
+  donation: PostDonationInterface | null = null;
 
   constructor(private donationService: DonationService) {
 
@@ -33,8 +33,6 @@ export default class FormDonacionComponent {
   }
 
   onMedicinaSeleccionada(medicina: MedicationInterface) {
-    console.log(medicina.id)
-    this.donationService.addMedication(medicina.id!, medicina.name, 1);
-    console.log(this.donationService.donation.getValue())
+    this.donationService.addMedication(medicina.id!, medicina.name!, 1);
   }
 }

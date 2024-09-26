@@ -5,7 +5,7 @@ import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resum
 import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
 import { CommonModule } from '@angular/common';
 import { ResumenDonanteComponent } from "../../Donante/resumen-donante/resumen-donante.component";
-import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
+import { PostDonationInterface } from '../../../Core/Interfaces/donation.interface';
 import { Subscription } from 'rxjs';
 import { CardMedicamentoWithDateComponent } from "../../Medicinas/card-medicamento-with-date/card-medicamento-with-date.component";
 
@@ -17,8 +17,8 @@ import { CardMedicamentoWithDateComponent } from "../../Medicinas/card-medicamen
   styleUrls: ['./resumen-donacion.component.css']
 })
 export class ResumenDonacionComponent {
-  donation: DonationInterface | null = null;
-  private donationSubscription: Subscription |null = null;
+  donation: PostDonationInterface | null = null;
+  private donationSubscription: Subscription | null = null;
 
   constructor(private donationService: DonationService) {}
 
@@ -50,9 +50,8 @@ export class ResumenDonacionComponent {
     this.donationService.decreaseMedicationQuantity(medicineId);
   }
 
-  onDateChanged(medicineId : number, newDate: Date){
+  onDateChanged(medicineId : number, newDate: string){
     this.donationService.updateMedicationExpireDate(medicineId, newDate)
-    console.log(this.donationService.donation.getValue())
   }
 
   deleteCharity() {

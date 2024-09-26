@@ -18,7 +18,7 @@ export class ListaTratamientoComponent {
       status: "supplied",
       active: "active",
       medications: [
-        { medication_id: 201, quantity: "2" }
+        { id: 201, quantity: 2 }
       ],
       createdAt: new Date('2023-01-01'),
       updatedAt: new Date('2023-01-02'),
@@ -30,7 +30,7 @@ export class ListaTratamientoComponent {
       status: "partially supplied",
       active: "active",
       medications: [
-        { medication_id: 202, quantity: "1" }
+        { medication_id: 202, quantity: 1 }
       ],
       createdAt: new Date('2023-01-03'),
       updatedAt: new Date('2023-01-04'),
@@ -42,7 +42,7 @@ export class ListaTratamientoComponent {
       status: "supplied",
       active: "active",
       medications: [
-        { medication_id: 203, quantity: "1" }
+        { medication_id: 203, quantity: 1 }
       ],
       createdAt: new Date('2023-01-05'),
       updatedAt: new Date('2023-01-06'),
@@ -54,7 +54,7 @@ export class ListaTratamientoComponent {
       status: "supplied",
       active: "active",
       medications: [
-        { medication_id: 204, quantity: "3" }
+        { medication_id: 204, quantity: 3 }
       ],
       createdAt: new Date('2023-01-07'),
       updatedAt: new Date('2023-01-08'),

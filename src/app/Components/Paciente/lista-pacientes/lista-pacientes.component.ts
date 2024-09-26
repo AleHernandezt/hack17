@@ -99,12 +99,13 @@ export class ListaPacientesComponent {
     // Continua para los demás pacientes
   ];
 
-  filteredPatients : PatientInterface[] | null = []
+  filteredPatients : PatientInterface[]  = []
 
 
   @Output() pacienteSeleccionado = new EventEmitter<PatientInterface>();
 
   seleccionarPaciente(paciente: PatientInterface) {
+    console.log(paciente)
     this.pacienteSeleccionado.emit(paciente);
   }
 

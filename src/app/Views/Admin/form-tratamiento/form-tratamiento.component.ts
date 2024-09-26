@@ -29,11 +29,12 @@ export default class FormTratamientoComponent implements OnInit {
   }
 
   onPacienteSeleccionado(paciente: PatientInterface) {
-    this.treatmentService.updatePatient(paciente.id!)
+    this.treatmentService.updatePatient(paciente.id!, `${paciente.first_name} ${paciente.last_name}`)
+    console.log(this.treatment)
   }
 
   onMedicinaSeleccionada(medicina : MedicationInterface){
-    this.treatmentService.addMedication(medicina.id!, medicina.name, 1)
+    this.treatmentService.addMedication(medicina.id!, medicina.name!, 1)
   }
 
 }

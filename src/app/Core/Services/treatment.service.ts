@@ -8,6 +8,7 @@ import { TreatmentInterface } from '../Interfaces/treatment.interface';
 export class TreatmentService {
   public treatment: BehaviorSubject<TreatmentInterface> = new BehaviorSubject<TreatmentInterface>({
     patient_id: 0,
+    patientName : '',
     observation: "",
     medications:[
     ]
@@ -21,11 +22,13 @@ export class TreatmentService {
     this.treatment.next(newTreatment);
   }
 
-  public updatePatient(id: number): void {
+  public updatePatient(id: number, name : string): void {
     const newTreatment = {
       ...this.treatment.getValue(),
-      patientId: id
+      patient_id: id,
+      patientName : name
     };
+
     this.updateTreatment(newTreatment);
   }
 

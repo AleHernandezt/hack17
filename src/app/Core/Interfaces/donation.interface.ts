@@ -1,17 +1,36 @@
-export interface DonationInterface {
-  idDonation?: number;
+//para obtener la data
+
+export interface GetDonationInterface {
+  id: number;
   description: string;
-  category_id: number;
-  name: string;
-  charity_id: number;
-  charityName: string;
-  medications?: Array<{
-    id: number;
+  createdAt: string;
+  category: {
     name: string;
-    quantity: number;
-    expireDate?: Date;
-  }>;
-  fechaDonacion?: Date;
+    description: string;
+  };
+  charity: {
+    razon_social: string;
+  };
+  medications: {
+    name: string;
+    medication_details: {
+      quantity: number;
+      expiration_date: string;
+    };
+  }[];
 }
 
-//experimental no usar
+//para mandar la data
+export interface PostDonationInterface {
+  description: string;
+  category_id?: number;
+  category_name: string;
+  charity_id: number;
+  charity_name?: string;
+  medications: {
+    medication_id: number;
+    name?: string;
+    quantity: number;
+    expiration_date?: string;
+  }[];
+}

@@ -2,13 +2,13 @@
   <h1 class="title">Crear Tratamiento</h1>
 
   <div class="treatment-container">
-    <p *ngIf="!treatment.patientId && treatment.medications.length === 0" class="empty-message">
+    <p *ngIf="!treatment.patient_id && treatment.medications.length === 0" class="empty-message">
       El Tratamiento está vacío
     </p>
 
-    <div *ngIf="treatment.patientId || treatment.medications.length > 0" class="treatment-details">
+    <div *ngIf="treatment.patient_id || treatment.medications.length > 0" class="treatment-details">
       <app-resumen-paciente
-        [paciente]="{ patientName: treatment.patientName, patientId: treatment.patientId }"
+        [paciente]="{ patientName: treatment.patientName, patientId: treatment.patient_id }"
         (deletePatient)="deletePatient()"
       ></app-resumen-paciente>
 
@@ -22,7 +22,7 @@
       </ng-container>
     </div>
 
-    <form class="treatment-form" *ngIf="treatment.patientId && treatment.medications && treatment.medications.length > 0">
+    <form class="treatment-form" *ngIf="treatment.patient_id && treatment.medications && treatment.medications.length > 0">
       <input
         type="text"
         placeholder="Observaciones"

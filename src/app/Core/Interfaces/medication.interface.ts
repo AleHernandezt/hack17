@@ -1,4 +1,6 @@
 export interface MedicationInterface {
   id?: number;
-  name: string;
+  name?: string;
+  quantity? : number;
+  expiration_date? : string
 }

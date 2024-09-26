@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
 
 @Component({
   selector: 'app-card-medicamento-with-date',
@@ -7,24 +8,29 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./card-medicamento-with-date.component.css']
 })
 export class CardMedicamentoWithDateComponent {
-  @Input() medicine: any;
-  @Output() medicineDeleted = new EventEmitter<string>();
-  @Output() quantityIncreased = new EventEmitter<string>();
-  @Output() quantityDecreased = new EventEmitter<string>();
-  @Output() dateChanged = new EventEmitter<{ id: string, newDate: Date }>();
+  @Input() medicine: {name : string, id : number, expire_date? : string, quantity : number}  = {
+    name: '',
+    id : 0,
+    expire_date: "",
+    quantity : 1
+  };
+  @Output() medicineDeleted = new EventEmitter<number>();
+  @Output() quantityIncreased = new EventEmitter<number>();
+  @Output() quantityDecreased = new EventEmitter<number>();
+  @Output() dateChanged = new EventEmitter<{ id: number, newDate: string }>();
 
   deleteMedicine() {
-    this.medicineDeleted.emit(this.medicine.id);
+    this.medicineDeleted.emit(this.medicine?.id);
   }
 
   decreaseQuantity() {
-    if (this.medicine.quantity > 0) {
-      this.quantityDecreased.emit(this.medicine.id);
+    if (this.medicine!.quantity! > 0) {
+      this.quantityDecreased.emit(this.medicine!.id);
     }
   }
 
   increaseQuantity() {
-    this.quantityIncreased.emit(this.medicine.id);
+    this.quantityIncreased.emit(this.medicine!.id);
   }
 
   changeDate(event: Event) {
@@ -35,12 +41,13 @@ export class CardMedicamentoWithDateComponent {
     currentDate.setHours(0, 0, 0, 0);
     selectedDate.setHours(0, 0, 0, 0);
 
-
-    if (selectedDate < currentDate) {
-      selectedDate.setTime(currentDate.getTime());
+    if (currentDate > selectedDate) {
       input.value = currentDate.toISOString().split('T')[0];
+      this.medicine.expire_date = input.value;
+    } else {
+      this.medicine.expire_date = input.value;
     }
 
-    this.dateChanged.emit({ id: this.medicine.id, newDate: selectedDate });
+    this.dateChanged.emit({ id: this.medicine.id, newDate: selectedDate >= currentDate ? selectedDate.toISOString() : currentDate.toISOString() });
   }
 }

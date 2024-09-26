@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DonationInterface } from '../Interfaces/donation.interface';
+import { PostDonationInterface } from '../Interfaces/donation.interface';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,32 +7,32 @@ import { Injectable } from '@angular/core';
 })
 
 export class DonationService {
-  public donation: BehaviorSubject<DonationInterface> = new BehaviorSubject<DonationInterface>({
+  public donation: BehaviorSubject<PostDonationInterface> = new BehaviorSubject<PostDonationInterface>({
     description: "",
     category_id: 0,
-    name: "",
+    category_name: "",
     charity_id: 0,
-    charityName: "",
+    charity_name: "",
     medications: [
 
     ],
   });
 
-  private data: Observable<DonationInterface> = this.donation.asObservable();
+  private data: Observable<PostDonationInterface> = this.donation.asObservable();
 
   constructor() {}
 
-  public updateDonation(newDonation: DonationInterface): void {
+  public updateDonation(newDonation: PostDonationInterface): void {
     this.donation.next(newDonation);
   }
 
   public updateCharity(id: number, name: string): void {
     const currentDonation = this.donation.getValue();
 
-    const newDonation: DonationInterface = {
+    const newDonation: PostDonationInterface = {
       ...currentDonation,
       charity_id: id,
-      charityName: name,
+      charity_name: name,
     };
 
     this.updateDonation(newDonation);
@@ -41,9 +41,7 @@ export class DonationService {
   public addMedication(id: number, name: string, quantity: number): void {
     const currentDonation = this.donation.getValue();
 
-    console.log(id, name, quantity)
-
-    const existingMedicationIndex = currentDonation.medications?.findIndex((med) => med.id === id);
+    const existingMedicationIndex = currentDonation.medications?.findIndex((med) => med.medication_id === id);
 
     let newMedications;
 
@@ -57,10 +55,13 @@ export class DonationService {
         ...currentDonation.medications!.slice(existingMedicationIndex! + 1),
       ];
     } else {
-      newMedications = [...currentDonation.medications!, { id: id, name: name, quantity}];
+      newMedications = [
+        ...currentDonation.medications!,
+        { medication_id: id, name: name, quantity}
+      ];
     }
 
-    const newDonation: DonationInterface = {
+    const newDonation: PostDonationInterface = {
       ...currentDonation,
       medications: newMedications,
     };
@@ -70,9 +71,9 @@ export class DonationService {
 
   public removeMedication(medicineId: number): void {
     const currentDonation = this.donation.getValue();
-    const newMedications = currentDonation.medications!.filter((med) => med.id !== medicineId);
+    const newMedications = currentDonation.medications!.filter((med) => +med.medication_id !== medicineId);
 
-    const newDonation: DonationInterface = {
+    const newDonation: PostDonationInterface = {
       ...currentDonation,
       medications: newMedications,
     };
@@ -83,13 +84,13 @@ export class DonationService {
   public increaseMedicationQuantity(medicineId: number): void {
     const currentDonation = this.donation.getValue();
     const newMedications = currentDonation.medications!.map((medication) => {
-      if (medication.id === medicineId) {
+      if (+medication.medication_id === medicineId) {
         return { ...medication, quantity: medication.quantity + 1 };
       }
       return medication;
     });
 
-    const newDonation: DonationInterface = {
+    const newDonation: PostDonationInterface = {
       ...currentDonation,
       medications: newMedications,
     };
@@ -101,13 +102,13 @@ export class DonationService {
     const currentDonation = this.donation.getValue();
 
     const newMedications = currentDonation.medications!.map((medication) => {
-      if (medication.id === medicineId) {
+      if (+medication.medication_id === medicineId) {
         return { ...medication, quantity: Math.max(medication.quantity - 1, 0) };
       }
       return medication;
     });
 
-    const newDonation: DonationInterface = {
+    const newDonation: PostDonationInterface = {
       ...currentDonation,
       medications: newMedications,
     };
@@ -115,25 +116,27 @@ export class DonationService {
     this.updateDonation(newDonation);
   }
 
-  public updateMedicationExpireDate(medicineId: number, newExpireDate: Date): void {
+  public updateMedicationExpireDate(medicineId: number, newExpireDate: string): void {
     const currentDonation = this.donation.getValue();
 
+
     const newMedications = currentDonation.medications!.map((medication) => {
-      if (medication.id === medicineId) {
-        return { ...medication, expireDate: newExpireDate }; // Actualiza la fecha de vencimiento
+      if (+medication.medication_id === medicineId) {
+        return { ...medication, expiration_date: newExpireDate };
       }
       return medication;
     });
 
-    const newDonation: DonationInterface = {
+    const newDonation: PostDonationInterface = {
       ...currentDonation,
       medications: newMedications,
     };
 
     this.updateDonation(newDonation);
+    console.log(this.donation.getValue())
   }
 
-  public getDonation(): Observable<DonationInterface> {
+  public getDonation(): Observable<PostDonationInterface> {
     return this.data;
   }
 

@@ -8,19 +8,23 @@
 
     <div *ngIf="donation?.charity_id || donation?.medications?.length" class="treatment-details">
       <app-resumen-donante
-        [donante]="{charityId: donation?.charity_id!, charityName : donation?.charityName!}"
+        [donante]="{charityId: donation?.charity_id!, charityName : donation?.charity_name!}"
         (deleteCharity)="deleteCharity()"
       ></app-resumen-donante>
 
       <ng-container *ngFor="let medicine of donation?.medications">
         <app-card-medicamento-with-date
-          [medicine]="medicine"
-          (medicineDeleted)="onMedicineDeleted(+$event)"
-          (quantityIncreased)="onQuantityIncreased(+$event)"
-          (quantityDecreased)="onQuantityDecreased(+$event)"
-          (dateChanged)="onDateChanged(+$event.id, $event.newDate)"
+          [medicine]="{
+            name: medicine.name || 'Sin nombre',
+            id: medicine.medication_id || 0,
+            quantity: medicine.quantity || 0,
+            expire_date: medicine.expiration_date ? medicine.expiration_date : ''
+          }"
+          (medicineDeleted)="onMedicineDeleted(medicine.medication_id)"
+          (quantityIncreased)="onQuantityIncreased(medicine.medication_id)"
+          (quantityDecreased)="onQuantityDecreased(medicine.medication_id)"
+          (dateChanged)="onDateChanged(medicine.medication_id, $event.newDate)"
         >
-
         </app-card-medicamento-with-date>
       </ng-container>
     </div>
