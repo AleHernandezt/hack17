@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
 import { DeliveryInterface } from '../../../Core/Interfaces/delivery.interface';
 import { CardMedicamentoEntregaComponent } from "../../Medicinas/card-medicamento-entrega/card-medicamento-entrega.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-resumen-entrega',
@@ -16,7 +17,7 @@ export class ResumenEntregaComponent {
 
   delivery : DeliveryInterface | null = null
 
-  constructor(private deliveryService : DeliveryService){}
+  constructor(private deliveryService : DeliveryService, private toastService : ToastrService){}
 
   ngOnInit() {
     this.deliveryService.getDelivery().subscribe(delivery => {
@@ -28,6 +29,7 @@ export class ResumenEntregaComponent {
   onMedicineDeleted(medicineId: number) {
     //eliminación de medicina
     this.deliveryService.removeMedication(medicineId);
+
   }
 
   onQuantityIncreased(medicineId: number) {
@@ -45,7 +47,7 @@ export class ResumenEntregaComponent {
     const id= 0;
     const name = ''
     this.deliveryService.updatePatient(id, name)
-
+    this.toastService.success("eliminado", "alerta")
   }
 
 }
