@@ -17,12 +17,21 @@ export class Table2Component<T extends Record<string, any>> {
   @Input()
   items: T[] = [];
 
+  //arreglo de columnas que se deben mostrar
+
+  @Input()
+  columns: string[] = [];
+
   //se emiten eventos para capturar en el padre
 
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
-
-  get headers(): string[] {
-    return this.items.length > 0 ? Object.keys(this.items[0]) : [];
-  }
 }
+
+
+
+
+//   get headers(): string[] {
+//     return this.items.length > 0 ? Object.keys(this.items[0]) : [];
+//   }
+// }

@@ -1,11 +1,11 @@
 <app-h1 title="Gestion Paciente"></app-h1>
-<app-h1 title="Pacientes"></app-h1>
 <div class="horizontal">
   <app-btn [label]="'Crear Paciente'" [route]="'/crearPaciente'"></app-btn>
   <app-searchbar></app-searchbar>  
 </div>
 <app-table2
   [items]="pacientes"
+  [columns]="['first_name', 'last_name', 'email', 'phone', 'address']"
   (edit)="editPaciente($event)"
   (delete)="deletePaciente($event)"
 >
