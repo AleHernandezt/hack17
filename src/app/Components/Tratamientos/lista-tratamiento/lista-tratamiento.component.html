@@ -6,7 +6,7 @@
 
   <div class="cards-cont">
     <app-card-tratamiento
-      *ngFor="let treatment of treatments"
+      *ngFor="let treatment of filteredTreatments"
       [treatment]="treatment"
       (click)="seleccionarTratamiento(treatment)"
     ></app-card-tratamiento>

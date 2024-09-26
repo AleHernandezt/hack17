@@ -3,7 +3,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-side2',
@@ -34,6 +34,11 @@ export class Side2Component implements OnInit {
                         label: 'Comunidades',
                         icon: 'pi pi-file',
                         command: () => this.navigateToRoute('/gestionComunidad')
+                    },
+                    {
+                      label: 'Tratamientos',
+                      icon: 'pi pi-file',
+                      command: () => this.navigateToRoute('/crearTratamiento')
                     },
                     {
                         label: 'Categoria',
@@ -67,7 +72,7 @@ export class Side2Component implements OnInit {
                     {
                         label: 'Entrada',
                         icon: 'pi pi-mobile',
-                        command: () => this.navigateToRoute('/medicamentosEntrada')
+                        command: () => this.navigateToRoute('/crearDonacion')
                     },
                     {
                         label: 'Salida',
@@ -76,7 +81,7 @@ export class Side2Component implements OnInit {
                             {
                                 label: 'Donacion',
                                 icon: 'pi pi-mobile',
-                                command: () => this.navigateToRoute('/MedicamentosSalidaDonacion')
+                                command: () => this.navigateToRoute('/crearEntrega')
                             },
                             {
                                 label: 'Otros Motivos',

@@ -1,1 +1,44 @@
-<p>resumen-entrega works!</p>
+<aside class="sidebar">
+  <h1 class="title">Generar Entrega</h1>
+
+  <div class="treatment-container">
+    <p *ngIf="!delivery?.patient_id && delivery?.medications" class="empty-message">
+      La Entrega está vacía
+    </p>
+
+    <div *ngIf="delivery?.patient_id || delivery?.medications?.length" class="treatment-details">
+      <app-resumen-paciente
+        [paciente]="{ patientName: delivery?.patient_name! , patientId: delivery!.patient_id.toString()}"
+        (deletePatient)="deletePatient()"
+      ></app-resumen-paciente>
+
+      <ng-container *ngFor="let medicine of delivery!.medications">
+        <app-card-medicamento-entrega
+          [medicine]="{
+            name: medicine ? medicine.name : 'Sin nombre',
+            id: medicine ? medicine.id! : 0,
+            quantity: 0,
+            maxQuantity :  medicine ? medicine.delivery_details.quantity : 0
+          }"
+          (medicineDeleted)="onMedicineDeleted(+$event)"
+          (quantityIncreased)="onQuantityIncreased(+$event)"
+          (quantityDecreased)="onQuantityDecreased(+$event)">
+        </app-card-medicamento-entrega>
+      </ng-container>
+    </div>
+
+    <form class="treatment-form" *ngIf="delivery!.patient_id && delivery!.medications && delivery!.medications.length > 0">
+      <input
+        type="text"
+        placeholder="Observaciones"
+        class="name-input"
+        name="name"
+      />
+      <input
+        type="submit"
+        class="submit-button"
+        value="Confirmar Tratamiento"
+      />
+    </form>
+  </div>
+</aside>

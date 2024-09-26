@@ -21,7 +21,4 @@ export class CardPacientesComponent implements OnChanges {
     }
   }
 
-  constructor() {
-    console.log(this.pacient);
-  }
 }

@@ -2,25 +2,23 @@ import { Component } from '@angular/core';
 import { ListaDonanteComponent } from "../../../Components/Donante/lista-donante/lista-donante.component";
 import { ListaTratamientoComponent } from "../../../Components/Tratamientos/lista-tratamiento/lista-tratamiento.component";
 import { ResumenDonacionComponent } from "../../../Components/Donacion/resumen-donacion/resumen-donacion.component";
-import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
-import { DonationService } from '../../../Core/Services/donation.service';
-import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
-
 import { DeliveryService } from '../../../Core/Services/delivery.service';
 import { PatientInterface } from '../../../Core/Interfaces/patient.interface';
 import { TreatmentInterface } from '../../../Core/Interfaces/treatment.interface';
 import { ListaPacientesComponent } from "../../../Components/Paciente/lista-pacientes/lista-pacientes.component";
 import { DeliveryInterface } from '../../../Core/Interfaces/delivery.interface';
+import { CommonModule } from '@angular/common';
+import { ResumenEntregaComponent } from "../../../Components/Entrega/resumen-entrega/resumen-entrega.component";
 
 
 @Component({
   selector: 'app-form-entrega',
   standalone: true,
-  imports: [ListaDonanteComponent, ListaTratamientoComponent, ResumenDonacionComponent, ListaPacientesComponent],
+  imports: [ListaDonanteComponent, ListaTratamientoComponent, ResumenDonacionComponent, ListaPacientesComponent, CommonModule, ResumenEntregaComponent],
   templateUrl: './form-entrega.component.html',
   styleUrls: ['./form-entrega.component.css'] // Cambiado a styleUrls
 })
-export class FormEntregaComponent {
+export default class FormEntregaComponent {
   delivery: DeliveryInterface | null = null;
 
   constructor(private deliveryService: DeliveryService) {}
@@ -33,10 +31,14 @@ export class FormEntregaComponent {
 
 
   onPacienteSeleccionado(paciente: PatientInterface) {
+
     this.deliveryService.updatePatient(paciente.id!, `${paciente.first_name} ${paciente.last_name}`);
   }
 
   onTratamientoSeleccionado(tratamiento: TreatmentInterface) {
+
     this.deliveryService.updateDelivery({treatment_id : tratamiento.id!});
+    this.deliveryService.addMedicationsFromTreatment(tratamiento);
+
   }
 }

@@ -1,13 +1,14 @@
 
 <div class="cont">
   <app-lista-pacientes
-    *ngIf="!delivery?.patientId"
+    *ngIf="!delivery?.patient_id"
     (pacienteSeleccionado)="onPacienteSeleccionado($event)"
   ></app-lista-pacientes>
   <app-lista-tratamiento
-    *ngIf="donation?.charity_id"
+    *ngIf="delivery?.patient_id"
+    [idPaciente]="delivery!.patient_id"
     (tratamientoSeleccionado)="onTratamientoSeleccionado($event)"
   ></app-lista-tratamiento>
 
-  <app-resumen-donacion></app-resumen-donacion>
+  <app-resumen-entrega></app-resumen-entrega>
 </div>

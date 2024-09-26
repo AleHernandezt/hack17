@@ -105,7 +105,6 @@ export class ListaPacientesComponent {
   @Output() pacienteSeleccionado = new EventEmitter<PatientInterface>();
 
   seleccionarPaciente(paciente: PatientInterface) {
-    console.log(paciente)
     this.pacienteSeleccionado.emit(paciente);
   }
 
