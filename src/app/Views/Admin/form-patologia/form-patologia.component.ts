@@ -12,6 +12,7 @@ import { NgZone } from '@angular/core';
 })
 export default class FormPatologiaComponent {
   patologia = {
+    id: 101,
     name: ''
   };
 
@@ -33,6 +34,7 @@ export default class FormPatologiaComponent {
         } else {
           console.log('Patología creada con éxito');
           this.patologia = {
+            id: this.patologia.id + 1,
             name: ''
           };
         }
