@@ -56,11 +56,14 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7px;
-  background-color: gold;
-  color: black;
+  padding: 15px;
+  background-color: #4274b4;
+  color: #ffffff;
   border: none;
   cursor: pointer;
+  border-radius: 5px;
+  font-size: medium;
+
 
 }
 
@@ -68,11 +71,13 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7px;
-  background-color: red;
+  padding: 15px;
+  background-color: rgb(196, 33, 33);
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 5px;
+  font-size: medium;
 }
 
 .link {

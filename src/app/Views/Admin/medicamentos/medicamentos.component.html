@@ -5,6 +5,7 @@
 </div>
 <app-table2
   [items]="medicamentos"
+  [columns]="['name', 'quantity']"
   (edit)="editMedicamento($event)"
   (delete)="deleteMedicamento($event)"
 >
