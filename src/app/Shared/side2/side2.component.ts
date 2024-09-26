@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { Router } from '@angular/router'; 
+import { AccesoService } from '../../Core/Services/auth.service';
+import { deleteCookie } from '../../Authentication/login/cookies';
 
 @Component({
     selector: 'app-side2',
@@ -16,6 +18,7 @@ export class Side2Component implements OnInit {
     sidebarVisible: boolean = false;
     items: MenuItem[] | undefined;
     logoutItem: MenuItem | undefined;
+    private accesoService = inject(AccesoService);
 
     constructor(private router: Router) { }
     ngOnInit() {
@@ -121,11 +124,17 @@ export class Side2Component implements OnInit {
         this.sidebarVisible = false;
     }
 
-    logout() {
-        // Aquí puedes agregar la lógica para cerrar la sesión
-        // Por ejemplo, puedes eliminar el token de autenticación
-        // o redirigir al usuario a la página de login
-        this.closeSidebar();
-        this.router.navigate(['/login']);
-    }
+    logout(){
+        this.accesoService.logout().subscribe({
+             next: (response) => {
+                  deleteCookie('access_token');
+                  this.closeSidebar();
+                  this.router.navigate(['/']);  
+                  console.log(response);  
+             },
+             error: (error) => {
+                  console.log('Error al cerrar sesión:', error);
+             }
+        });
+   }
 }

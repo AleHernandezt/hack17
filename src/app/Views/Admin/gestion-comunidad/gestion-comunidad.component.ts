@@ -4,10 +4,9 @@ import { TableComponent } from "../../../Shared/table/table.component";
 import { Table2Component } from "../../../Shared/table2/table2.component";
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { SearchbarComponent } from "../../../Shared/searchbar/searchbar.component";
-import { Header } from 'primeng/api';
-import { CommonModule } from '@angular/common';
 import { NgForOf } from '@angular/common';
 import { NgZone } from '@angular/core';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 
 @Component({
@@ -36,14 +35,18 @@ export default class GestionComunidadComponent implements OnInit {
     this.getPost();
   }
   getPost() {
-    fetch('http://localhost:3000/api/community/getAll')
-      .then((response) => response.json())
-      .then((json) => {
-        this.ngZone.run(() => {
-          this.comunidades = json.data.Community;
-        });
-        console.log(json);
+    const { headers } = getCookieHeader();
+    fetch('http://localhost:3000/api/community/getAll', {
+      method: 'GET',
+      headers: headers
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      this.ngZone.run(() => {
+        this.comunidades = json.data.Community;
       });
+      console.log(json);
+    });
   }
 }
 

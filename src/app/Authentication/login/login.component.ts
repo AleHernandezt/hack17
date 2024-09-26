@@ -1,41 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AccesoService } from '../../Core/Services/auth.service';
+import { Login } from '../../Core/Interfaces/admin.interface';
 import { CardComponent } from '../../Shared/card/card.component';
 import { InputPasswordComponent } from '../../Shared/input-password/input-password.component';
-import { InputEmailComponent } from "../../Shared/input-email/input-email.component";
 import { BtnComponent } from "../../Shared/btn/btn.component";
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
-
-import { AuthService } from '../../Core/Services/auth.service';
+import { setCookie } from './cookies';
+import { InputTextComponent } from '../../Shared/input-text/input-text.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CardComponent, InputPasswordComponent, InputEmailComponent, BtnComponent, FormsModule, CardModule],
+  imports: [CardComponent, InputPasswordComponent, InputTextComponent, BtnComponent, FormsModule, CardModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrl: './login.component.css'
 })
 export default class LoginComponent {
-  email: string = '';
-  password: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+     private accesoService = inject(AccesoService);
+     private router = inject(Router);
+     public formBuild = inject(FormBuilder);
 
-  onSubmit() {
-    if (this.email && this.password) {
-      this.authService.login(this.email, this.password)
-        .then((token: any) => {
-          if (token) {
-            console.log('Logged in successfully!');
-            this.router.navigate(['/dashboardAdmin']);
-          } else {
-            console.error('Login failed!');
+     public formLogin: FormGroup = this.formBuild.group({
+          cedula: ['',Validators.required],
+          password: ['',Validators.required]
+     })
+
+     iniciarSesion(){
+          if(this.formLogin.invalid) return;
+
+          const objeto:Login = {
+               cedula: this.formLogin.value.cedula,
+               password: this.formLogin.value.password
           }
-        })
-        .catch((error: any) => {
-          console.error(error);
-        });
-    }
-  }
+
+          this.accesoService.login(objeto).subscribe({
+               next:(data) =>{
+
+                    if(data.data.Admin){
+                      setCookie("access_token", data.data.token);
+                      this.router.navigate(['dashboard'])
+                    }else{
+                      alert("Credenciales son incorrectas")
+                    }
+               },
+               error:(error) =>{
+                    console.log(error.message);
+               }
+          })
+     }
 }
