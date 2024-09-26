@@ -1,45 +1,55 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Comunidad } from '../../../Core/Interfaces/comunidad.interface';
-import { ComunidadService } from '../../../Core/Services/comunidad.service';
-import { CardComponent } from "../../../Shared/card/card.component";
+import { NgZone } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { H1Component } from "../../../Shared/h1/h1.component";
-import { InputTextComponent } from "../../../Shared/input-text/input-text.component";
-import { BtnComponent } from "../../../Shared/btn/btn.component";
 
 @Component({
   selector: 'app-form-comunidad',
   standalone: true,
-  imports: [ReactiveFormsModule, CardComponent, H1Component, BtnComponent, InputTextComponent],
+  imports: [FormsModule, H1Component],
   templateUrl: './form-comunidad.component.html',
   styleUrls: ['./form-comunidad.component.css']
 })
 export default class FormComunidadComponent {
-  form: FormGroup<any> = this.formBuilder.group({}); // Initialize the form group
+  form: any = {
+    nombre: '',
+    region: ''
+  };
 
-  constructor(private formBuilder: FormBuilder, private comunidadService: ComunidadService) { }
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      region: ['', Validators.required]
-    });
-  }
+  constructor(private ngZone: NgZone) { }
 
   createComunidad(): void {
-    if (this.form.valid) {
-      const comunidad: Comunidad = {
-        name: this.form.get('name')?.value,
-        description: this.form.get('description')?.value,
-        id: 0
+    if (this.form.nombre !== '' && this.form.region !== '') {
+      const comunidad = {
+        name: this.form.nombre,
+        description: '',
+        id: 0,
+        region: this.form.region
       };
-      this.comunidadService.createComunidad(comunidad).subscribe((response: any) => {
-        console.log(response); // Log the response from the API
-        // Handle success response
-      }, (error: any) => {
+
+      fetch('http://localhost:3000/api/community/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comunidad)
+      })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json); // Log the response from the API
+        this.ngZone.run(() => {
+          alert('Comunidad creada con éxito');
+          this.form = {
+            nombre: '',
+            region: ''
+          };
+        });
+      })
+      .catch((error) => {
         console.error(error); // Log the error
-        // Handle error response
+        this.ngZone.run(() => {
+          alert('Error al crear la comunidad');
+        });
       });
     }
   }
