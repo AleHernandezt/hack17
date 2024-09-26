@@ -27,8 +27,9 @@ export default class GestionCategoriaComponent implements OnInit {
     fetch('http://localhost:3000/api/category/getAllActive')
       .then((response) => response.json())
       .then((json) => {
+        console.log(json.data); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.categories = [json]; // <--- Cambia esto
+          this.categories = json.data.Category; // <--- Cambia esto
         });
       });
   }

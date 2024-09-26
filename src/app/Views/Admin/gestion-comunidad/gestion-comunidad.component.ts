@@ -19,60 +19,21 @@ import { NgZone } from '@angular/core';
 
 })
 export default class GestionComunidadComponent implements OnInit {
-//       "name": "pedregal",
-//       "region": "comprende la zona geográfica de..."
-//     }),
-//     headers: {
-//       'Content-Type': 'application/json; charset=UTF-8'
-//     }
-//   })
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     return response.json();
-//   })
-//   .then((json) => console.log(json))
-//   .catch((error) => console.error('Error creating post:', error));
-// }
-// comunidades = [
-//   {
-//     id: 1,
-//     nombre: 'Comunidad 1',
-//     region: 'Calle 1, número 2, 28001 Madrid'
-//   },
-//   {
-//     id: 2,
-//     nombre: 'Comunidad 2',
-//     region: 'Avenida 3, número 4, 28002 Madrid'
-//   },
-//   {
-//     id: 3,
-//     nombre: 'Comunidad 3',
-//     region: 'Calle 5, número 6, 28003 Madrid'
-//   }
-// ];
-// editComunidad(comunidad: any) {
-//   alert(comunidad.nombre);
-// }
-// deleteComunidad(comunidad: any) {
-//   alert(comunidad.id);
-// }
-constructor(private ngZone: NgZone) { }
 
-deleteComunidad($event: any) {
-throw new Error('Method not implemented.');
-}
-editComunidad($event: any) {
-throw new Error('Method not implemented.');
-}
-  comunidades: any[] = []; // <--- Add this
-items: any;
+  constructor(private ngZone: NgZone) { }
+
+  deleteComunidad($event: any) {
+    throw new Error('Method not implemented.');
+  }
+  editComunidad($event: any) {
+    throw new Error('Method not implemented.');
+  }
+  comunidades: any[] = [];
+  items: any;
 
   ngOnInit(): void {
     console.log('asdf');
     this.getPost();
-    // this.createPost();
   }
   getPost() {
     fetch('http://localhost:3000/api/community/getAll')
@@ -85,52 +46,4 @@ items: any;
       });
   }
 }
-  // createPost() {
-  //   fetch('http://localhost:3000/api/community/create', {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       "name": "pedregal",
-  //       "region": "comprende la zona geográfica de..."
-  //     }),
-  //     headers: {
-  //       'Content-Type': 'application/json; charset=UTF-8'
-  //     }
-  //   })
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((json) => console.log(json))
-  //   .catch((error) => console.error('Error creating post:', error));
-  // }
-
-
-
-  // comunidades = [
-  //   {
-  //     id: 1,
-  //     nombre: 'Comunidad 1',
-  //     region: 'Calle 1, número 2, 28001 Madrid'
-  //   },
-  //   {
-  //     id: 2,
-  //     nombre: 'Comunidad 2',
-  //     region: 'Avenida 3, número 4, 28002 Madrid'
-  //   },
-  //   {
-  //     id: 3,
-  //     nombre: 'Comunidad 3',
-  //     region: 'Calle 5, número 6, 28003 Madrid'
-  //   }
-  // ];
-
-  // editComunidad(comunidad: any) {
-  //   alert(comunidad.nombre);
-  // }
-
-  // deleteComunidad(comunidad: any) {
-  //   alert(comunidad.id);
-  // }
 
