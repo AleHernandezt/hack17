@@ -5,9 +5,9 @@
   <app-searchbar></app-searchbar>  
 </div>
 
-
 <app-table2
   [items]="categories"
+  [columns]="['name']"
   (edit)="editCategory($event)"
   (delete)="deleteCategory($event)"
 >
