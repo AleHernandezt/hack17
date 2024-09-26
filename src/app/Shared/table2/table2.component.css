@@ -63,7 +63,10 @@ td {
   cursor: pointer;
   border-radius: 5px;
   font-size: medium;
-
+}
+.edit:hover{
+  background-color: #305688;
+  transform: scale(1.05);
 
 }
 
@@ -72,12 +75,17 @@ td {
   align-items: center;
   justify-content: center;
   padding: 15px;
-  background-color: rgb(196, 33, 33);
+  background-color: #c42121;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   font-size: medium;
+}
+
+.delete:hover{
+  background-color: #7c1414;;
+  transform: scale(1.05);
 }
 
 .link {
