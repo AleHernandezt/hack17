@@ -31,9 +31,9 @@ table {
 }
 
 th, td {
-  padding: 18px;
+  padding: 1rem;
   text-align: center;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 th {
@@ -47,8 +47,9 @@ td {
 }
 
 .actions {
-
-  gap: 5px;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .edit{

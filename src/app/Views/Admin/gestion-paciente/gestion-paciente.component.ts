@@ -27,9 +27,13 @@ export default class GestionPacienteComponent implements OnInit {
       .then((response) => response.json())
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
-        this.ngZone.run(() => {
-          this.pacientes = json.Patients; // <--- Cambia esto
-        });
+        if (json && json.data && json.data.Patients && Array.isArray(json.data.Patients)) {
+          this.ngZone.run(() => {
+            this.pacientes = json.data.Patients.slice(0, 10);
+          });
+        } else {
+          console.error('La API no devolvió un arreglo de pacientes');
+        }
       });
   }
 

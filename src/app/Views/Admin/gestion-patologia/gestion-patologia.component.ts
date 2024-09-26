@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { H1Component } from "../../../Shared/h1/h1.component";
 import { BtnComponent } from "../../../Shared/btn/btn.component";
 import { SearchbarComponent } from "../../../Shared/searchbar/searchbar.component";
 import { Table2Component } from "../../../Shared/table2/table2.component";
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-gestion-patologia',
@@ -11,33 +12,35 @@ import { Table2Component } from "../../../Shared/table2/table2.component";
   templateUrl: './gestion-patologia.component.html',
   styleUrl: './gestion-patologia.component.css'
 })
-export default class GestionPatologiaComponent {
-  patologias = [
-    {
-      id: 1,
-      nombre: 'Patología 1',
-      categoria: 'Categoria A',
-      descripcion: 'Descripción de la patología 1. Este es un texto un poco más largo para describir la patología.'
-    },
-    {
-      id: 2,
-      nombre: 'Patología 2',
-      categoria: 'Categoria B',
-      descripcion: 'Descripción de la patología 2. Este es un texto un poco más largo para describir la patología.'
-    },
-    {
-      id: 3,
-      nombre: 'Patología 3',
-      categoria: 'Categoria C',
-      descripcion: 'Descripción de la patología 3. Este es un texto un poco más largo para describir la patología.'
-    }
-  ];
+export default class GestionPatologiaComponent implements OnInit {
+  patologias: any[] = [];
+
+  constructor(private ngZone: NgZone) { }
+
+  ngOnInit(): void {
+    this.getPatologias();
+  }
+
+  getPatologias() {
+    fetch('http://localhost:3000/api/pathology/getAll')
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
+        if (json && json.data && json.data.pathologies && Array.isArray(json.data.pathologies)) {
+          this.ngZone.run(() => {
+            this.patologias = json.data.pathologies.slice(0, 10);
+          });
+        } else {
+          console.error('La API no devolvió un arreglo de patologías');
+        }
+      });
+  }
 
   editPatologia(patologia: any) {
-    alert(patologia.id);
+    alert(patologia);
   }
 
   deletePatologia(patologia: any) {
-    alert(patologia.id);
+    alert(patologia);
   }
 }
