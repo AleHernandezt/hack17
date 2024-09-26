@@ -1,11 +1,11 @@
 <app-h1 title="Comunidades"></app-h1>
 <div class="horizontal">
   <app-btn [label]="'Crear Comunidad'" [route]="'/crearComunidad'"></app-btn>
-  <app-searchbar></app-searchbar>  
+  <app-searchbar></app-searchbar>
 </div>
-<!-- <app-table2
+<app-table2
   [items]="comunidades"
+  [columns]="['name', 'region']"
   (edit)="editComunidad($event)"
   (delete)="deleteComunidad($event)"
->
-</app-table2> -->
+></app-table2>
