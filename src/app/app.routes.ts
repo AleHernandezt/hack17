@@ -41,6 +41,10 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/form-entrega/form-entrega.component')
     },
     {
+        path: 'crearPatologia',
+        loadComponent: () => import('./Views/Admin/form-patologia/form-patologia.component')
+    },
+    {
         path: 'gestionCategoria',
         loadComponent: () => import('./Views/Admin/gestion-categoria/gestion-categoria.component')
     },

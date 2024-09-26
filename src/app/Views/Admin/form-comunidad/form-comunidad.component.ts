@@ -22,8 +22,6 @@ export default class FormComunidadComponent {
     if (this.form.nombre !== '' && this.form.region !== '') {
       const comunidad = {
         name: this.form.nombre,
-        description: '',
-        id: 0,
         region: this.form.region
       };
 
