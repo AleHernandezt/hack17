@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TreatmentInterface } from '../Interfaces/treatment.interface';
 import { MedicationInterface } from '../Interfaces/medication.interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { appSettings } from '../../settings/appsettings';
 import { getCookieHeader } from '../../custom/getCookieHeader';
 

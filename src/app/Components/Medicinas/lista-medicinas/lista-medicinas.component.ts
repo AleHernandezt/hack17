@@ -5,6 +5,7 @@ import { CardMedicamentoComponent } from '../card-medicamento/card-medicamento.c
 import { CommonModule } from '@angular/common';
 import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
 import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-lista-medicinas',
@@ -26,10 +27,12 @@ export class ListaMedicinasComponent implements OnInit {
   }
 
   loadMedications() {
+    const { headers } = getCookieHeader();
     const apiUrl = `${appSettings.apiUrl}medication/getAll`;
     this.http
       .get<{ message: string; data: { Medication: MedicationInterface[] } }>(
-        apiUrl
+        apiUrl,
+        { headers: headers }
       )
       .subscribe(
         (response) => {
