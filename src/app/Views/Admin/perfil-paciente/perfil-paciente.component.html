@@ -1,0 +1,65 @@
+<div class="cont">
+  <div class="main-dataCont">
+    <h2 class="title">Datos Personales</h2>
+    <div class="main-data">
+      <div class="maindata-section-1">
+        <p><span>Nombre:</span> {{ patient?.first_name }} {{ patient?.last_name }}</p>
+        <p><span>Cédula:</span> {{ patient?.id_card }}</p>
+        <p><span>Género:</span> {{ patient?.gender }}</p>
+        <p><span>Correo:</span> {{ patient?.email }}</p>
+      </div>
+
+      <div class="maindata-section-2">
+        <p><span>Teléfono:</span> {{ patient?.phone }}</p>
+        <p><span>Fecha de Nacimiento:</span> {{ patient?.birth_date | date:'shortDate' }}</p>
+
+        <p><span>Patologías:</span>
+          <ng-container *ngIf="pathologiesList.length > 0; else noPathologies">
+            <div class="pathologies-container">
+              <p *ngFor="let pathology of pathologiesList" class="pathology">{{ pathology }}</p>
+            </div>
+          </ng-container>
+          <ng-template #noPathologies>No hay patologías registradas.</ng-template>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="secondary-dataCont">
+    <div class="treatment-data">
+      <h2 class="title">Tratamientos</h2>
+      <div class="treatment-section-1">
+        <div *ngFor="let treatment of patient?.treatments" class="treatment">
+          <p><strong>ID:</strong> {{ treatment.id }}</p>
+          <p><strong>Observación:</strong> {{ treatment.observation }}</p>
+          <p><strong>Estado:</strong> {{ treatment.status }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ treatment.createdAt | date }}</p>
+          <h4>Medicamentos:</h4>
+          <ul>
+            <li *ngFor="let medication of treatment.medications">
+              {{ medication.name }} - Cantidad: {{ medication.medication_quantity.quantity }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="deliveries-data">
+      <h2 class="title">Entregas</h2>
+      <div class="deliveries-section-1">
+        <div *ngFor="let delivery of patient?.deliveries" class="delivery">
+          <h3>Entrega ID: {{ delivery.id }}</h3>
+          <p><strong>Fecha de Cita:</strong> {{ delivery.appointment_date | date }}</p>
+          <p><strong>Fecha de Retiro:</strong> {{ delivery.withdrawal_date | date }}</p>
+          <p><strong>Estado:</strong> {{ delivery.status }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ delivery.createdAt | date }}</p>
+          <h4>Medicamentos Entregados:</h4>
+          <ul>
+            <li *ngFor="let medication of delivery.medications">
+              {{ medication.name }} - Cantidad: {{ medication.delivery_details.quantity }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
