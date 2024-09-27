@@ -215,7 +215,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'perfilPaciente/id:',
+    path: 'perfilPaciente/:id',
     loadComponent: () =>
       import('./Views/Admin/perfil-paciente/perfil-paciente.component'),
     canActivate: [authGuard],
