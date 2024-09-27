@@ -47,7 +47,7 @@ export default class GestionPacienteVulnerableComponent implements OnInit {
       });
   }
 
-  onView(index: number) {
-    this.router.navigate(['/paciente', index]);
+  onView(paciente: any) {
+    this.router.navigate(['/perfilPaciente', paciente.id_card]);
   }
 }

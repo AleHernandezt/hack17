@@ -42,7 +42,7 @@ export default class GestionPacienteComponent implements OnInit {
           Array.isArray(json.data.Patients)
         ) {
           this.ngZone.run(() => {
-            this.pacientes = json.data.Patients.slice(0, 10);
+            this.pacientes = json.data.Patients.slice(-10); // Obtener los últimos 10 elementos
           });
         } else {
           console.error('La API no devolvió un arreglo de pacientes');
