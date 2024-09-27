@@ -29,6 +29,10 @@ export class Table2Component<T extends Record<string, any>> {
   @Input()
   showDelete: boolean = true;
 
+  @Input()
+  showView: boolean = true;
+
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
+  @Output() view = new EventEmitter<T>();
 }

@@ -214,4 +214,10 @@ export const routes: Routes = [
       import('./Views/Doner/form-donante/form-donante.component'),
     canActivate: [authGuard],
   },
+  {
+    path: 'perfilPaciente/id:',
+    loadComponent: () =>
+      import('./Views/Admin/perfil-paciente/perfil-paciente.component'),
+    canActivate: [authGuard],
+  },
 ];

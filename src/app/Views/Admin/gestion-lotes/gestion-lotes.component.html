@@ -1,1 +1,13 @@
-<p>gestion-lotes works!</p>
+<app-h1 title="Lotes de Medicamentos"></app-h1>
+
+<div class="horizontal">
+  <app-searchbar></app-searchbar>  
+</div>
+
+<app-table2
+  [items]="lotes"
+  [columns]="['medication_id', 'expiration_date', 'quantity']"
+  [showEdit]="false"
+  [showDelete]="true"
+>
+</app-table2>

@@ -1,3 +1,4 @@
+// gestion-paciente-vulnerable.component.ts
 import { Component, OnInit, NgZone } from '@angular/core';
 import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { TableComponent } from '../../../Shared/table/table.component';
@@ -6,6 +7,7 @@ import { H1Component } from '../../../Shared/h1/h1.component';
 import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-paciente-vulnerable',
@@ -23,7 +25,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 export default class GestionPacienteVulnerableComponent implements OnInit {
   pacientes: any[] = [];
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
     console.log('holi');
@@ -43,5 +45,9 @@ export default class GestionPacienteVulnerableComponent implements OnInit {
           this.pacientes = json.data.vulnerablePatients.slice(-10); // <--- Muestra los últimos 10 pacientes vulnerables
         });
       });
+  }
+
+  onView(index: number) {
+    this.router.navigate(['/paciente', index]);
   }
 }
