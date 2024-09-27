@@ -34,11 +34,5 @@ export default class GestionPacienteVulnerableComponent implements OnInit {
       });
   }
 
-  editPaciente(paciente: any) {
-    alert(paciente.first_name);
-  }
-
-  deletePaciente(paciente: any) {
-    alert(paciente.first_name);
-  }
+  
 }
