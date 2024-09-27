@@ -18,7 +18,7 @@ export class ListaTratamientoComponent {
     treatments: TreatmentInterface[] = [
     {
       id: 1,
-      patient_id: 101,
+      patient_id: 65692780,
       patientName: "John Doe",
       observation: "Initial check-up",
       status: "supplied",
@@ -31,7 +31,7 @@ export class ListaTratamientoComponent {
     },
     {
       id: 2,
-      patient_id: 102,
+      patient_id: 65692780,
       patientName: "Jane Smith",
       observation: "Follow-up visit",
       status: "partially supplied",
@@ -44,7 +44,7 @@ export class ListaTratamientoComponent {
     },
     {
       id: 3,
-      patient_id: 103,
+      patient_id: 65692780,
       patientName: "Alice Johnson",
       observation: "Routine examination",
       status: "supplied",
@@ -109,7 +109,7 @@ export class ListaTratamientoComponent {
     },
     {
       id: 8,
-      patient_id: 108,
+      patient_id: 65692780,
       patientName: "Fiona Green",
       observation: "Check-up for hypertension",
       status: "partially supplied",
@@ -314,7 +314,6 @@ export class ListaTratamientoComponent {
   }
 
   seleccionarTratamiento(tratamiento: TreatmentInterface) {
-    console.log(tratamiento)
     this.tratamientoSeleccionado.emit(tratamiento);
   }
 
@@ -323,6 +322,7 @@ export class ListaTratamientoComponent {
   }
 
   filterTreatments() {
+    console.log(this.idPaciente)
     if (this.idPaciente !== null) {
       this.filteredTreatments = this.treatments.filter(treatment => treatment.patient_id === this.idPaciente);
     } else {

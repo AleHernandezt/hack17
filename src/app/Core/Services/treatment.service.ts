@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TreatmentInterface } from '../Interfaces/treatment.interface';
+import { MedicationInterface } from '../Interfaces/medication.interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TreatmentService {
+
+  private apiURL = "localhost:3000/api/treatment"
+
   public treatment: BehaviorSubject<TreatmentInterface> = new BehaviorSubject<TreatmentInterface>({
     patient_id: 0,
     patientName : '',
@@ -16,7 +21,7 @@ export class TreatmentService {
 
   private data: Observable<any> = this.treatment.asObservable();
 
-  constructor() {}
+  constructor(private http : HttpClient) {}
 
   public updateTreatment(newTreatment: any): void {
     this.treatment.next(newTreatment);
@@ -32,10 +37,20 @@ export class TreatmentService {
     this.updateTreatment(newTreatment);
   }
 
+  public updateObservation(observation: string): void {
+    const currentTreatment = this.treatment.getValue();
+    const newTreatment = {
+      ...currentTreatment,
+      observation: observation
+    };
+
+    this.updateTreatment(newTreatment);
+  }
+
   public addMedication(id: number, name: string, quantity: number): void {
     const currentTreatment = this.treatment.getValue();
 
-    const existingMedicationIndex = currentTreatment.medications!.findIndex((med : any) => med.id === id);
+    const existingMedicationIndex = currentTreatment.medications!.findIndex((med : MedicationInterface) => med.id === id);
 
     let newMedications;
 
@@ -113,6 +128,23 @@ export class TreatmentService {
   }
 
   public saveTreatment() {
-    // Código para guardar tratamiento en la DB
+    const treatment = this.treatment.getValue();
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    const data = {
+      patient_id: treatment.patient_id,
+      observation: treatment.observation,
+      medications: treatment.medications!.map(med => {
+        return {
+          medication_id: med.id,
+          quantity: med.quantity
+        };
+      })
+    };
+
+    return this.http.post(`${this.apiURL}/create`,data,{headers})
   }
 }

@@ -17,7 +17,8 @@ export class ResumenEntregaComponent {
 
   delivery : DeliveryInterface | null = null
 
-  constructor(private deliveryService : DeliveryService, private toastService : ToastrService){}
+  constructor(private deliveryService : DeliveryService, private toastService : ToastrService){
+  }
 
   ngOnInit() {
     this.deliveryService.getDelivery().subscribe(delivery => {
@@ -35,12 +36,20 @@ export class ResumenEntregaComponent {
   onQuantityIncreased(medicineId: number) {
     //aumento de cantidad
     this.deliveryService.increaseMedicationQuantity(medicineId);
-    console.log(this.delivery?.medications)
   }
 
   onQuantityDecreased(medicineId: number) {
     //disminución de cantidad
     this.deliveryService.decreaseMedicationQuantity(medicineId);
+  }
+
+  onExpireDateChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target && target.value) {
+      this.deliveryService.updateExpirationDate(target.value);
+    }
+
+    console.log(this.delivery)
   }
 
   deletePatient(){
@@ -50,4 +59,7 @@ export class ResumenEntregaComponent {
     this.toastService.success("eliminado", "alerta")
   }
 
+  saveDelivery(){
+    this.deliveryService.saveDelivery();
+  }
 }

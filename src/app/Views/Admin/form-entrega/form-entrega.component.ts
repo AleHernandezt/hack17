@@ -31,8 +31,7 @@ export default class FormEntregaComponent {
 
 
   onPacienteSeleccionado(paciente: PatientInterface) {
-
-    this.deliveryService.updatePatient(paciente.id!, `${paciente.first_name} ${paciente.last_name}`);
+    this.deliveryService.updatePatient(+paciente.id_card!, `${paciente.first_name} ${paciente.last_name}`);
   }
 
   onTratamientoSeleccionado(tratamiento: TreatmentInterface) {

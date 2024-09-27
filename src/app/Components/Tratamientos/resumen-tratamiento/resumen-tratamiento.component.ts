@@ -39,11 +39,29 @@ export class ResumenTratamientoComponent {
     this.treatmentService.decreaseMedicationQuantity(medicineId);
   }
 
+  onObservationChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target && target.value) {
+      this.treatmentService.updateObservation(target.value);
+    }
+  }
+
   deletePatient(){
     const id= 0;
     const name = ''
     this.treatmentService.updatePatient(id, name)
 
+  }
+
+  saveTreatment() {
+    this.treatmentService.saveTreatment().subscribe(
+      response => {
+        console.log('Tratamiento guardado correctamente:', response);
+      },
+      error => {
+        console.error('Error al guardar el tratamiento:', error);
+      }
+    );
   }
 }
 

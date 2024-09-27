@@ -31,7 +31,6 @@ export class CardMedicamentoEntregaComponent {
   }
 
   increaseQuantity() {
-    console.log(this.medicine)
     if (this.medicine.quantity < this.medicine.maxQuantity) {
       this.medicine.quantity++;
       this.quantityIncreased.emit(this.medicine.id);

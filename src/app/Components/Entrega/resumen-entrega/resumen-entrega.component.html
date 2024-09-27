@@ -17,8 +17,8 @@
           [medicine]="{
             name: medicine ? medicine.name : 'Sin nombre',
             id: medicine ? medicine.id! : 0,
-            quantity: 0,
-            maxQuantity :  medicine ? medicine.delivery_details.quantity : 0
+            quantity: medicine.delivery_details.quantity,
+            maxQuantity : medicine.delivery_details.max_quantity!
           }"
           (medicineDeleted)="onMedicineDeleted(+$event)"
           (quantityIncreased)="onQuantityIncreased(+$event)"
@@ -27,18 +27,22 @@
       </ng-container>
     </div>
 
-    <form class="treatment-form" *ngIf="delivery!.patient_id && delivery!.medications && delivery!.medications.length > 0">
+    <div class="treatment-form" *ngIf="delivery!.patient_id && delivery!.medications && delivery!.medications.length > 0">
+      <p>Fecha para vencimiento de entrega</p>
       <input
-        type="text"
-        placeholder="Observaciones"
+        type="date"
+        placeholder="Fecha Vencimiento consulta"
         class="name-input"
         name="name"
+        (change)="onExpireDateChange($event)"
+        [value]="delivery?.expiration_date"
       />
-      <input
+      <button
         type="submit"
         class="submit-button"
         value="Confirmar Tratamiento"
-      />
-    </form>
+        (click)="saveDelivery()"
+      >Confirmar Tratamiento</button>
+    </div>
   </div>
 </aside>

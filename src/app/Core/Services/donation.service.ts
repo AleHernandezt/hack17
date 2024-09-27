@@ -1,12 +1,16 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PostDonationInterface } from '../Interfaces/donation.interface';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DonationService {
+
+  private apiURL = "localhost:3000/api/donation/"
+
   public donation: BehaviorSubject<PostDonationInterface> = new BehaviorSubject<PostDonationInterface>({
     description: "",
     category_id: 0,
@@ -20,7 +24,7 @@ export class DonationService {
 
   private data: Observable<PostDonationInterface> = this.donation.asObservable();
 
-  constructor() {}
+  constructor(private http : HttpClient) {}
 
   public updateDonation(newDonation: PostDonationInterface): void {
     this.donation.next(newDonation);
@@ -33,6 +37,16 @@ export class DonationService {
       ...currentDonation,
       charity_id: id,
       charity_name: name,
+    };
+
+    this.updateDonation(newDonation);
+  }
+
+  public updateDescription(description: string): void {
+    const currentDonation = this.donation.getValue();
+    const newDonation = {
+      ...currentDonation,
+      description: description
     };
 
     this.updateDonation(newDonation);
@@ -136,11 +150,41 @@ export class DonationService {
     console.log(this.donation.getValue())
   }
 
+  public updateCategory(categoryId: number): void {
+    const currentDonation = this.donation.getValue();
+
+    const newDonation: PostDonationInterface = {
+      ...currentDonation,
+      category_id: categoryId
+    };
+    console.log(this.donation.getValue())
+    this.updateDonation(newDonation);
+  }
+
   public getDonation(): Observable<PostDonationInterface> {
     return this.data;
   }
 
   public saveDonation() {
-    // Código para guardar la donación en la base de datos
+    const donation = this.donation.getValue();
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    const data = {
+      description: donation.description,
+      category_id: donation.category_id,
+      charity_id: donation.charity_id,
+      medications: donation.medications.map(med => {
+        return {
+          medication_id: med.medication_id,
+          quantity: med.quantity,
+          expiration_date : med.expiration_date
+        };
+      })
+    };
+
+    return this.http.post(`${this.apiURL}create`,data,{headers})
   }
 }
