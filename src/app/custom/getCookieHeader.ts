@@ -1,11 +1,19 @@
-import { getCookie } from "../Authentication/login/cookies";
+import { getCookie } from '../Authentication/login/cookies';
 
 export const getCookieHeader = () => {
   const token = getCookie('access_token');
   return {
     headers: {
-      'Authorization': `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
-    token
+    headerPost: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    headerPostForm: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
+    },
+    token,
   };
 };
