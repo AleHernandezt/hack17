@@ -1,6 +1,8 @@
 export interface PatientInterface {
   id?: number;
-  community_id: number;
+  community: {
+    name : string
+  };
   first_name: string;
   last_name: string;
   birth_date: Date;
@@ -12,8 +14,10 @@ export interface PatientInterface {
   status: "active" | "inactive" | "deleted";
   pathologies?:
       {
-          id_pathology:number;
-          description:string
+          name:string;
+          pathology_patient: {
+            description : string
+          }
       }[]
 
   createdAt?: Date;

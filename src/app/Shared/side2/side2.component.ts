@@ -29,8 +29,93 @@ export class Side2Component implements OnInit {
         items: [
           {
             label: 'Paciente',
+            icon: 'pi pi-mobile',
+            items: [
+              {
+                label: 'General',
+                icon: 'pi pi-mobile',
+                command: () => this.navigateToRoute('/gestionPaciente'),
+              },
+              {
+                label: 'Tratamiento',
+                icon: 'pi pi-mobile',
+                command: () => this.navigateToRoute('/crearTratamiento'),
+              },
+              {
+                label: 'Vulnerable',
+                icon: 'pi pi-mobile',
+                command: () => this.navigateToRoute('/'),
+              },
+            ],
+          },
+          {
+            label: 'Donante',
             icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/gestionPaciente'),
+            items: [
+              {
+                label: 'General',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/'),
+              },
+              {
+                label: 'Categorias',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/gestionCategoria'),
+              },
+              {
+                label: 'Estadisticas',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/'),
+              },
+              {
+                label: 'Lotes',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/'),
+              },
+            ],
+          },
+          {
+            label: 'Donativo',
+            icon: 'pi pi-file',
+            items: [
+              {
+                label: 'General',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/crearDonacion'),
+              },
+              {
+                label: 'Estadisticas',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/'),
+              },
+            ],
+          },
+          {
+            label: 'Medicamentos',
+            icon: 'pi pi-file',
+            items: [
+              {
+                label: 'General',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/gestionMedicamentos'),
+              },
+              {
+                label: 'Desecho',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/gestionCategoria'),
+              },
+              {
+                label: 'Estadisticas',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/'),
+              },
+            ],
+          },
+
+          {
+            label: 'Patologia',
+            icon: 'pi pi-file',
+            command: () => this.navigateToRoute('/gestionPatologia'),
           },
           {
             label: 'Comunidades',
@@ -38,31 +123,16 @@ export class Side2Component implements OnInit {
             command: () => this.navigateToRoute('/gestionComunidad'),
           },
           {
-            label: 'Tratamientos',
+            label: 'Usuarios',
             icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/crearTratamiento'),
-          },
-          {
-            label: 'Categoria',
-            icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/gestionCategoria'),
-          },
-          {
-            label: 'Patologia',
-            icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/gestionPatologia'),
-          },
-          {
-            label: 'Devoluciones',
-            icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/gestionDevoluciones'),
+            command: () => this.navigateToRoute('/Cesar'),
           },
         ],
       },
 
       {
-        label: 'Medicamentos',
-        icon: 'pi pi-mobile',
+        label: 'Entrega',
+        icon: 'pi pi-file',
         items: [
           {
             label: 'General',
@@ -70,41 +140,14 @@ export class Side2Component implements OnInit {
             command: () => this.navigateToRoute('/gestionMedicamentos'),
           },
           {
-            label: 'Entrada',
-            icon: 'pi pi-mobile',
-            command: () => this.navigateToRoute('/crearDonacion'),
-          },
-          {
-            label: 'Salida',
-            icon: 'pi pi-mobile',
-            items: [
-              {
-                label: 'Donacion',
-                icon: 'pi pi-mobile',
-                command: () => this.navigateToRoute('/crearEntrega'),
-              },
-              {
-                label: 'Otros Motivos',
-                icon: 'pi pi-mobile',
-                command: () => this.navigateToRoute('/MedicamentosSalidaOtro'),
-              },
-            ],
-          },
-        ],
-      },
-      {
-        label: 'Donantes',
-        icon: 'pi pi-mobile',
-        items: [
-          {
-            label: 'Crear',
-            icon: 'pi pi-mobile',
-            command: () => this.navigateToRoute('/CrearDonante'),
+            label: 'Devolucion',
+            icon: 'pi pi-file',
+            command: () => this.navigateToRoute('/gestionDevoluciones'),
           },
           {
             label: 'Estadisticas',
-            icon: 'pi pi-mobile',
-            command: () => this.navigateToRoute('/DashboardDoner'),
+            icon: 'pi pi-file',
+            command: () => this.navigateToRoute('/'),
           },
         ],
       },

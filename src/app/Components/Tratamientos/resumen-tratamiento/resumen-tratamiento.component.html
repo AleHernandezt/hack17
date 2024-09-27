@@ -22,18 +22,19 @@
       </ng-container>
     </div>
 
-    <form class="treatment-form" *ngIf="treatment.patient_id && treatment.medications && treatment.medications.length > 0">
+    <div class="treatment-form" *ngIf="treatment.patient_id && treatment.medications && treatment.medications.length > 0">
       <input
         type="text"
         placeholder="Observaciones"
         class="name-input"
         name="name"
+        (change)="onObservationChange($event)"
       />
-      <input
-        type="submit"
+      <button
+        (click)="saveTreatment()"
         class="submit-button"
         value="Confirmar Tratamiento"
-      />
-    </form>
+      ></button>
+    </div>
   </div>
 </aside>

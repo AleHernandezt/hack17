@@ -16,5 +16,6 @@ export interface MedicationInterface {
   name: string;
   delivery_details: {
     quantity: number;
+    max_quantity?: number
   };
 }

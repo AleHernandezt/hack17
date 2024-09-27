@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 import { ListaDonanteComponent } from '../../../Components/Donante/lista-donante/lista-donante.component';
 import { ListaTratamientoComponent } from '../../../Components/Tratamientos/lista-tratamiento/lista-tratamiento.component';
 import { ResumenDonacionComponent } from '../../../Components/Donacion/resumen-donacion/resumen-donacion.component';
-import { DonationInterface } from '../../../Core/Interfaces/donation.interface';
-import { DonationService } from '../../../Core/Services/donation.service';
-import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
-
 import { DeliveryService } from '../../../Core/Services/delivery.service';
 import { PatientInterface } from '../../../Core/Interfaces/patient.interface';
 import { TreatmentInterface } from '../../../Core/Interfaces/treatment.interface';
@@ -41,7 +37,7 @@ export default class FormEntregaComponent {
 
   onPacienteSeleccionado(paciente: PatientInterface) {
     this.deliveryService.updatePatient(
-      paciente.id!,
+      +paciente.id_card!,
       `${paciente.first_name} ${paciente.last_name}`
     );
   }

@@ -11,10 +11,15 @@
   </div>
 
   <div class="cards-cont">
-    <app-card-medicamento
-      *ngFor="let medicine of (filteredMedicines.length ? filteredMedicines : medications)"
-      [medicine]="medicine"
-      (click)="seleccionarMedicina(medicine)"
-    ></app-card-medicamento>
+    <ng-container *ngIf="filteredMedicines.length > 0; else noMedicines">
+      <app-card-medicamento
+        *ngFor="let medicine of filteredMedicines"
+        [medicine]="medicine"
+        (click)="seleccionarMedicina(medicine)"
+      ></app-card-medicamento>
+    </ng-container>
+    <ng-template #noMedicines>
+      <p>No se encontraron medicinas. Intenta otra búsqueda.</p>
+    </ng-template>
   </div>
 </main>

@@ -48,7 +48,7 @@
   gap: 10px;
 }
 
-.name-input {
+.name-input, select {
   background-color: white;
   border: 1px solid #ccc;
   padding: 10px;

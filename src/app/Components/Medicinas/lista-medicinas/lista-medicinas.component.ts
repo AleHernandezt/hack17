@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { SearchBarInputComponent } from "../../../Shared/search-bar-input/search-bar-input.component";
 import { CardMedicamentoComponent } from "../card-medicamento/card-medicamento.component";
 import { CommonModule } from '@angular/common';
@@ -9,43 +10,46 @@ import { MedicationInterface } from '../../../Core/Interfaces/medication.interfa
   standalone: true,
   imports: [SearchBarInputComponent, CardMedicamentoComponent, CommonModule],
   templateUrl: './lista-medicinas.component.html',
-  styleUrl: './lista-medicinas.component.css'
+  styleUrls: ['./lista-medicinas.component.css']
 })
-export class ListaMedicinasComponent {
+export class ListaMedicinasComponent implements OnInit {
 
-
-  medications = [
-    { id: '1', name: 'Aspirin'},
-    { id: '2', name: 'Ibuprofen'},
-    { id: '3', name: 'acetamino'},
-    { id: '4', name: 'atamel'},
-    { id: '5', name: 'cerelac'},
-    { id: '6', name: 'alegra'},
-    { id: '7', name: 'cetirizina',},
-    { id: '8', name: 'bisoprolol'}
-  ]
-
-  filteredMedicines : any = []
-
+  medications: MedicationInterface[] = [];
+  filteredMedicines: MedicationInterface[] = [];
 
   @Output() medicinaSeleccionada = new EventEmitter<MedicationInterface>();
 
-  seleccionarMedicina(Medicina: MedicationInterface) {
-    this.medicinaSeleccionada.emit(Medicina);
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.loadMedications();
+  }
+
+  loadMedications() {
+    const apiUrl = 'http://localhost:3000/api/medication/getAll';
+    this.http.get<{ message: string; data: { Medication: MedicationInterface[] } }>(apiUrl).subscribe(
+      (response) => {
+
+        this.medications = response.data.Medication;
+        this.filteredMedicines = this.medications;
+      },
+      error => {
+        console.error('Error al obtener medicamentos:', error);
+      }
+    );
+  }
+
+  seleccionarMedicina(medicina: MedicationInterface) {
+    this.medicinaSeleccionada.emit(medicina);
   }
 
   realizarBusqueda(busqueda: string) {
     this.filteredMedicines = this.medications.filter(medicine =>
-      medicine.name.toLowerCase().includes(busqueda.toLowerCase())
+      medicine.name!.toLowerCase().includes(busqueda.toLowerCase())
     );
   }
 
   limpiarBusqueda() {
-    this.filteredMedicines = [];
+    this.filteredMedicines = this.medications; // Restaurar a todos los medicamentos
   }
-
-
-
-
-
 }

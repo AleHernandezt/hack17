@@ -6,6 +6,11 @@
       La donacion está vacía
     </p>
 
+    <select name="category" id="category-select" (change)="onCategorySelected($event)">
+      <option value="">Seleccione una Categoría</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+
     <div *ngIf="donation?.charity_id || donation?.medications?.length" class="treatment-details">
       <app-resumen-donante
         [donante]="{charityId: donation?.charity_id!, charityName : donation?.charity_name!}"
@@ -29,15 +34,16 @@
       </ng-container>
     </div>
 
-    <form class="treatment-form" *ngIf="donation?.charity_id && donation?.medications && donation?.medications?.length" (ngSubmit)="submitForm($event, descriptionInput)">
+    <div class="treatment-form" *ngIf="donation?.charity_id && donation?.medications && donation?.medications?.length" >
       <input
         type="text"
         placeholder="Descripción"
         class="name-input"
         name="name"
         #descriptionInput
+        (change)="onDesacriptionChange($event)"
       />
-      <button type="submit" class="submit-button">Confirmar Tratamiento</button>
-    </form>
+      <button (click)="saveDonation()"  class="submit-button">Confirmar Donacion</button>
+    </div>
   </div>
 </aside>
