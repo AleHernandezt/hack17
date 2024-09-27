@@ -21,7 +21,7 @@
 input[type="text"], 
 input[type="number"], 
 input[type="email"],
-input[type="date"],
+input[type="password"],
 select {
   width: 100%;
   padding: 1rem;
@@ -42,6 +42,46 @@ select {
 
 .id-card-input input {
   flex-grow: 1;
+}
+
+.user-type-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.user-type-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-type-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.user-type-card.selected {
+  border-color: #1759b1;
+  background-color: #e6f0ff;
+}
+
+.user-type-card i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #1759b1;
+}
+
+.user-type-card span {
+  font-size: medium;
+  text-align: center;
 }
 
 button[type="button"] {
@@ -71,4 +111,5 @@ button[type="button"]:hover {
     width: 90%;
     padding: 15px;
   }
+
 }

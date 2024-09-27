@@ -1,1 +1,12 @@
-<p>gestion-desecho works!</p>
+<app-h1 title="Desecho de Medicamentos"></app-h1>
+<div class="horizontal">
+  <app-searchbar></app-searchbar>
+</div>
+<app-table2
+  [items]="desechos"
+  [columns]="['nombre', 'cantidadDesechada', 'razon']"
+  [showDelete]="false"
+  [showEdit]="false"
+  [showView]="false"
+
+></app-table2>
