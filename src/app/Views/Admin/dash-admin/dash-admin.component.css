@@ -1,0 +1,31 @@
+h1{
+  color: dodgerblue;
+  font-size: xx-large;
+  text-align: center;
+}
+
+.cont{
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 120px;
+}
+
+.grafica{
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center ;
+  align-items: center;
+  background-color: dodgerblue;
+
+}
+
+.level1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
