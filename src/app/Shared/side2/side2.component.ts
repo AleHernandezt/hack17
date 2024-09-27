@@ -66,6 +66,12 @@ export class Side2Component implements OnInit {
                                 icon: 'pi pi-file',
                                 command: () => this.navigateToRoute('/')
 
+                            },
+                            {
+                                label:'Lotes',
+                                icon: 'pi pi-file',
+                                command: () => this.navigateToRoute('/')
+
                             }
                         ]
                     },
@@ -77,6 +83,30 @@ export class Side2Component implements OnInit {
                                 label:'General',
                                 icon: 'pi pi-file',
                                 command: () => this.navigateToRoute('/crearDonacion')
+
+                            },
+                            {
+                                label:'Estadisticas',
+                                icon: 'pi pi-file',
+                                command: () => this.navigateToRoute('/')
+
+                            }
+                        ]
+                    },
+                    {
+                        label: 'Medicamentos',
+                        icon: 'pi pi-file',
+                        items: [
+                            {
+                                label:'General',
+                                icon: 'pi pi-file',
+                                command: () => this.navigateToRoute('/gestionMedicamentos')
+
+                            },
+                            {
+                                label:'Desecho',
+                                icon: 'pi pi-file',
+                                command: () => this.navigateToRoute('/gestionCategoria')
 
                             },
                             {
@@ -159,4 +189,4 @@ export class Side2Component implements OnInit {
         this.closeSidebar();
         this.router.navigate(['/login']);
     }
-}
+  }
