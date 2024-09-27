@@ -18,6 +18,7 @@ import { ResumenEntregaComponent } from '../../../Components/Entrega/resumen-ent
     ListaTratamientoComponent,
     ListaPacientesComponent,
     CommonModule,
+    ResumenEntregaComponent,
   ],
   templateUrl: './form-entrega.component.html',
   styleUrls: ['./form-entrega.component.css'], // Cambiado a styleUrls

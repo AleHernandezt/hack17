@@ -53,28 +53,29 @@ import { Component } from '@angular/core';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { FormsModule } from '@angular/forms';
 import { NgZone } from '@angular/core';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-form-patologia',
   standalone: true,
   imports: [H1Component, FormsModule],
   templateUrl: './form-patologia.component.html',
-  styleUrls: ['./form-patologia.component.css']
+  styleUrls: ['./form-patologia.component.css'],
 })
 export default class FormPatologiaComponent {
   patologia = {
-    name: ''
+    name: '',
   };
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone) {}
 
   createPatologia() {
-    fetch('http://localhost:3000/api/pathology/create', {
+    const { headerPost } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}pathology/create`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.patologia)
+      headers: headerPost,
+      body: JSON.stringify(this.patologia),
     })
       .then((response) => response.json())
       .then((json) => {
@@ -84,7 +85,7 @@ export default class FormPatologiaComponent {
         } else {
           console.log('Patología creada con éxito');
           this.patologia = {
-            name: ''
+            name: '',
           };
         }
       })

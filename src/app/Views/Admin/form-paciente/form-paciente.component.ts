@@ -1,16 +1,24 @@
 import { Component, NgZone } from '@angular/core';
 import { H1Component } from '../../../Shared/h1/h1.component';
-import { CardComponent } from "../../../Shared/card/card.component";
-import { InputTextComponent } from "../../../Shared/input-text/input-text.component";
-import { BtnComponent } from "../../../Shared/btn/btn.component";
+import { CardComponent } from '../../../Shared/card/card.component';
+import { InputTextComponent } from '../../../Shared/input-text/input-text.component';
+import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { FormsModule } from '@angular/forms';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-form-paciente',
   standalone: true,
-  imports: [H1Component, CardComponent, InputTextComponent, BtnComponent, FormsModule],
+  imports: [
+    H1Component,
+    CardComponent,
+    InputTextComponent,
+    BtnComponent,
+    FormsModule,
+  ],
   templateUrl: './form-paciente.component.html',
-  styleUrls: ['./form-paciente.component.css']
+  styleUrls: ['./form-paciente.component.css'],
 })
 export default class FormPacienteComponent {
   form: any = {
@@ -24,10 +32,10 @@ export default class FormPacienteComponent {
     gender: '',
     vulnerability_level: '',
     economic_status: '',
-    pathology_description: ''
+    pathology_description: '',
   };
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone) {}
 
   createPaciente(): void {
     const paciente = {
@@ -45,43 +53,42 @@ export default class FormPacienteComponent {
       pathologies: [
         {
           id_pathology: 1,
-          description: this.form.pathology_description
-        }
-      ]
+          description: this.form.pathology_description,
+        },
+      ],
     };
 
-    fetch('http://localhost:3000/api/patient/create', {
+    const { headerPost } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}patient/create`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(paciente)
+      headers: headerPost,
+      body: JSON.stringify(paciente),
     })
-    .then((response) => response.json())
-    .then((json) => {
-      console.log(json); // Log the response from the API
-      this.ngZone.run(() => {
-        alert('Paciente creado con éxito');
-        this.form = {
-          first_name: '',
-          last_name: '',
-          birth_date: '',
-          email: '',
-          id_card: '',
-          phone: '',
-          address: '',
-          gender: '',
-          vulnerability_level: '',
-          economic_status: '',
-          pathology_description: ''
-        };
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json); // Log the response from the API
+        this.ngZone.run(() => {
+          alert('Paciente creado con éxito');
+          this.form = {
+            first_name: '',
+            last_name: '',
+            birth_date: '',
+            email: '',
+            id_card: '',
+            phone: '',
+            address: '',
+            gender: '',
+            vulnerability_level: '',
+            economic_status: '',
+            pathology_description: '',
+          };
+        });
+      })
+      .catch((error) => {
+        console.error(error); // Log the error
+        this.ngZone.run(() => {
+          alert('Error al crear el paciente');
+        });
       });
-    })
-    .catch((error) => {
-      console.error(error); // Log the error
-      this.ngZone.run(() => {
-        alert('Error al crear el paciente');
-      });
-    });
   }
 }

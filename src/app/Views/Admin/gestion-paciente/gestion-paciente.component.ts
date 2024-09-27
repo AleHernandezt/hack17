@@ -26,7 +26,7 @@ export default class GestionPacienteComponent implements OnInit {
 
   getPost() {
     const { headers } = getCookieHeader();
-    fetch(`${appSettings.apiUrl}patient/getAll/`, {
+    fetch(`${appSettings.apiUrl}patient/getAll`, {
       method: 'GET',
       headers: headers,
     })
