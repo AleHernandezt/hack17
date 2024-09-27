@@ -25,7 +25,10 @@ export class Table2Component<T extends Record<string, any>> {
   //se emiten eventos para capturar en el padre
 
   @Input()
-  showActions: boolean = true;
+  showEdit: boolean = true;
+
+  @Input()
+  showDelete: boolean = true;
 
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();

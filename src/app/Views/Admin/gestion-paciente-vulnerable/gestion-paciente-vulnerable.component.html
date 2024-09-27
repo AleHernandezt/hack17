@@ -1,12 +1,14 @@
 <app-h1 title="Pacientes Vulnerables"></app-h1>
 
 <div class="horizontal">
+  <app-btn [label]="'Crear Paciente'" [route]="'/crearPaciente'"></app-btn>
   <app-searchbar></app-searchbar>  
 </div>
 
 <app-table2
   [items]="pacientes"
   [columns]="['first_name', 'last_name', 'economic_status', 'vulnerability_level', 'phone', 'address']"
-  [showActions]="false"
+  [showEdit]="false"
+  [showDelete]="false"
 >
 </app-table2>
