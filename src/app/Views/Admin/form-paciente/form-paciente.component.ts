@@ -6,6 +6,8 @@ import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { FormsModule } from '@angular/forms';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-form-paciente',
@@ -16,6 +18,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
     InputTextComponent,
     BtnComponent,
     FormsModule,
+    CommonModule
   ],
   templateUrl: './form-paciente.component.html',
   styleUrls: ['./form-paciente.component.css'],
@@ -33,9 +36,38 @@ export default class FormPacienteComponent {
     gender: '',
     economic_status: '',
     pathology_description: '',
+    vulnerability_level: '',
   };
 
+  pathologies: any[] = [];
+
   constructor(private ngZone: NgZone) {}
+
+  ngOnInit(): void {
+    this.getPathologies();
+  }
+
+  getPathologies(): void {
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}pathology/getAll`, {
+      method: 'GET',
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json); // Imprime los datos en la consola
+        this.pathologies = json.data.pathologies.slice(0, 5).map((pathology: { id: any; name: any; }) => ({
+          id: pathology.id,
+          name: pathology.name,
+          selected: false,
+        }));
+      });
+  }
+
+  updatePathologies(): void {
+    const selectedPathologies = this.pathologies.filter((pathology) => pathology.selected);
+    console.log(selectedPathologies);
+  }
 
   createPaciente(): void {
     if (
@@ -65,12 +97,11 @@ export default class FormPacienteComponent {
       gender: this.form.gender,
       economic_status: this.form.economic_status,
       community_id: 1,
-      pathologies: [
-        {
-          id_pathology: 1,
-          description: this.form.pathology_description,
-        },
-      ],
+      pathologies: this.pathologies.filter((pathology) => pathology.selected).map((pathology) => ({
+        id_pathology: pathology.id,
+        description: this.form.pathology_description,
+      })),
+      vulnerability_level: this.form.vulnerability_level,
     };
 
     const { headerPost } = getCookieHeader();
@@ -96,6 +127,7 @@ export default class FormPacienteComponent {
             gender: '',
             economic_status: '',
             pathology_description: '',
+            vulnerability_level: '',
           };
         });
       })
