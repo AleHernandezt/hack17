@@ -71,7 +71,7 @@ export class DonationService {
 
   public removeMedication(medicineId: number): void {
     const currentDonation = this.donation.getValue();
-    const newMedications = currentDonation.medications!.filter((med) => +med.medication_id !== medicineId);
+    const newMedications = currentDonation.medications!.filter((med) => med.medication_id !== medicineId);
 
     const newDonation: PostDonationInterface = {
       ...currentDonation,
@@ -84,7 +84,7 @@ export class DonationService {
   public increaseMedicationQuantity(medicineId: number): void {
     const currentDonation = this.donation.getValue();
     const newMedications = currentDonation.medications!.map((medication) => {
-      if (+medication.medication_id === medicineId) {
+      if (medication.medication_id === medicineId) {
         return { ...medication, quantity: medication.quantity + 1 };
       }
       return medication;
@@ -102,7 +102,7 @@ export class DonationService {
     const currentDonation = this.donation.getValue();
 
     const newMedications = currentDonation.medications!.map((medication) => {
-      if (+medication.medication_id === medicineId) {
+      if (medication.medication_id === medicineId) {
         return { ...medication, quantity: Math.max(medication.quantity - 1, 0) };
       }
       return medication;

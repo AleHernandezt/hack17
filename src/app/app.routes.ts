@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './custom/Token.guard';
+import { authGuard } from './custom/token.guard';
 
 export const routes: Routes = [
   {
@@ -55,6 +55,37 @@ export const routes: Routes = [
     path: 'gestionCategoria',
     loadComponent: () =>
       import('./Views/Admin/gestion-categoria/gestion-categoria.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'gestionComunidad',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-comunidad/gestion-comunidad.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'crearMedicina',
+    loadComponent: () =>
+      import('./Views/Admin/form-medicina/form-medicina.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'crearEntrega',
+    loadComponent: () =>
+      import('./Views/Admin/form-entrega/form-entrega.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'crearPatologia',
+    loadComponent: () =>
+      import('./Views/Admin/form-patologia/form-patologia.component'),
+    canActivate: [authGuard],
+  },
+
+  {
+    path: 'crearMedicamento',
+    loadComponent: () =>
+      import('./Views/Admin/form-medicamentos/form-medicamentos.component'),
     canActivate: [authGuard],
   },
   {

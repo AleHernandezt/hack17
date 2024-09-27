@@ -17,7 +17,7 @@
   display: block;
 }
 
-input[type="text"], input[type="number"], input[type="date"], input[type="email"] {
+input[type="text"], input[type="number"] {
   width: 100%;
   padding: 1rem;
   border: 1px solid #ccc;
@@ -39,3 +39,14 @@ button[type="button"] {
 button[type="button"]:hover {
   background-color: rgb(11, 58, 119);
 }
+
+/* No hay textarea en el HTML de medicamentos, pero si lo necesitas, aquí está el estilo */
+/* textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 100px;
+  font-family: sans-serif;
+  font-size: medium;
+} */

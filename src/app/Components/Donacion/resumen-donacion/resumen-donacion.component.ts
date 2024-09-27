@@ -8,6 +8,7 @@ import { ResumenDonanteComponent } from "../../Donante/resumen-donante/resumen-d
 import { PostDonationInterface } from '../../../Core/Interfaces/donation.interface';
 import { Subscription } from 'rxjs';
 import { CardMedicamentoWithDateComponent } from "../../Medicinas/card-medicamento-with-date/card-medicamento-with-date.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-resumen-donacion',
@@ -20,7 +21,7 @@ export class ResumenDonacionComponent {
   donation: PostDonationInterface | null = null;
   private donationSubscription: Subscription | null = null;
 
-  constructor(private donationService: DonationService) {}
+  constructor(private donationService: DonationService, private notificationService : ToastrService) {}
 
   ngOnInit() {
     this.donationSubscription = this.donationService.getDonation().subscribe(data => {
@@ -37,6 +38,7 @@ export class ResumenDonacionComponent {
 
   onMedicineDeleted(medicineId: number) {
     // Eliminación de medicina
+    this.notificationService.success("lol")
     this.donationService.removeMedication(medicineId);
   }
 

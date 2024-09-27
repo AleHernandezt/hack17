@@ -11,6 +11,8 @@ import { PatientInterface } from '../../../Core/Interfaces/patient.interface';
 import { TreatmentInterface } from '../../../Core/Interfaces/treatment.interface';
 import { ListaPacientesComponent } from '../../../Components/Paciente/lista-pacientes/lista-pacientes.component';
 import { DeliveryInterface } from '../../../Core/Interfaces/delivery.interface';
+import { CommonModule } from '@angular/common';
+import { ResumenEntregaComponent } from '../../../Components/Entrega/resumen-entrega/resumen-entrega.component';
 
 @Component({
   selector: 'app-form-entrega',
@@ -20,11 +22,13 @@ import { DeliveryInterface } from '../../../Core/Interfaces/delivery.interface';
     ListaTratamientoComponent,
     ResumenDonacionComponent,
     ListaPacientesComponent,
+    CommonModule,
+    ResumenEntregaComponent,
   ],
   templateUrl: './form-entrega.component.html',
   styleUrls: ['./form-entrega.component.css'], // Cambiado a styleUrls
 })
-export class FormEntregaComponent {
+export default class FormEntregaComponent {
   delivery: DeliveryInterface | null = null;
 
   constructor(private deliveryService: DeliveryService) {}
@@ -44,5 +48,6 @@ export class FormEntregaComponent {
 
   onTratamientoSeleccionado(tratamiento: TreatmentInterface) {
     this.deliveryService.updateDelivery({ treatment_id: tratamiento.id! });
+    this.deliveryService.addMedicationsFromTreatment(tratamiento);
   }
 }
