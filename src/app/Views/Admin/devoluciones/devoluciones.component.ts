@@ -1,32 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { H1Component } from "../../../Shared/h1/h1.component";
-import { BtnComponent } from "../../../Shared/btn/btn.component";
-import { SearchbarComponent } from "../../../Shared/searchbar/searchbar.component";
-import { Table2Component } from "../../../Shared/table2/table2.component";
+import { H1Component } from '../../../Shared/h1/h1.component';
+import { BtnComponent } from '../../../Shared/btn/btn.component';
+import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
+import { Table2Component } from '../../../Shared/table2/table2.component';
 import { NgZone } from '@angular/core';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-devoluciones',
   standalone: true,
   imports: [H1Component, BtnComponent, SearchbarComponent, Table2Component],
   templateUrl: './devoluciones.component.html',
-  styleUrl: './devoluciones.component.css'
+  styleUrl: './devoluciones.component.css',
 })
 export default class DevolucionesComponent implements OnInit {
   devoluciones: any[] = [];
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone) {}
 
   ngOnInit(): void {
     this.getDevoluciones();
   }
 
   getDevoluciones() {
-    fetch('http://localhost:3000/api/delivery/getDeleted')
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}delivery/getDeleted`, {
+      method: 'GET',
+      headers: headers,
+    })
       .then((response) => response.json())
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
-        if (json && json.data && json.data.Delivery && Array.isArray(json.data.Delivery)) {
+        if (
+          json &&
+          json.data &&
+          json.data.Delivery &&
+          Array.isArray(json.data.Delivery)
+        ) {
           this.ngZone.run(() => {
             this.devoluciones = json.data.Delivery;
           });

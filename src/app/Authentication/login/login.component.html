@@ -1,8 +1,12 @@
-<form class="container" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+<form class="container" [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
     <app-card [title]="'Inicia Sesión'">
-        <p>Inicia Sesión con tu email y contraseña.</p>
-        <app-input-email [(ngModel)]="email" name="email" required email></app-input-email>
-        <app-input-password [(ngModel)]="password" name="password" required></app-input-password>
-        <app-btn label="Iniciar Sesión" [disabled]="!loginForm.valid"></app-btn>
+        <p>Inicia sesión con tu cédula y contraseña</p>
+        <div class="form">
+            <input placeholder="Ingrese su cédula" class="inputForm" formControlName="cedula" required />
+    
+            <input placeholder="Ingrese su contreseña" class="inputForm" formControlName="password" type="password" required />
+        </div>
+
+        <app-btn type="submit" label="Iniciar Sesión"></app-btn>
     </app-card>
 </form>

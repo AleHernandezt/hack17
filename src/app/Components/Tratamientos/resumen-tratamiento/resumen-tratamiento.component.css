@@ -23,7 +23,6 @@
 .treatment-details {
   margin-top: 20px;
   display: flex;
-  align-items: start;
   justify-content: center;
   gap: 10px;
   flex-direction: column;

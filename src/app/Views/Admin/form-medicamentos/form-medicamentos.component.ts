@@ -1,32 +1,33 @@
-// 
+//
 
 import { Component } from '@angular/core';
 import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { H1Component } from "../../../Shared/h1/h1.component";
+import { H1Component } from '../../../Shared/h1/h1.component';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-form-medicamentos',
   standalone: true,
   imports: [FormsModule, H1Component],
   templateUrl: './form-medicamentos.component.html',
-  styleUrls: ['./form-medicamentos.component.css']
+  styleUrls: ['./form-medicamentos.component.css'],
 })
 export default class FormMedicamentosComponent {
   medicamento = {
     name: '',
-    quantity: 0
+    quantity: 0,
   };
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone) {}
 
   createMedicamento() {
-    fetch('http://localhost:3000/api/medication/create', {
+    const { headerPost } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}medication/create`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.medicamento)
+      headers: headerPost,
+      body: JSON.stringify(this.medicamento),
     })
       .then((response) => response.json())
       .then((json) => {
@@ -37,7 +38,7 @@ export default class FormMedicamentosComponent {
           console.log('Medicamento creado con éxito');
           this.medicamento = {
             name: '',
-            quantity: 0
+            quantity: 0,
           };
         }
       })

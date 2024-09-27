@@ -1,19 +1,20 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CardPacientesComponent } from "../card-pacientes/card-pacientes.component";
+import { CardPacientesComponent } from '../card-pacientes/card-pacientes.component';
 import { CommonModule } from '@angular/common';
-import { SearchBarInputComponent } from "../../../Shared/search-bar-input/search-bar-input.component";
+import { SearchBarInputComponent } from '../../../Shared/search-bar-input/search-bar-input.component';
 import { PatientInterface } from '../../../Core/Interfaces/patient.interface';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-lista-pacientes',
   standalone: true,
   imports: [CardPacientesComponent, CommonModule, SearchBarInputComponent],
   templateUrl: './lista-pacientes.component.html',
-  styleUrls: ['./lista-pacientes.component.css']
+  styleUrls: ['./lista-pacientes.component.css'],
 })
 export class ListaPacientesComponent implements OnInit {
-
   pacientes: PatientInterface[] = [];
   filteredPatients: PatientInterface[] = [];
 
@@ -26,17 +27,23 @@ export class ListaPacientesComponent implements OnInit {
   }
 
   loadPatients() {
-    const apiUrl = 'http://localhost:3000/api/patient/getAll';
-    this.http.get<{ message: string; data: {Patients : PatientInterface[]} }>(apiUrl).subscribe(
-      (response) => {
-        console.log(response)
-        this.pacientes = response.data.Patients;
-        this.filteredPatients = this.pacientes;
-      },
-      error => {
-        console.error('Error al obtener pacientes:', error);
-      }
-    );
+    const apiUrl = `${appSettings.apiUrl}patient/getAll`;
+    const { headerPost } = getCookieHeader();
+    this.http
+      .get<{ message: string; data: { Patients: PatientInterface[] } }>(
+        apiUrl,
+        { headers: headerPost }
+      )
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.pacientes = response.data.Patients;
+          this.filteredPatients = this.pacientes;
+        },
+        (error) => {
+          console.error('Error al obtener pacientes:', error);
+        }
+      );
   }
 
   seleccionarPaciente(paciente: PatientInterface) {
@@ -44,7 +51,7 @@ export class ListaPacientesComponent implements OnInit {
   }
 
   realizarBusqueda(busqueda: string) {
-    this.filteredPatients = this.pacientes.filter(paciente =>
+    this.filteredPatients = this.pacientes.filter((paciente) =>
       paciente.id_card.toLowerCase().includes(busqueda.toLowerCase())
     );
   }

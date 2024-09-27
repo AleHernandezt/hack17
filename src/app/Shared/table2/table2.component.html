@@ -6,15 +6,15 @@
           <thead>
             <tr>
               <th *ngFor="let column of columns">{{ column | titlecase }}</th>
-              <th class="actions">Acciones</th>
+              <th class="actions" *ngIf="showEdit || showDelete">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of items">
               <td *ngFor="let column of columns">{{ item[column] }}</td>
-              <td class="actions">
-                <button class="edit" (click)="edit.emit(item)">Editar</button>
-                <button class="delete" (click)="delete.emit(item)">Eliminar</button>
+              <td class="actions" *ngIf="showEdit || showDelete">
+                <button class="edit" *ngIf="showEdit" (click)="edit.emit(item)">Editar</button>
+                <button class="delete" *ngIf="showDelete" (click)="delete.emit(item)">Eliminar</button>
               </td>
             </tr>
           </tbody>

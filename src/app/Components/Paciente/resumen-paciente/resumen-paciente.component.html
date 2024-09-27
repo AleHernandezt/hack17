@@ -1,10 +1,11 @@
-<div class="patient-detail">
-  <div class="patient-data">
-    <p>Nombre: {{ paciente.patientName }}</p>
-    <p>Cedula: {{ paciente.patientId }}</p>
+<header class="patient-header">
+  <div class="patient-info">
+    <h1 class="patient-name">Paciente: {{ paciente.patientName }}</h1>
+    <p class="patient-id">Cédula: {{ paciente.patientId }}</p>
   </div>
-
-  <button type="button" class="delete-button" (click)="delete()">
-    &times;
-  </button>
-</div>
+  <div class="header-actions">
+    <button type="button" class="delete-button" (click)="delete()" aria-label="Eliminar paciente">
+      &times;
+    </button>
+  </div>
+</header>

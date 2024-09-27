@@ -1,0 +1,14 @@
+<app-h1 title="Donantes"></app-h1>
+
+<div class="horizontal">
+  <app-btn [label]="'Crear Donante'" [route]="'/crearDonante'"></app-btn>
+  <app-searchbar></app-searchbar>  
+</div>
+
+<app-table2
+  [items]="donantes"
+  [columns]="['razon_social', 'description', 'status', 'identification', 'indentification_type', 'is_fundation']"
+  (edit)="editDonante($event)"
+  (delete)="deleteDonante($event)"
+>
+</app-table2>

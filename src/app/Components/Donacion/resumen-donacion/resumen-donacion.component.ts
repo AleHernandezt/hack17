@@ -1,53 +1,69 @@
 import { Component } from '@angular/core';
 import { DonationService } from '../../../Core/Services/donation.service';
-import { ResumenTratamientoComponent } from "../../Tratamientos/resumen-tratamiento/resumen-tratamiento.component";
-import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resumen-medicina.component";
-import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
+import { ResumenTratamientoComponent } from '../../Tratamientos/resumen-tratamiento/resumen-tratamiento.component';
+import { ResumenMedicinaComponent } from '../../Medicinas/resumen-medicina/resumen-medicina.component';
+import { ResumenPacienteComponent } from '../../Paciente/resumen-paciente/resumen-paciente.component';
 import { CommonModule } from '@angular/common';
-import { ResumenDonanteComponent } from "../../Donante/resumen-donante/resumen-donante.component";
+import { ResumenDonanteComponent } from '../../Donante/resumen-donante/resumen-donante.component';
 import { PostDonationInterface } from '../../../Core/Interfaces/donation.interface';
 import { Subscription } from 'rxjs';
-import { CardMedicamentoWithDateComponent } from "../../Medicinas/card-medicamento-with-date/card-medicamento-with-date.component";
+import { CardMedicamentoWithDateComponent } from '../../Medicinas/card-medicamento-with-date/card-medicamento-with-date.component';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryInterface } from '../../../Core/Interfaces/category.interface';
 import { HttpClient } from '@angular/common/http';
+import { appSettings } from '../../../settings/appsettings';
 
 @Component({
   selector: 'app-resumen-donacion',
   standalone: true,
-  imports: [ResumenTratamientoComponent, ResumenMedicinaComponent, ResumenPacienteComponent, CommonModule, ResumenDonanteComponent, CardMedicamentoWithDateComponent],
+  imports: [
+    ResumenTratamientoComponent,
+    ResumenMedicinaComponent,
+    ResumenPacienteComponent,
+    CommonModule,
+    ResumenDonanteComponent,
+    CardMedicamentoWithDateComponent,
+  ],
   templateUrl: './resumen-donacion.component.html',
-  styleUrls: ['./resumen-donacion.component.css']
+  styleUrls: ['./resumen-donacion.component.css'],
 })
-
 export class ResumenDonacionComponent {
   donation: PostDonationInterface | null = null;
   private donationSubscription: Subscription | null = null;
   categories: CategoryInterface[] = [];
 
-  constructor(private donationService: DonationService, private notificationService : ToastrService, private http: HttpClient) {}
+  constructor(
+    private donationService: DonationService,
+    private notificationService: ToastrService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
-    this.donationSubscription = this.donationService.getDonation().subscribe(data => {
-      this.donation = data;
-    });
+    this.donationSubscription = this.donationService
+      .getDonation()
+      .subscribe((data) => {
+        this.donation = data;
+      });
     this.loadCategories();
   }
 
-
-    loadCategories() {
-      this.http.get<{data : {Category: CategoryInterface[]} }>('http://localhost:3000/api/category/getAllActive')
-        .subscribe(response => {
-          console.log(response)
+  loadCategories() {
+    this.http
+      .get<{ data: { Category: CategoryInterface[] } }>(
+        `${appSettings.apiUrl}category/getAllActive`
+      )
+      .subscribe(
+        (response) => {
+          console.log(response);
           this.categories = response.data.Category;
-        }, error => {
+        },
+        (error) => {
           console.error('Error al cargar las categorías:', error);
-        });
-    }
-
+        }
+      );
+  }
 
   ngOnDestroy() {
-
     if (this.donationSubscription) {
       this.donationSubscription.unsubscribe();
     }
@@ -55,7 +71,7 @@ export class ResumenDonacionComponent {
 
   onMedicineDeleted(medicineId: number) {
     // Eliminación de medicina
-    this.notificationService.warning("Eliminado", "Alerta")
+    this.notificationService.warning('Eliminado', 'Alerta');
     this.donationService.removeMedication(medicineId);
   }
 
@@ -69,22 +85,22 @@ export class ResumenDonacionComponent {
     this.donationService.decreaseMedicationQuantity(medicineId);
   }
 
-  onDateChanged(medicineId : number, newDate: string){
-    this.donationService.updateMedicationExpireDate(medicineId, newDate)
+  onDateChanged(medicineId: number, newDate: string) {
+    this.donationService.updateMedicationExpireDate(medicineId, newDate);
   }
 
   onCategorySelected(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedCategoryId = selectElement.value;
 
-    this.donationService.updateCategory(+selectedCategoryId)
+    this.donationService.updateCategory(+selectedCategoryId);
   }
 
-  onDesacriptionChange(event: Event){
-      const target = event.target as HTMLInputElement;
-      if (target && target.value) {
-        this.donationService.updateDescription(target.value);
-      }
+  onDesacriptionChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target && target.value) {
+      this.donationService.updateDescription(target.value);
+    }
   }
 
   deleteCharity() {
@@ -94,7 +110,6 @@ export class ResumenDonacionComponent {
   }
 
   saveDonation(): void {
-
-    this.donationService.saveDonation()
+    this.donationService.saveDonation();
   }
 }

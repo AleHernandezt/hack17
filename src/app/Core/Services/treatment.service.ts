@@ -2,36 +2,37 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TreatmentInterface } from '../Interfaces/treatment.interface';
 import { MedicationInterface } from '../Interfaces/medication.interface';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { appSettings } from '../../settings/appsettings';
+import { getCookieHeader } from '../../custom/getCookieHeader';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TreatmentService {
+  private apiURL = `${appSettings.apiUrl}treatment`;
 
-  private apiURL = "localhost:3000/api/treatment"
-
-  public treatment: BehaviorSubject<TreatmentInterface> = new BehaviorSubject<TreatmentInterface>({
-    patient_id: 0,
-    patientName : '',
-    observation: "",
-    medications:[
-    ]
-  });
+  public treatment: BehaviorSubject<TreatmentInterface> =
+    new BehaviorSubject<TreatmentInterface>({
+      patient_id: 0,
+      patientName: '',
+      observation: '',
+      medications: [],
+    });
 
   private data: Observable<any> = this.treatment.asObservable();
 
-  constructor(private http : HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   public updateTreatment(newTreatment: any): void {
     this.treatment.next(newTreatment);
   }
 
-  public updatePatient(id: number, name : string): void {
+  public updatePatient(id: number, name: string): void {
     const newTreatment = {
       ...this.treatment.getValue(),
       patient_id: id,
-      patientName : name
+      patientName: name,
     };
 
     this.updateTreatment(newTreatment);
@@ -41,7 +42,7 @@ export class TreatmentService {
     const currentTreatment = this.treatment.getValue();
     const newTreatment = {
       ...currentTreatment,
-      observation: observation
+      observation: observation,
     };
 
     this.updateTreatment(newTreatment);
@@ -50,40 +51,46 @@ export class TreatmentService {
   public addMedication(id: number, name: string, quantity: number): void {
     const currentTreatment = this.treatment.getValue();
 
-    const existingMedicationIndex = currentTreatment.medications!.findIndex((med : MedicationInterface) => med.id === id);
+    const existingMedicationIndex = currentTreatment.medications!.findIndex(
+      (med: MedicationInterface) => med.id === id
+    );
 
     let newMedications;
 
     if (existingMedicationIndex !== -1) {
-        const existingMedication = currentTreatment.medications![existingMedicationIndex];
-        existingMedication.quantity += quantity;
+      const existingMedication =
+        currentTreatment.medications![existingMedicationIndex];
+      existingMedication.quantity += quantity;
 
-
-        newMedications = [
-            ...currentTreatment.medications!.slice(0, existingMedicationIndex),
-            existingMedication,
-            ...currentTreatment.medications!.slice(existingMedicationIndex + 1)
-        ];
+      newMedications = [
+        ...currentTreatment.medications!.slice(0, existingMedicationIndex),
+        existingMedication,
+        ...currentTreatment.medications!.slice(existingMedicationIndex + 1),
+      ];
     } else {
-
-        newMedications = [...currentTreatment.medications!, { id, name, quantity }];
+      newMedications = [
+        ...currentTreatment.medications!,
+        { id, name, quantity },
+      ];
     }
 
     const newTreatment = {
-        ...currentTreatment,
-        medications: newMedications
+      ...currentTreatment,
+      medications: newMedications,
     };
 
     this.updateTreatment(newTreatment);
-}
+  }
 
   public removeMedication(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();
-    const newMedications = currentTreatment.medications!.filter(( med : any) => med.id !== medicineId);
+    const newMedications = currentTreatment.medications!.filter(
+      (med: any) => med.id !== medicineId
+    );
 
     const newTreatment = {
       ...currentTreatment,
-      medications: newMedications
+      medications: newMedications,
     };
 
     this.updateTreatment(newTreatment);
@@ -91,16 +98,18 @@ export class TreatmentService {
 
   public increaseMedicationQuantity(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();
-    const newMedications = currentTreatment.medications!.map((medication : any) => {
-      if (medication.id === medicineId) {
-        return { ...medication, quantity: medication.quantity + 1 };
+    const newMedications = currentTreatment.medications!.map(
+      (medication: any) => {
+        if (medication.id === medicineId) {
+          return { ...medication, quantity: medication.quantity + 1 };
+        }
+        return medication;
       }
-      return medication;
-    });
+    );
 
     const newTreatment = {
       ...currentTreatment,
-      medications: newMedications
+      medications: newMedications,
     };
 
     this.updateTreatment(newTreatment);
@@ -109,19 +118,24 @@ export class TreatmentService {
   public decreaseMedicationQuantity(medicineId: string): void {
     const currentTreatment = this.treatment.getValue();
 
-    const newMedications = currentTreatment.medications!.map((medication: any) => {
+    const newMedications = currentTreatment.medications!.map(
+      (medication: any) => {
         if (medication.id === medicineId) {
-            return { ...medication, quantity: Math.max(medication.quantity - 1, 0) };
+          return {
+            ...medication,
+            quantity: Math.max(medication.quantity - 1, 0),
+          };
         }
         return medication;
-    });
+      }
+    );
 
     const newTreatment = {
-        ...currentTreatment,
-        medications: newMedications
+      ...currentTreatment,
+      medications: newMedications,
     };
     this.updateTreatment(newTreatment);
-}
+  }
 
   public getTreatment(): Observable<any> {
     return this.data;
@@ -129,22 +143,21 @@ export class TreatmentService {
 
   public saveTreatment() {
     const treatment = this.treatment.getValue();
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+    const { headerPost } = getCookieHeader();
 
     const data = {
       patient_id: treatment.patient_id,
       observation: treatment.observation,
-      medications: treatment.medications!.map(med => {
+      medications: treatment.medications!.map((med) => {
         return {
           medication_id: med.id,
-          quantity: med.quantity
+          quantity: med.quantity,
         };
-      })
+      }),
     };
 
-    return this.http.post(`${this.apiURL}/create`,data,{headers})
+    return this.http.post(`${this.apiURL}/create`, data, {
+      headers: headerPost,
+    });
   }
 }

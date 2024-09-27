@@ -1,39 +1,32 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { setCookie, getCookie, deleteCookie } from './cookies';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { appSettings } from '../../settings/appsettings';
+import { Admin, Login, loginResponse } from '../Interfaces/admin.interface';
 
 @Injectable({
-  providedIn: 'root'
+     providedIn: 'root'
 })
-export class AuthService {
-  private apiUrl = 'https://your-api-url.com/api'; // Replace with your API URL
-  private tokenCookieName = 'access_token';
+export class AccesoService {
 
-  constructor(private http: HttpClient) { }
+     private http = inject(HttpClient);
+     private baseUrl: string = appSettings.apiUrl;
 
-  login(email: string, password: string): Promise<any> {
-    return this.http.post(`${this.apiUrl}/login`, { email, password })
-      .toPromise()
-      .then(response => {
-        const token = response.token;
-        setCookie(this.tokenCookieName, token);
-        return token;
-      })
-      .catch(error => {
-        console.error(error);
-        return null;
-      });
-  }
+     constructor() { }
 
-  logout(): void {
-    deleteCookie(this.tokenCookieName);
-  }
+     registrarse(objeto: Admin): Observable<loginResponse> {
+          return this.http.post<loginResponse>(`${this.baseUrl}admin/create`, objeto)
+     }
 
-  getToken(): string | null {
-    return getCookie(this.tokenCookieName);
-  }
+     login(objeto: Login): Observable<loginResponse> {
+          return this.http.post<loginResponse>(`${this.baseUrl}admin/login`, objeto)
+     }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
+     logout(): Observable<string> {
+          return this.http.post<string>(`${this.baseUrl}admin/logout`, {});
+     }
+
+     validarToken(token: string): Observable<loginResponse> {
+          return this.http.get<loginResponse>(`${this.baseUrl}Acceso/ValidarToken?token=${token}`)
+     }
 }
