@@ -87,6 +87,25 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Admin/patologias/patologias.component')
     },
 
+    {
+        path: 'gestionDonante',
+        loadComponent: () => import('./Views/Admin/gestion-donante/gestion-donante.component')
+    },
+
+    {
+        path: 'gestionLotes',
+        loadComponent: () => import('./Views/Admin/gestion-lotes/gestion-lotes.component')
+    },
+
+    {
+        path: 'gestionPacienteVulnerable',
+        loadComponent: () => import('./Views/Admin/gestion-paciente-vulnerable/gestion-paciente-vulnerable.component')
+    },
+    {
+        path: 'gestionDesecho',
+        loadComponent: () => import('./Views/Admin/gestion-desecho/gestion-desecho.component')
+    },
+
     //! esta no esta siendo mostrada
     {
         path: 'gestionPatologia',

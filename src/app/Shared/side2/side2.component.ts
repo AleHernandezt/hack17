@@ -41,7 +41,7 @@ export class Side2Component implements OnInit {
                             {
                                 label: 'Vulnerable',
                                 icon: 'pi pi-mobile',
-                                command: () => this.navigateToRoute('/')
+                                command: () => this.navigateToRoute('/gestionPacienteVulnerable')
                             },
                         ]
                     },
@@ -52,7 +52,7 @@ export class Side2Component implements OnInit {
                             {
                                 label:'General',
                                 icon: 'pi pi-file',
-                                command: () => this.navigateToRoute('/')
+                                command: () => this.navigateToRoute('/gestionDonante')
 
                             },
                             {
@@ -70,7 +70,7 @@ export class Side2Component implements OnInit {
                             {
                                 label:'Lotes',
                                 icon: 'pi pi-file',
-                                command: () => this.navigateToRoute('/')
+                                command: () => this.navigateToRoute('/gestionLotes')
 
                             }
                         ]
@@ -106,7 +106,7 @@ export class Side2Component implements OnInit {
                             {
                                 label:'Desecho',
                                 icon: 'pi pi-file',
-                                command: () => this.navigateToRoute('/gestionCategoria')
+                                command: () => this.navigateToRoute('/gestionDesecho')
 
                             },
                             {
