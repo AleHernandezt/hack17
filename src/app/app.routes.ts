@@ -168,6 +168,35 @@ export const routes: Routes = [
   },
 
   {
+    path: 'gestionDonante',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-donante/gestion-donante.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'gestionLotes',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-lotes/gestion-lotes.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'gestionPacienteVulnerable',
+    loadComponent: () =>
+      import(
+        './Views/Admin/gestion-paciente-vulnerable/gestion-paciente-vulnerable.component'
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'gestionDesecho',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-desecho/gestion-desecho.component'),
+    canActivate: [authGuard],
+  },
+
+  //! esta no esta siendo mostrada
+
+  {
     path: 'DasboardAdmin',
     loadComponent: () =>
       import('./Views/Admin/dash-admin/dash-admin.component'),

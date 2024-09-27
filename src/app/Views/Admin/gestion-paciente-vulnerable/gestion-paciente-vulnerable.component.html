@@ -1,0 +1,12 @@
+<app-h1 title="Pacientes Vulnerables"></app-h1>
+
+<div class="horizontal">
+  <app-searchbar></app-searchbar>  
+</div>
+
+<app-table2
+  [items]="pacientes"
+  [columns]="['first_name', 'last_name', 'economic_status', 'vulnerability_level', 'phone', 'address']"
+  [showActions]="false"
+>
+</app-table2>

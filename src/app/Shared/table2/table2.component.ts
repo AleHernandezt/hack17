@@ -24,14 +24,9 @@ export class Table2Component<T extends Record<string, any>> {
 
   //se emiten eventos para capturar en el padre
 
+  @Input()
+  showActions: boolean = true;
+
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
 }
-
-
-
-
-//   get headers(): string[] {
-//     return this.items.length > 0 ? Object.keys(this.items[0]) : [];
-//   }
-// }
