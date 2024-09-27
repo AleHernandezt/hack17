@@ -213,4 +213,10 @@ export const routes: Routes = [
     loadComponent: () => import('./Views/Admin/form-user/form-user.component'),
     canActivate: [authGuard],
   },
+  {
+    path: 'perfilPaciente/:id',
+    loadComponent: () =>
+      import('./Views/Admin/perfil-paciente/perfil-paciente.component'),
+    canActivate: [authGuard],
+  },
 ];

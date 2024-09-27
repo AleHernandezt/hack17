@@ -1,3 +1,4 @@
+<!-- table2.component.html -->
 <div class="container">
   <div class="flowRoot">
     <div class="tableWrapper">
@@ -6,15 +7,19 @@
           <thead>
             <tr>
               <th *ngFor="let column of columns">{{ column | titlecase }}</th>
-              <th class="actions" *ngIf="showEdit || showDelete">Acciones</th>
+              <th class="actions" *ngIf="showEdit || showDelete || showView">Acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of items">
-              <td *ngFor="let column of columns">{{ item[column] }}</td>
-              <td class="actions" *ngIf="showEdit || showDelete">
+              <td *ngFor="let column of columns">
+                {{ column === 'id_card' ? 'Cédula' : '' }}
+                {{ item[column] }}
+              </td>
+              <td class="actions" *ngIf="showEdit || showDelete || showView">
                 <button class="edit" *ngIf="showEdit" (click)="edit.emit(item)">Editar</button>
                 <button class="delete" *ngIf="showDelete" (click)="delete.emit(item)">Eliminar</button>
+                <button class="view" *ngIf="showView" (click)="view.emit(item)">Ver</button>
               </td>
             </tr>
           </tbody>

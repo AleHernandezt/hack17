@@ -88,6 +88,23 @@ td {
   transform: scale(1.05);
 }
 
+.view{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #42b472;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: medium;
+}
+.view:hover{
+  background-color: #136937;;
+  transform: scale(1.05);
+}
+
 .link {
   color: #4c51bf; /* text-indigo-600 */
   text-decoration: none;
