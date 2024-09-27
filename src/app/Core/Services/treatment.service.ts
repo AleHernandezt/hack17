@@ -156,6 +156,7 @@ export class TreatmentService {
       }),
     };
 
+    console.log(data)
     return this.http.post(`${this.apiURL}/create`, data, {
       headers: headerPost,
     });

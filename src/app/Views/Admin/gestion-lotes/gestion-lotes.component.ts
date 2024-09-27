@@ -32,7 +32,7 @@ export default class GestionLotesComponent implements OnInit {
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.lotes = json.slice(-10); // <--- Muestra los últimos 10 lotes de medicamentos
+          this.lotes = json.data.MedicationExpirationDate.slice(-10); // <--- Muestra los últimos 10 lotes de medicamentos
         });
       });
   }
