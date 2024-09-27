@@ -209,9 +209,8 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'CrearDonante',
-    loadComponent: () =>
-      import('./Views/Doner/form-donante/form-donante.component'),
+    path: 'User',
+    loadComponent: () => import('./Views/Admin/form-user/form-user.component'),
     canActivate: [authGuard],
   },
 ];

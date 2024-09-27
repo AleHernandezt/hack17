@@ -117,7 +117,6 @@ export class Side2Component implements OnInit {
               },
             ],
           },
-
           {
             label: 'Patologia',
             icon: 'pi pi-file',
@@ -131,7 +130,7 @@ export class Side2Component implements OnInit {
           {
             label: 'Usuarios',
             icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/Cesar'),
+            command: () => this.navigateToRoute('/User'),
           },
         ],
       },

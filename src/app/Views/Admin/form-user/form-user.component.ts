@@ -1,0 +1,99 @@
+import { Component, NgZone } from '@angular/core';
+import { H1Component } from '../../../Shared/h1/h1.component';
+import { CardComponent } from '../../../Shared/card/card.component';
+import { InputTextComponent } from '../../../Shared/input-text/input-text.component';
+import { BtnComponent } from '../../../Shared/btn/btn.component';
+import { FormsModule } from '@angular/forms';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { Admin } from '../../../Core/Interfaces/admin.interface';
+
+@Component({
+  selector: 'app-form-usuario',
+  standalone: true,
+  imports: [
+    H1Component,
+    CardComponent,
+    InputTextComponent,
+    BtnComponent,
+    FormsModule,
+  ],
+  templateUrl: './form-user.component.html',
+  styleUrls: ['./form-user.component.css'],
+})
+export default class FormUserComponent {
+  form: Admin = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    id_card_prefix: '',
+    id_card: '',
+    password: '',
+    confirm_password: '',
+    userType: 'donor',
+  };
+
+  selectUserType(type: 'admin' | 'donor') {
+    this.form.userType = type;
+  }
+
+  constructor(private ngZone: NgZone) {}
+
+  createUser(): void {
+    if (this.form.password !== this.form.confirm_password) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    if (
+      !this.form.first_name ||
+      !this.form.last_name ||
+      !this.form.email ||
+      !this.form.id_card ||
+      !this.form.password ||
+      !this.form.confirm_password
+    ) {
+      alert('Por favor, complete todos los campos');
+      return;
+    }
+
+    const user = {
+      first_name: this.form.first_name,
+      last_name: this.form.last_name,
+      email: this.form.email,
+      cedula: this.form.id_card_prefix + this.form.id_card,
+      password: this.form.password,
+      userType: this.form.userType,
+    };
+
+    const { headerPost } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}admin/create`, {
+      method: 'POST',
+      headers: headerPost,
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json); // Log the response from the API
+        this.ngZone.run(() => {
+          alert('Usuario creado con éxito');
+          this.form = {
+            first_name: '',
+            last_name: '',
+            email: '',
+            id_card: '',
+            id_card_prefix: 'V-',
+            password: '',
+            confirm_password: '',
+            userType: 'admin',
+          };
+        });
+      })
+      .catch((error) => {
+        console.error(error); // Log the error
+        this.ngZone.run(() => {
+          alert('Error al crear el usuario');
+        });
+      });
+  }
+}

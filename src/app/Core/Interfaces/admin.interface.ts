@@ -2,9 +2,12 @@ export interface Admin {
   id?: number;
   first_name: string;
   last_name: string;
-  cedula: string;
+  id_card_prefix: string;
+  id_card: string;
   email: string;
-  status: 'active' | 'inactive' | 'deleted';
+  password: string;
+  confirm_password: string;
+  status?: 'active' | 'inactive' | 'deleted';
   userType: 'admin' | 'donor';
 }
 
