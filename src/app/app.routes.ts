@@ -116,6 +116,10 @@ export const routes: Routes = [
         loadComponent: () => import('./Views/Doner/dasboard-doner/dasboard-doner.component')
     },
     {
+        path: 'fichaPaciente/:id',
+        loadComponent: () => import('./Views/Admin/perfil-paciente/perfil-paciente.component')
+    },
+    {
         path: 'CrearDonante',
         loadComponent: () => import('./Views/Doner/form-donante/form-donante.component')
     },
