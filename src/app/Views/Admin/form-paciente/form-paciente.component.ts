@@ -26,11 +26,11 @@ export default class FormPacienteComponent {
     last_name: '',
     birth_date: '',
     email: '',
+    id_card_prefix: '',
     id_card: '',
     phone: '',
     address: '',
     gender: '',
-    vulnerability_level: '',
     economic_status: '',
     pathology_description: '',
   };
@@ -38,16 +38,31 @@ export default class FormPacienteComponent {
   constructor(private ngZone: NgZone) {}
 
   createPaciente(): void {
+    if (
+      !this.form.first_name ||
+      !this.form.last_name ||
+      !this.form.birth_date ||
+      !this.form.email ||
+      !this.form.id_card ||
+      !this.form.phone ||
+      !this.form.address ||
+      !this.form.gender ||
+      !this.form.economic_status ||
+      !this.form.pathology_description
+    ) {
+      alert('Por favor, complete todos los campos');
+      return;
+    }
+
     const paciente = {
       first_name: this.form.first_name,
       last_name: this.form.last_name,
       birth_date: this.form.birth_date,
       email: this.form.email,
-      id_card: this.form.id_card,
+      cedula: this.form.id_card_prefix + this.form.id_card,
       phone: this.form.phone,
       address: this.form.address,
       gender: this.form.gender,
-      vulnerability_level: this.form.vulnerability_level,
       economic_status: this.form.economic_status,
       community_id: 1,
       pathologies: [
@@ -74,11 +89,11 @@ export default class FormPacienteComponent {
             last_name: '',
             birth_date: '',
             email: '',
+            id_card_prefix: 'V-',
             id_card: '',
             phone: '',
             address: '',
             gender: '',
-            vulnerability_level: '',
             economic_status: '',
             pathology_description: '',
           };

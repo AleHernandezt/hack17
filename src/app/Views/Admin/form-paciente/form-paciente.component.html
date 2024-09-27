@@ -19,7 +19,15 @@
     </div>
     <div class="form-group">
       <label class="label">Cédula de identidad:</label>
-      <input type="number" [(ngModel)]="form.id_card" name="id_card" placeholder="Ingrese la cédula de identidad del paciente" required>
+      <div class="id-card-input">
+        <select id="id_card_prefix" [(ngModel)]="form.id_card_prefix" name="id_card_prefix" required>
+          <option value="V-">V-</option>
+          <option value="J-">J-</option>
+          <option value="G-">G-</option>
+          <option value="E-">E-</option>
+        </select>
+        <input id="id_card" type="text" [(ngModel)]="form.id_card" name="id_card" placeholder="Ingrese la cédula de identidad del paciente" required>
+      </div>
     </div>
     <div class="form-group">
       <label class="label">Teléfono:</label>
@@ -34,14 +42,6 @@
       <select [(ngModel)]="form.gender" name="gender" required>
         <option value="masculino">Masculino</option>
         <option value="femenino">Femenino</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="label">Nivel de vulnerabilidad:</label>
-      <select [(ngModel)]="form.vulnerability_level" name="vulnerability_level" required>
-        <option value="alto">Alto</option>
-        <option value="medio">Medio</option>
-        <option value="bajo">Bajo</option>
       </select>
     </div>
     <div class="form-group">

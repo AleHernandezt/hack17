@@ -1,12 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BtnComponent } from '../../../Shared/btn/btn.component';
+import { TableComponent } from '../../../Shared/table/table.component';
+import { Table2Component } from '../../../Shared/table2/table2.component';
+import { H1Component } from '../../../Shared/h1/h1.component';
+import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
+import { NgForOf } from '@angular/common';
+import { NgZone } from '@angular/core';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { appSettings } from '../../../settings/appsettings';
 
 @Component({
   selector: 'app-gestion-desecho',
   standalone: true,
-  imports: [],
+  imports: [
+    H1Component,
+    BtnComponent,
+    TableComponent,
+    Table2Component,
+    SearchbarComponent,
+    NgForOf,
+  ],
   templateUrl: './gestion-desecho.component.html',
-  styleUrl: './gestion-desecho.component.css'
+  styleUrls: ['./gestion-desecho.component.css'],
 })
-export default class GestionDesechoComponent {
+export default class GestionDesechoComponent implements OnInit {
+  constructor(private ngZone: NgZone) {}
 
+  deleteDesecho($event: any) {
+    throw new Error('Method not implemented.');
+  }
+  editDesecho($event: any) {
+    throw new Error('Method not implemented.');
+  }
+  desechos: any[] = [];
+  items: any;
+
+  ngOnInit(): void {
+    console.log('asdf');
+    this.getPost();
+  }
+  getPost() {
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}medication_disposal/getAll`, {
+      method: 'GET',
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        this.ngZone.run(() => {
+          this.desechos = json.data.MedicationDisposal.slice(-10);
+        });
+        console.log(json);
+      });
+  }
 }
