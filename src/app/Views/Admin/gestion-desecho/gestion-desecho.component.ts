@@ -47,10 +47,25 @@ export default class GestionDesechoComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        this.ngZone.run(() => {
-          this.desechos = json.data.MedicationDisposal.slice(-10);
+        const desechos = json.data.MedicationDisposal;
+        const medicamentos: { nombre: any; cantidadDesechada: any; razon: any; }[] = [];
+        desechos.forEach((desecho: { medication_id: any; medication: any; quantity: any; reason: any; }) => {
+          const medicamentoId = desecho.medication_id;
+          console.log('Medicamento ID:', medicamentoId);
+          const medicamento = desecho.medication;
+          if (medicamento) {
+            this.ngZone.run(() => {
+              medicamentos.push({
+                nombre: medicamento.name,
+                cantidadDesechada: desecho.quantity,
+                razon: desecho.reason,
+              });
+            });
+          }
         });
-        console.log(json);
+        this.ngZone.run(() => {
+          this.desechos = medicamentos.slice(-10);
+        });
       });
   }
 }
