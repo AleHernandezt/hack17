@@ -1,8 +1,8 @@
 <form class="container" [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
     <app-card [title]="'Inicia Sesión'">
-        <p>Inicia sesión con tu cédula y contraseña</p>
+        <p>Inicia sesión con tu correo y contraseña</p>
         <div class="form">
-            <input placeholder="Ingrese su cédula" class="inputForm" formControlName="cedula" required />
+            <input placeholder="Ingrese su correo" class="inputForm" formControlName="email" required />
     
             <input placeholder="Ingrese su contreseña" class="inputForm" formControlName="password" type="password" required />
         </div>

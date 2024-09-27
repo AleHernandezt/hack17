@@ -1,6 +1,6 @@
 <div class="card flex justify-content-center">
     <p-sidebar [(visible)]="sidebarVisible" class="p-sidebar">
-        <h3>Bienvenido, Nombre</h3>
+        <h3>Bienvenido, {{name }}</h3>
         <p-panelMenu [model]="items" class="p-panelMenu" ></p-panelMenu>
         <button pButton type="button" (click)="logout()" label="Cerrar sesión" icon="pi pi-sign-out" class="logout-button p-m-2"></button>
     </p-sidebar>

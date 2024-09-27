@@ -6,6 +6,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { Router } from '@angular/router';
 import { AccesoService } from '../../Core/Services/auth.service';
 import { deleteCookie } from '../../Authentication/login/cookies';
+import { getUserInfoFromToken } from '../../custom/getJwtInfo';
 
 @Component({
   selector: 'app-side2',
@@ -16,12 +17,16 @@ import { deleteCookie } from '../../Authentication/login/cookies';
 })
 export class Side2Component implements OnInit {
   sidebarVisible: boolean = false;
+  name: string = 'Usuario';
   items: MenuItem[] | undefined;
   logoutItem: MenuItem | undefined;
   private accesoService = inject(AccesoService);
 
   constructor(private router: Router) {}
   ngOnInit() {
+    const { name } = getUserInfoFromToken();
+    this.name = name;
+
     this.items = [
       {
         label: 'Gestion',
