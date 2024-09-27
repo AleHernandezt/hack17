@@ -1,65 +1,93 @@
-<div class="cont">
-  <div class="main-dataCont">
-    <h2 class="title">Datos Personales</h2>
-    <div class="main-data">
-      <div class="maindata-section-1">
-        <p><span>Nombre:</span> {{ patient?.first_name }} {{ patient?.last_name }}</p>
-        <p><span>Cédula:</span> {{ patient?.id_card }}</p>
-        <p><span>Género:</span> {{ patient?.gender }}</p>
-        <p><span>Correo:</span> {{ patient?.email }}</p>
+<div class="container">
+  <section class="patient-card">
+    <div class="patient-card-header">
+      <h2>{{ patient?.first_name }} {{ patient?.last_name }}</h2>
+      <p class="id-card">{{ patient?.id_card }}</p>
+      <p class="id-card">{{ patient?.gender }}</p>
+    </div>
+    <div class="patient-card-body">
+      <div class="contact-info">
+        <div class="info_flex">
+          <p>Dirección <span>{{ patient?.address }}</span></p>
+          <p>Fecha de nacimiento <span>{{ patient?.birth_date | date:'shortDate' }}</span></p>
+        </div>
+        <div class="info_flex">
+          <p>Teléfono <span>{{ patient?.phone }}</span></p>
+          <p>Correo Electrónico <span>{{ patient?.email }}</span></p>
+        </div>
       </div>
+      <div class="pathologies">
+        <h3>Patologías</h3>
+        <ng-container *ngIf="pathologiesList.length > 0; else noPathologies">
+        <ul>
+          <li *ngFor="let pa of patient?.pathologies; let index = index" [attr.key]="index">
+            {{ pa.name }}
+          </li>
+        </ul>
+      </ng-container>
+      <ng-template #noPathologies>No hay patologías asignadas</ng-template>
+      </div>
+    </div>
+  </section>
 
-      <div class="maindata-section-2">
-        <p><span>Teléfono:</span> {{ patient?.phone }}</p>
-        <p><span>Fecha de Nacimiento:</span> {{ patient?.birth_date | date:'shortDate' }}</p>
-
-        <p><span>Patologías:</span>
-          <ng-container *ngIf="pathologiesList.length > 0; else noPathologies">
-            <div class="pathologies-container">
-              <p *ngFor="let pathology of pathologiesList" class="pathology">{{ pathology }}</p>
+  <!-- Sección de Tratamientos -->
+  <div class="containerTratamiento">
+    <div class="containerTratamiento">
+      <section class="treatments">
+        <h2>Tratamientos</h2>
+        <ng-container *ngIf="patient?.treatments!.length > 0; else noTreatments">
+        <div *ngFor="let treatment of patient?.treatments" class="treatment-item">
+          <div class="treatment-card">
+            <div class="treatment-card-header">
+              <h2>{{ treatment.id }} - {{ treatment.observation }}</h2>
             </div>
-          </ng-container>
-          <ng-template #noPathologies>No hay patologías registradas.</ng-template>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="secondary-dataCont">
-    <div class="treatment-data">
-      <h2 class="title">Tratamientos</h2>
-      <div class="treatment-section-1">
-        <div *ngFor="let treatment of patient?.treatments" class="treatment">
-          <p><strong>ID:</strong> {{ treatment.id }}</p>
-          <p><strong>Observación:</strong> {{ treatment.observation }}</p>
-          <p><strong>Estado:</strong> {{ treatment.status }}</p>
-          <p><strong>Fecha de Creación:</strong> {{ treatment.createdAt | date }}</p>
-          <h4>Medicamentos:</h4>
-          <ul>
-            <li *ngFor="let medication of treatment.medications">
-              {{ medication.name }} - Cantidad: {{ medication.medication_quantity.quantity }}
-            </li>
-          </ul>
+            <div class="treatment-card-body">
+              <div class="treatment-info">
+                <p>Observación: <span>{{ treatment.observation }}</span></p>
+                <p>Estado: <span>{{ treatment.status }}</span></p>
+                <p>Fecha de Creación: <span>{{ treatment.createdAt | date }}</span></p>
+              </div>
+              <div class="treatment-medications">
+                <h3>Medicamentos</h3>
+                <ul>
+                  <li *ngFor="let medication of treatment.medications">
+                    {{ medication.name }} - Cantidad: {{ medication.medication_quantity.quantity }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #noTreatments>No hay Tratamientos asignados</ng-template>
+      </section>
     </div>
 
-    <div class="deliveries-data">
-      <h2 class="title">Entregas</h2>
-      <div class="deliveries-section-1">
-        <div *ngFor="let delivery of patient?.deliveries" class="delivery">
-          <h3>Entrega ID: {{ delivery.id }}</h3>
-          <p><strong>Fecha de Cita:</strong> {{ delivery.appointment_date | date }}</p>
-          <p><strong>Fecha de Retiro:</strong> {{ delivery.withdrawal_date | date }}</p>
-          <p><strong>Estado:</strong> {{ delivery.status }}</p>
-          <p><strong>Fecha de Creación:</strong> {{ delivery.createdAt | date }}</p>
-          <h4>Medicamentos Entregados:</h4>
-          <ul>
-            <li *ngFor="let medication of delivery.medications">
-              {{ medication.name }} - Cantidad: {{ medication.delivery_details.quantity }}
-            </li>
-          </ul>
+    <section class="treatments">
+      <h2>Entregas</h2>
+      <ng-container *ngIf="patient?.deliveries!.length > 0; else noDeliveries">
+      <div *ngFor="let delivery of patient?.deliveries" class="delivery-item">
+        <div class="treatment-card">
+          <div class="treatment-card-header">
+            <h2>Entrega ID: {{ delivery.id }}</h2>
+            <p>Fecha de Cita: {{ delivery.appointment_date | date }}</p>
+
+          </div>
         </div>
+        <p><strong>Fecha de Retiro:</strong> {{ delivery.withdrawal_date | date }}</p>
+        <p><strong>Estado:</strong> {{ delivery.status }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ delivery.createdAt | date }}</p>
+        <h4>Medicamentos Entregados:</h4>
+        <ul>
+          <li *ngFor="let medication of delivery.medications">
+            {{ medication.name }} - Cantidad: {{ medication.delivery_details.quantity }}
+          </li>
+        </ul>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #noDeliveries>No hay entregas asignadas</ng-template>
+    </section>
   </div>
+
+
 </div>
