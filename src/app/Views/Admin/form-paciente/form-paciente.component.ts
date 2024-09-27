@@ -8,17 +8,16 @@ import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-form-paciente',
   standalone: true,
   imports: [
+    CommonModule,
     H1Component,
     CardComponent,
     InputTextComponent,
     BtnComponent,
     FormsModule,
-    CommonModule
   ],
   templateUrl: './form-paciente.component.html',
   styleUrls: ['./form-paciente.component.css'],
@@ -70,6 +69,7 @@ export default class FormPacienteComponent {
   }
 
   createPaciente(): void {
+    console.log('Valor del campo id_card:', this.form.id_card);
     if (
       !this.form.first_name ||
       !this.form.last_name ||
@@ -92,6 +92,7 @@ export default class FormPacienteComponent {
       birth_date: this.form.birth_date,
       email: this.form.email,
       cedula: this.form.id_card_prefix + this.form.id_card,
+      id_card: this.form.id_card, // Agrega este campo
       phone: this.form.phone,
       address: this.form.address,
       gender: this.form.gender,
