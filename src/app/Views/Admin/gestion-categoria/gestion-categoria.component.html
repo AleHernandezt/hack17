@@ -8,7 +8,8 @@
 <app-table2
   [items]="categories"
   [columns]="['name', 'description']"
-  (edit)="editCategory($event)"
-  (delete)="deleteCategory($event)"
+  [showDelete]="false"
+  [showEdit]="false"
+  [showView]="false"
 >
 </app-table2>
