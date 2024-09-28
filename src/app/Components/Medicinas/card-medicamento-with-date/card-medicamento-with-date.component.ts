@@ -1,17 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MedicationInterface } from '../../../Core/Interfaces/medication.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-card-medicamento-with-date',
+  imports : [CommonModule],
   standalone: true,
   templateUrl: './card-medicamento-with-date.component.html',
   styleUrls: ['./card-medicamento-with-date.component.css']
 })
 export class CardMedicamentoWithDateComponent {
-  @Input() medicine: {name : string, id : number, expire_date? : string, quantity : number}  = {
+  @Input() medicine: {name : string, id : number, expiration_date? : string, quantity : number}  = {
     name: '',
     id : 0,
-    expire_date: "",
+    expiration_date: "",
     quantity : 1
   };
   @Output() medicineDeleted = new EventEmitter<number>();
@@ -43,11 +45,12 @@ export class CardMedicamentoWithDateComponent {
 
     if (currentDate > selectedDate) {
       input.value = currentDate.toISOString().split('T')[0];
-      this.medicine.expire_date = input.value;
+      this.medicine.expiration_date = input.value;
     } else {
-      this.medicine.expire_date = input.value;
+      this.medicine.expiration_date = input.value;
     }
 
     this.dateChanged.emit({ id: this.medicine.id, newDate: selectedDate >= currentDate ? selectedDate.toISOString() : currentDate.toISOString() });
+    console.log(this.medicine.expiration_date)
   }
 }

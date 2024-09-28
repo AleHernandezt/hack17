@@ -52,6 +52,18 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'crearEntrega',
+    loadComponent: () =>
+      import('./Views/Admin/form-entrega/form-entrega.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'crearDonacion',
+    loadComponent: () =>
+      import('./Views/Admin/form-donacion/form-donacion.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: 'gestionCategoria',
     loadComponent: () =>
       import('./Views/Admin/gestion-categoria/gestion-categoria.component'),

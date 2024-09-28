@@ -63,18 +63,18 @@ hr{
     text-align: center;
     gap: 6px;
   }
-  
+
   .info_flex{
     display: flex;
   }
 
 .contact-info p {
   margin: 5px 0;
-  display: flex; 
+  display: flex;
   flex-direction: column;
   font-weight: 500;
   gap: 5px;
-  
+
   span{
     font-weight: 400;
   }
@@ -149,34 +149,34 @@ hr{
     text-overflow: ellipsis;
 
   }
-  
+
   .treatment-card:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
   }
-  
+
   .treatment-card-header {
     background-color: #1e90ff;
     padding: 15px;
     color: white;
   }
-  
+
   .treatment-card-header h2 {
     margin: 0;
     font-size: 1em;
     font-weight: bold;
   }
-  
+
   .treatment-card-body {
     padding: 15px;
   }
-  
+
   .treatment-info {
     margin-bottom: 15px;
     font-size: .8em;
     color: #333;
   }
-  
+
   .treatment-info p {
     margin: 5px 0;
     font-weight: 600;
@@ -186,26 +186,26 @@ hr{
       font-weight: 500;
     }
   }
-  
+
   .treatment-medications {
     display: flex;
     flex-direction: column;
 
   }
-  
+
   .treatment-medications h3 {
     font-size: 1.2em;
     color: #1e90ff;
     margin: 0 0 10px;
   }
-  
+
   .treatment-medications ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
     font-size: 0.8em;
   }
-  
+
   .treatment-medications li {
     background-color: #f0f8ff;
     border-radius: 4px;
@@ -214,8 +214,7 @@ hr{
     display: inline-block;
     margin-right: 5px;
   }
-  
+
   .treatment-item {
     margin: 1rem;
   }
-  

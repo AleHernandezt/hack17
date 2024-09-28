@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class DonationService {
 
-  private apiURL = "localhost:3000/api/donation/"
+  private apiURL = "http://localhost:3000/api/donation/"
 
   public donation: BehaviorSubject<PostDonationInterface> = new BehaviorSubject<PostDonationInterface>({
     description: "",

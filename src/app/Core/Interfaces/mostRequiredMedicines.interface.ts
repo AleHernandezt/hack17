@@ -11,11 +11,14 @@ export interface mostRequiredInterface {
 }
 
 export interface mostRequiredByCommunityInterface {
-  Medication: {
-    community_name : string,
-    medications : {
-      medication_name : string,
-      total_medicamentos_necesitados : number
+  message: string,
+  data : {
+    Medication: {
+      community_name : string,
+      medications : {
+        medication_name : string,
+        total_medicamentos_necesitados : number
+      }[]
     }[]
-  }[]
+  }
 }

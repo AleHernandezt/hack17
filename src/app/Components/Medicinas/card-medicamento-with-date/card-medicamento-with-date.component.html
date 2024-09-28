@@ -21,7 +21,7 @@
       <p>Fecha de Vencimiento</p>
       <input
         type="date"
-        [value]="medicine.expire_date ? medicine.expire_date : ''"
+        [value]="medicine.expiration_date ? (medicine.expiration_date | date: 'yyyy-MM-dd') : ''"
         (change)="changeDate($event)"
       />
     </div>

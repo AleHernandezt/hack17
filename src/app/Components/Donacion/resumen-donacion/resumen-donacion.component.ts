@@ -110,6 +110,13 @@ export class ResumenDonacionComponent {
   }
 
   saveDonation(): void {
-    this.donationService.saveDonation();
+    this.donationService.saveDonation().subscribe(
+      response => {
+        console.log('Donation saved successfully:', response);
+      },
+      error => {
+        console.error('Error saving donation:', error);
+      }
+    );
   }
 }
