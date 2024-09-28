@@ -21,8 +21,7 @@ import { appSettings } from '../../../settings/appsettings';
     NgForOf,
   ], // <--- Add NgForOf
   templateUrl: './gestion-comunidad.component.html',
-  styleUrl: './gestion-comunidad.component.css',
-})
+  styleUrls: ['./gestion-comunidad.component.css'],})
 export default class GestionComunidadComponent implements OnInit {
   constructor(private ngZone: NgZone) {}
 
