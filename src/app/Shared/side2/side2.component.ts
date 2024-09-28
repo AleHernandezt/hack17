@@ -198,4 +198,8 @@ export class Side2Component implements OnInit {
       },
     });
   }
+  goToDashboard() {
+    this.closeSidebar();
+    this.router.navigate(['/dashboard']);
+}
 }
