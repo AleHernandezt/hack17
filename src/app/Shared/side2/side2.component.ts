@@ -156,6 +156,17 @@ export class Side2Component implements OnInit {
           },
         ],
       },
+      {
+        label: 'Administrador',
+        icon: 'pi pi-file',
+        items: [
+          {
+            label: 'Estadisticas',
+            icon: 'pi pi-file',
+            command: () => this.navigateToRoute('/'),
+          },
+        ],
+      },
     ];
 
     this.logoutItem = {

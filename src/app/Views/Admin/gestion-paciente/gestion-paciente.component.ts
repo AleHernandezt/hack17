@@ -41,8 +41,9 @@ export default class GestionPacienteComponent implements OnInit {
           json.data.Patients &&
           Array.isArray(json.data.Patients)
         ) {
+          const pacientesOrdenados = json.data.Patients.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
           this.ngZone.run(() => {
-            this.pacientes = json.data.Patients.slice(-10); // Obtener los últimos 10 elementos
+            this.pacientes = pacientesOrdenados.slice(0, 10); // Obtener los últimos 10 elementos
           });
         } else {
           console.error('La API no devolvió un arreglo de pacientes');
