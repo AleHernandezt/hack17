@@ -23,7 +23,7 @@
             name: medicine.name || 'Sin nombre',
             id: medicine.medication_id || 0,
             quantity: medicine.quantity || 0,
-            expire_date: medicine.expiration_date ? medicine.expiration_date : ''
+            expiration_date: medicine.expiration_date ? medicine.expiration_date : ''
           }"
           (medicineDeleted)="onMedicineDeleted(medicine.medication_id)"
           (quantityIncreased)="onQuantityIncreased(medicine.medication_id)"
