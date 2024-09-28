@@ -2,6 +2,17 @@ h1{
   color: dodgerblue;
   font-size: xx-large;
   text-align: center;
+  margin: 70px 0;
+  margin-top: 40px;
+}
+
+h2{
+  color: dodgerblue;
+  position: relative;
+  bottom: 50px;
+  right: 30px;
+  font-size: 22px;
+  transition: transform 0.2s ease ;
 }
 
 .cont{
@@ -9,23 +20,69 @@ h1{
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 120px;
+  flex-direction: column;
+  gap: 80px;
 }
 
 .grafica{
-  padding: 25px;
+  padding: 45px;
+  border-radius: 20px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center ;
   align-items: center;
-  background-color: dodgerblue;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.384);
+  transition: background-color 0.2s ease;
+}
+
+.grafica:hover{
+  background-color: rgba(0, 128, 255, 0.06);
 
 }
 
-.level1{
+.grafica:hover h2{
+  transform: translateY(-25px);
+
+}
+
+.container-grafica{
+  position: relative;
+  bottom: 30px;
+}
+
+.level1, .level2{
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 80px;
+}
+
+.nivel1 .grafica:nth-child(1) {
+
+  min-width: 42%;
+  max-width: 50%;
+
+}
+
+.nivel1 .grafica:nth-child(2) {
+  min-width: 45%;
+  max-width: 50%;
+}
+
+
+
+
+.nivel2 .grafica:nth-child(1) {
+  min-width: 45%;
+  max-width: 50%;
+
+}
+
+.nivel2 .grafica:nth-child(2) {
+  min-width: 42%;
+  max-width: 50%;
 }
 
 

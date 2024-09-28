@@ -8,7 +8,7 @@ import { Chart, registerables } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { mostDonatedInterface } from '../../../Core/Interfaces/mostDonatedMedicines.interface';
 import { mostRequiredByCommunityInterface, mostRequiredInterface } from '../../../Core/Interfaces/mostRequiredMedicines.interface';
-import { pathologiesPerPatient } from '../../../Core/Interfaces/pathologiesPerPatient.interface';
+import { PathologiesPerPatient } from '../../../Core/Interfaces/pathologiesPerPatient.interface';
 
 Chart.register(...registerables);
 
@@ -24,7 +24,7 @@ export default class DashAdminComponent implements OnInit {
   public mostDonatedMedicines: mostDonatedInterface | null = null;
   public mostRequiredMedicines: mostRequiredInterface | null = null;
   public mostRequiredPerCommunity: mostRequiredByCommunityInterface | null = null;
-  public pathologiesPerPatient: pathologiesPerPatient | null = null;
+  public pathologiesPerPatient: PathologiesPerPatient | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -52,11 +52,13 @@ export default class DashAdminComponent implements OnInit {
     this.http.get<mostRequiredByCommunityInterface>('http://localhost:3000/api/medication/getMostRequeriedByCommunity')
       .subscribe(data => {
         this.mostRequiredPerCommunity = data;
+        this.renderMostRequiredByCommunityChart();
       });
 
-    this.http.get<pathologiesPerPatient>('http://localhost:3000/api/pathology/getPatientCount')
+    this.http.get<PathologiesPerPatient>('http://localhost:3000/api/pathology/getPatientCount')
       .subscribe(data => {
         this.pathologiesPerPatient = data;
+        this.renderPhatologiesPerPatientChart();
       });
   }
 
@@ -93,6 +95,60 @@ export default class DashAdminComponent implements OnInit {
       const data = firstFiveMedicines.map(med => med.usage_count);
 
       new Chart('Chart2', {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: data,
+              backgroundColor: this.getColors(labels.length)
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        }
+      });
+    }
+  }
+
+  renderPhatologiesPerPatientChart() {
+    if (this.pathologiesPerPatient) {
+      const firstFivePathologies = this.pathologiesPerPatient?.data.patientCountByPathology.slice(0, 5);
+      console.log(this.pathologiesPerPatient)
+      const labels = firstFivePathologies!.map(path => path.pathology_name);
+      const data = firstFivePathologies!.map(path => path.patient_count);
+
+      new Chart('Chart4', {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: data,
+              backgroundColor: this.getColors(labels.length)
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        }
+      });
+    }
+  }
+
+  renderMostRequiredByCommunityChart() {
+    if (this.mostRequiredPerCommunity) {
+      const communities = this.mostRequiredPerCommunity;
+
+      const labels = communities.data.Medication.map(comm => comm.community_name);
+      const data = communities.data.Medication.map(comm => {
+        return comm.medications.reduce((total, medic) => total + medic.total_medicamentos_necesitados, 0);
+      });
+
+      new Chart('Chart3', {
         type: 'doughnut',
         data: {
           labels: labels,
