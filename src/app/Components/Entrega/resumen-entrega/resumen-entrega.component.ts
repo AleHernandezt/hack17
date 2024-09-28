@@ -55,7 +55,7 @@ export class ResumenEntregaComponent {
   onWithdrawalDateChange(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target && target.value) {
-      this.deliveryService.updateExpirationDate(target.value);
+      this.deliveryService.onWithdrawalDateChange(target.value);
     }
 
     console.log(this.delivery)
@@ -64,7 +64,7 @@ export class ResumenEntregaComponent {
   onApoinmentDateChange(event: Event) {
     const target = event.target as HTMLInputElement;
     if (target && target.value) {
-      this.deliveryService.updateExpirationDate(target.value);
+      this.deliveryService.onApoinmentDateChange(target.value);
     }
 
     console.log(this.delivery)

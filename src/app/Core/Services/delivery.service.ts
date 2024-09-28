@@ -41,6 +41,7 @@ export class DeliveryService {
   }
 
   public addMedicationsFromTreatment(treatment: TreatmentInterface): void {
+    console.log(treatment)
     const newMedications: MedicationInterface[] = treatment.medications ? treatment.medications.map(med => ({
       id: med.id,
       name: med.name,
@@ -77,6 +78,7 @@ export class DeliveryService {
       return med;
     });
     this.updateDelivery({ medications: updatedMedications });
+    console.log(this.delivery.getValue())
   }
 
 
@@ -104,6 +106,7 @@ export class DeliveryService {
   }
   public onApoinmentDateChange(expirationDate: string): void {
     const currentDelivery = this.delivery.getValue();
+    console.log("holaaaa")
     this.delivery.next({ ...currentDelivery, appointment_date: expirationDate });
   }
   public onWithdrawalDateChange(expirationDate: string): void {
@@ -122,8 +125,8 @@ export class DeliveryService {
     const data = {
       patient_id: delivery.patient_id,
       treatment_id: delivery.treatment_id,
-      appointment_date: new Date().toISOString(),
-      withdrawal_date: null,
+      appointment_date: delivery.appointment_date,
+      withdrawal_date: delivery.withdrawal_date,
       expiration_date: delivery.expiration_date,
       medications: delivery.medications.map(med => {
         return {
