@@ -1,2 +1,55 @@
 <app-h1 title="Dashboard de Donante"></app-h1>
-<p>dasboard-doner works!</p>
+<div class="container">
+    <div class="reports-grid">
+        <div class="report-card">
+            <h2 class="report-title">Medicamentos más requeridos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Usados</th>
+                        <th>En existencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let med of mostRequiredMedicationsCopy">
+                        <td>{{med.medication_name}}</td>
+                        <td>{{med.usage_count}}</td>
+                        <td>{{med.total_quantity}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="report-card">
+            <h2 class="report-title">Medicamentos más donados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medicamento</th>
+                        <th>Donados</th>
+                        <th>Total donados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let med of mostDonatedMedicationsCopy">
+                        <td>{{ med.medication_name }}</td>
+                        <td>{{ med.donation_count }}</td>
+                        <td>{{ med.total_donated }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1 class="report-title_comunidad">Medicamentos requeridos por comunidad</h1>
+        <div class="container_comunidad">
+            <div class="report-card_comunidad" *ngFor="let community of medicationsByCommunity">
+                <h2 class="community-name">{{ community.community_name  }}</h2>
+                <ul class="medications-list">
+                    <li class="medication-item" *ngFor="let medication of community.medications">
+                        <span class="medication-name">{{ medication.medication_name }}</span>
+                        <span class="medication-amount">{{ medication.total_medicamentos_necesitados }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>

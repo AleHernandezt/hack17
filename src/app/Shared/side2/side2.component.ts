@@ -71,7 +71,7 @@ export class Side2Component implements OnInit {
               {
                 label: 'Estadisticas',
                 icon: 'pi pi-file',
-                command: () => this.navigateToRoute('/'),
+                command: () => this.navigateToRoute('/DashboardDoner'),
               },
               {
                 label: 'Lotes',
