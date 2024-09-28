@@ -18,8 +18,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
     SearchbarComponent,
   ],
   templateUrl: './gestion-categoria.component.html',
-  styleUrls: ['./gestion-categoria.component.css'],
-})
+  styleUrls: ['./gestion-categoria.component.css'],})
 export default class GestionCategoriaComponent implements OnInit {
   categories: any[] = [];
 
