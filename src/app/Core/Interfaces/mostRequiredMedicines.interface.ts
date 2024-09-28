@@ -5,7 +5,7 @@ export interface mostRequiredInterface {
       medication_id : number,
       medication_name : string,
       usage_count : string,
-      total_donated : string
+      total_quantity : string
     }[]
   }
 }

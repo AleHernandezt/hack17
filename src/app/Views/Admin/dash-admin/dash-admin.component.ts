@@ -67,7 +67,7 @@ export default class DashAdminComponent implements OnInit {
       const firstFiveMedicines = this.mostDonatedMedicines.data.Medication.slice(0, 5);
 
       const labels = firstFiveMedicines.map(med => med.medication_name);
-      const data = firstFiveMedicines.map(med => parseInt(med.donation_count));
+      const data = firstFiveMedicines.map(med => parseInt(med.total_donated));
 
       new Chart('Chart1', {
         type: 'doughnut',
@@ -92,7 +92,8 @@ export default class DashAdminComponent implements OnInit {
     if (this.mostRequiredMedicines) {
       const firstFiveMedicines = this.mostRequiredMedicines.data.Medication_Treatment.slice(0, 5);
       const labels = firstFiveMedicines.map(med => med.medication_name);
-      const data = firstFiveMedicines.map(med => med.usage_count);
+      console.log(firstFiveMedicines)
+      const data = firstFiveMedicines.map(med => med.total_quantity);
 
       new Chart('Chart2', {
         type: 'doughnut',

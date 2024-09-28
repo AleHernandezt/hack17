@@ -52,14 +52,40 @@ export class ResumenEntregaComponent {
     console.log(this.delivery)
   }
 
+  onWithdrawalDateChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target && target.value) {
+      this.deliveryService.updateExpirationDate(target.value);
+    }
+
+    console.log(this.delivery)
+  }
+
+  onApoinmentDateChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target && target.value) {
+      this.deliveryService.updateExpirationDate(target.value);
+    }
+
+    console.log(this.delivery)
+  }
+
   deletePatient(){
     const id= 0;
+    const idCard=0;
     const name = ''
-    this.deliveryService.updatePatient(id, name)
+    this.deliveryService.updatePatient(id,idCard, name)
     this.toastService.success("eliminado", "alerta")
   }
 
   saveDelivery(){
-    this.deliveryService.saveDelivery();
+    this.deliveryService.saveDelivery().subscribe(
+      response => {
+        console.log('delivery saved successfully:', response);
+      },
+      error => {
+        console.error('Error saving delivery:', error);
+      }
+    );;
   }
 }

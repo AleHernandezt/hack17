@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class DeliveryService {
   private delivery: BehaviorSubject<DeliveryInterface> = new BehaviorSubject<DeliveryInterface>({
     patient_id: 0,
+    patientidCard: 0,
     treatment_id: 0,
     appointment_date: "",
     withdrawal_date: null,
@@ -17,7 +18,7 @@ export class DeliveryService {
     medications: []
   });
 
-  private apiURL = "localhost:3000/api/delivery/"
+  private apiURL = "http://localhost:3000/api/delivery/"
 
   constructor(private http : HttpClient) {}
 
@@ -34,9 +35,9 @@ export class DeliveryService {
     this.delivery.next({ ...currentDelivery, ...updatedDelivery });
   }
 
-  public updatePatient(idPatient: number, patientName: string): void {
+  public updatePatient(idPatient: number, patientcardId: number, patientName: string): void {
     const currentDelivery = this.delivery.getValue();
-    this.delivery.next({ ...currentDelivery, patient_id: idPatient, patient_name: patientName });
+    this.delivery.next({ ...currentDelivery, patient_id: idPatient,patientidCard: patientcardId, patient_name: patientName });
   }
 
   public addMedicationsFromTreatment(treatment: TreatmentInterface): void {
@@ -101,6 +102,15 @@ export class DeliveryService {
     const currentDelivery = this.delivery.getValue();
     this.delivery.next({ ...currentDelivery, expiration_date: expirationDate });
   }
+  public onApoinmentDateChange(expirationDate: string): void {
+    const currentDelivery = this.delivery.getValue();
+    this.delivery.next({ ...currentDelivery, appointment_date: expirationDate });
+  }
+  public onWithdrawalDateChange(expirationDate: string): void {
+    const currentDelivery = this.delivery.getValue();
+    this.delivery.next({ ...currentDelivery, withdrawal_date: expirationDate });
+  }
+
 
   public saveDelivery(): Observable<any>  {
     const delivery = this.delivery.getValue();

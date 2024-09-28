@@ -4,6 +4,7 @@ export interface DeliveryInterface {
   withdrawal_date: string | null;
   treatment_id: number;
   patient_id: number;
+  patientidCard: number
   patient_name?: string;
   expiration_date: string;
   status?: 'pendiente' | 'completado' | 'cancelado';

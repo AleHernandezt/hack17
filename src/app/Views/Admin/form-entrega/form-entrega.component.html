@@ -6,6 +6,7 @@
   <app-lista-tratamiento
     *ngIf="delivery?.patient_id"
     [idPaciente]="delivery!.patient_id"
+    [id]="delivery!.patientidCard"
     (tratamientoSeleccionado)="onTratamientoSeleccionado($event)"
   ></app-lista-tratamiento>
 
