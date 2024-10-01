@@ -14,6 +14,7 @@ p-button {
   display: flex;
   gap: 4px;
   align-items: center;
+  margin: 20px 0;
 }
 
 .dashboard-button {
@@ -24,6 +25,7 @@ p-button {
 }
 .dashboard-button:last-child {
   background-color: #Db5856;
+  border: none;
   width: 80%;
 
 }

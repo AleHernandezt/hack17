@@ -29,7 +29,7 @@ export default class FormDonacionComponent {
   }
 
   onDonanteSeleccionado(charity: CharityInterface) {
-    this.donationService.updateCharity(charity.id!, charity.description);
+    this.donationService.updateCharity(charity.id!, charity.description, charity.razon_social);
   }
 
   onDeleteDonante(){

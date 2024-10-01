@@ -51,6 +51,7 @@ export class DonationService {
       description: '',
       category_id: 0,
       category_name: '',
+      razon_social: '',
       charity_id: 0,
       charity_name: '',
       medications: [],
@@ -65,13 +66,14 @@ export class DonationService {
     this.donation.next(newDonation);
   }
 
-  public updateCharity(id: number, name: string): void {
+  public updateCharity(id: number, name: string, razon_social: string): void {
     const currentDonation = this.donation.getValue();
 
     const newDonation: PostDonationInterface = {
       ...currentDonation,
       charity_id: id,
       charity_name: name,
+      razon_social : razon_social
     };
 
     this.updateDonation(newDonation);

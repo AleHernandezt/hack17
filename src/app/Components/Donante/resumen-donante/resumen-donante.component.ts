@@ -10,7 +10,7 @@ import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
 })
 export class ResumenDonanteComponent {
   @Input()
-  donante: {charityId: number, charityName : string} | null = null
+  donante: {charityId: number, charityName : string, razon_social : string} | null = null
 
   @Output() deleteCharity = new EventEmitter<number>();
 

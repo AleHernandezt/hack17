@@ -34,7 +34,6 @@ export default class FormTratamientoComponent implements OnInit {
   }
 
   onDeletePaciente(){
-    alert("hola")
     this.treatmentService.updatePatient(0, '')
   }
 

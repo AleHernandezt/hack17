@@ -13,7 +13,7 @@
 
     <div *ngIf="donation?.charity_id || donation?.medications?.length" class="treatment-details">
       <app-resumen-donante
-        [donante]="{charityId: donation?.charity_id!, charityName : donation?.charity_name!}"
+        [donante]="{charityId: donation?.charity_id!, charityName : donation?.charity_name!, razon_social : donation?.razon_social!}"
         (deleteCharity)="deleteCharity()"
       ></app-resumen-donante>
 

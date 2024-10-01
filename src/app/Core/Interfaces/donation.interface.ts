@@ -26,6 +26,7 @@ export interface PostDonationInterface {
   category_id?: number;
   category_name: string;
   charity_id: number;
+  razon_social? : string;
   charity_name?: string;
   medications: {
     medication_id: number;

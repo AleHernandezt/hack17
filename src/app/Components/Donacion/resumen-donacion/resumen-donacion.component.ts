@@ -108,7 +108,8 @@ export class ResumenDonacionComponent {
   deleteCharity() {
     const id = 0;
     const name = '';
-    this.donationService.updateCharity(id, name);
+    const razon_social = ''
+    this.donationService.updateCharity(id, name, razon_social);
   }
 
   saveDonation(): void {
