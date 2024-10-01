@@ -1,3 +1,4 @@
+// gestion-donativo.component.ts
 import { Component, OnInit, NgZone } from '@angular/core';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { Table2Component } from '../../../Shared/table2/table2.component';
@@ -14,15 +15,17 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   styleUrls: ['./gestion-donativo.component.css'],
 })
 export default class GestionDonativoComponent implements OnInit {
-deleteDonativo($event: any) {
-throw new Error('Method not implemented.');
-}
-editDonativo($event: any) {
-throw new Error('Method not implemented.');
-}
+  deleteDonativo($event: any) {
+    throw new Error('Method not implemented.');
+  }
+
+  editDonativo($event: any) {
+    throw new Error('Method not implemented.');
+  }
+
   donativos: any[] = [];
-  columnas: string[] = ['id', 'donante_id', 'medicamento_id', 'cantidad'];
-  encabezados: string[] = ['ID', 'ID Donante', 'ID Medicamento', 'Cantidad'];
+  columnas: string[] = ['id', 'descripcion', 'createdAt', 'categoria', 'charity'];
+  encabezados: string[] = ['ID', 'Descripción', 'Fecha de Creación', 'Categoría', 'Razón Social'];
 
   constructor(private ngZone: NgZone) {}
 
@@ -40,7 +43,13 @@ throw new Error('Method not implemented.');
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.donativos = json.data.Donation;
+          this.donativos = json.data.Donation.map((donation: { id: any; description: any; createdAt: any; category: { name: any; }; charity: { razon_social: any; }; }) => ({
+            id: donation.id,
+            descripcion: donation.description,
+            createdAt: donation.createdAt,
+            categoria: donation.category.name,
+            charity: donation.charity.razon_social, // <--- Extract razon social from charity object
+          }));
         });
       });
   }
