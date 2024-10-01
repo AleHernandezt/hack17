@@ -11,6 +11,12 @@
   [columnHeaders]="encabezados"
   [showEdit]="false"
   [showDelete]="false"
-  [showView]="false"
+  [showView]="true"
+  [showEntregado]="false"
+  [showProcesado]="true"
+  [showExpirado]="true"
+  [showCancelado]="false"
+  (view)="verEntrega($event)"
+
 >
 </app-table2>

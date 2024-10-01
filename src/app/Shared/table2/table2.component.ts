@@ -37,7 +37,23 @@ export class Table2Component<T extends Record<string, any>> {
   @Input()
   showView: boolean = true;
 
+  @Input()
+  showProcesado: boolean = false;
+
+  @Input()
+  showExpirado: boolean = false;
+
+  @Input()
+  showEntregado: boolean = false;
+
+  @Input()
+  showCancelado: boolean = false;
+
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
   @Output() view = new EventEmitter<T>();
+  @Output() procesado = new EventEmitter<T>();
+  @Output() expirado = new EventEmitter<T>();
+  @Output() entregado = new EventEmitter<T>();
+  @Output() cancelado = new EventEmitter<T>();
 }

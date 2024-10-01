@@ -141,6 +141,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'gestionEntregado',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-entregado/gestion-entregado.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: 'medicamentosEntrada',
     loadComponent: () =>
       import(
