@@ -33,7 +33,8 @@ export default class GestionDesechoComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   desechos: any[] = [];
-  items: any;
+  columnas: string[] = ['nombre', 'cantidadDesechada', 'razon'];
+  encabezados: string[] = ['Nombre', 'Cantidad Desechada', 'Razón'];
 
   ngOnInit(): void {
     console.log('asdf');
