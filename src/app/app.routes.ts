@@ -90,7 +90,6 @@ export const routes: Routes = [
   },
 
   {
-    // ?esta no esta siendo mostrada
     path: 'gestionFundacion',
     loadComponent: () =>
       import('./Views/Admin/gestion-fundacion/gestion-fundacion.component'),
@@ -129,11 +128,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
 
-  //! esta no esta siendo mostrada
   {
     path: 'gestionPatologia',
     loadComponent: () =>
       import('./Views/Admin/gestion-patologia/gestion-patologia.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'gestionDonativo',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-donativo/gestion-donativo.component'),
     canActivate: [authGuard],
   },
   {

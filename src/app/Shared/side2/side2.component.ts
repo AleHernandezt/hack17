@@ -90,6 +90,11 @@ export class Side2Component implements OnInit {
                 command: () => this.navigateToRoute('crearDonacion'),
               },
               {
+                label: 'Tabla',
+                icon: 'pi pi-file',
+                command: () => this.navigateToRoute('/gestionDonativo'),
+              },
+              {
                 label: 'Estadisticas',
                 icon: 'pi pi-file',
                 command: () => this.navigateToRoute('/'),
