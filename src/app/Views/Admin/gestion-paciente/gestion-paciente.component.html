@@ -1,4 +1,3 @@
-<!-- gestion-paciente.component.html -->
 <app-h1 title="Gestion Paciente"></app-h1>
 <div class="horizontal">
   <app-btn [label]="'Crear Paciente'" [route]="'/crearPaciente'"></app-btn>
@@ -6,7 +5,8 @@
 </div>
 <app-table2
   [items]="pacientes"
-  [columns]="['first_name', 'last_name', 'email', 'phone', 'address', 'id_card']"
+  [columns]="columns"
+  [columnHeaders]="columnHeaders"
   [showEdit]="false"
   [showDelete]="false"
   [showView]="true"

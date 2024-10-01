@@ -78,14 +78,23 @@ export class ResumenEntregaComponent {
     this.toastService.success("eliminado", "alerta")
   }
 
-  saveDelivery(){
+  public saveDelivery(): void {
     this.deliveryService.saveDelivery().subscribe(
       response => {
-        console.log('delivery saved successfully:', response);
+        if (response.success === false) {
+          this.toastService.error("La entrega tiene errores", "Alerta");
+          response.messages.forEach((message: string) => {
+            this.toastService.error(message, "Alerta");
+          });
+        } else {
+          console.log('Delivery saved successfully:', response);
+          this.toastService.success("La entrega se guardó correctamente", "Éxito");
+        }
       },
       error => {
-        console.error('Error saving delivery:', error);
+        this.toastService.error("Ocurrió un error inesperado", "Alerta");
+        console.error('Error inesperado:', error);
       }
-    );;
+    );
   }
 }

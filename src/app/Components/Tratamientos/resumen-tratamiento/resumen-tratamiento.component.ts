@@ -3,6 +3,7 @@ import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resum
 import { CommonModule } from '@angular/common';
 import { TreatmentService } from '../../../Core/Services/treatment.service';
 import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-resumen-tratamiento',
@@ -16,7 +17,10 @@ export class ResumenTratamientoComponent {
 
   treatment: any = {};
 
-  constructor(private treatmentService: TreatmentService) {}
+  constructor(
+    private treatmentService: TreatmentService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit() {
     this.treatmentService.getTreatment().subscribe(data => {
@@ -56,10 +60,19 @@ export class ResumenTratamientoComponent {
   saveTreatment() {
     this.treatmentService.saveTreatment().subscribe(
       response => {
-        console.log('Tratamiento guardado correctamente:', response);
+        if (response.success === false) {
+          this.toastrService.error("El tratamiento tiene errores", "Alerta");
+          response.messages.forEach((message: string) => {
+            this.toastrService.error(message, "Alerta");
+          });
+        } else {
+          console.log('Delivery saved successfully:', response);
+          this.toastrService.success("El tratamiento se guardó correctamente", "Éxito");
+        }
       },
       error => {
-        console.error('Error al guardar el tratamiento:', error);
+        this.toastrService.error("Ocurrió un error inesperado", "Alerta");
+        console.error('Error inesperado:', error);
       }
     );
   }

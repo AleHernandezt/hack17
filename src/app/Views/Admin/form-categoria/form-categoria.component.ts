@@ -5,6 +5,8 @@ import { NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { appSettings } from '../../../settings/appsettings';
+import { z, ZodError } from 'zod';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-categoria',
@@ -14,16 +16,33 @@ import { appSettings } from '../../../settings/appsettings';
   styleUrls: ['./form-categoria.component.css'],
 })
 export default class FormCategoriaComponent implements OnInit {
+  private formSchema = z.object({
+    name: z.string().min(1, { message: "El nombre de la categoría es obligatorio." }),
+    description: z.string().optional(),
+  });
+
   form: any = {
     name: '',
     description: '',
   };
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
 
   ngOnInit(): void {}
 
   createCategory() {
+    // Validar los datos de la categoría
+    try {
+      this.formSchema.parse(this.form);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        error.errors.forEach((err) => {
+          this.toastrService.error(`${err.message}`, 'Alerta');
+        });
+        return;
+      }
+    }
+
     const { headerPost } = getCookieHeader();
     fetch(`${appSettings.apiUrl}category/create`, {
       method: 'POST',
@@ -34,7 +53,7 @@ export default class FormCategoriaComponent implements OnInit {
       .then((json) => {
         console.log(json);
         this.ngZone.run(() => {
-          console.log('Categoría creada con éxito');
+          this.toastrService.success('Categoría creada con éxito');
           this.form = {
             name: '',
             description: '',
@@ -44,7 +63,7 @@ export default class FormCategoriaComponent implements OnInit {
       .catch((error) => {
         console.error(error);
         this.ngZone.run(() => {
-          console.log('Error al crear la categoría');
+          this.toastrService.error('Error al crear la categoría', 'Error');
         });
       });
   }

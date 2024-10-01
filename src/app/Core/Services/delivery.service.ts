@@ -1,28 +1,56 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  DeliveryInterface,
-  MedicationInterface,
-} from '../Interfaces/delivery.interface'; // Asegúrate de que la ruta sea correcta
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { DeliveryInterface, MedicationInterface } from '../Interfaces/delivery.interface'; // Asegúrate de que la ruta sea correcta
 import { TreatmentInterface } from '../Interfaces/treatment.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { z, ZodError } from 'zod';
 import { appSettings } from '../../settings/appsettings';
-import { getCookieHeader } from '../../custom/getCookieHeader';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeliveryService {
-  private delivery: BehaviorSubject<DeliveryInterface> =
-    new BehaviorSubject<DeliveryInterface>({
-      patient_id: 0,
-      patientidCard: 0,
-      treatment_id: 0,
-      appointment_date: '',
-      withdrawal_date: null,
-      expiration_date: '',
-      medications: [],
-    });
+
+  private medicationSchema = z.object({
+    id: z.number().int().optional(),
+    name: z.string().min(1, {
+      message: "El nombre del medicamento es obligatorio."
+    }),
+    delivery_details: z.object({
+      quantity: z.number().int().nonnegative().refine(qty => qty > 0, {
+        message: "La cantidad debe ser un número positivo."
+      }),
+    })
+  });
+
+
+  private deliverySchema = z.object({
+    patient_id: z.number().int().positive().or(z.literal(0)).refine(id => id !== 0, {
+      message: "El paciente es obligatorio"
+    }),
+    treatment_id: z.number().int().positive().or(z.literal(0)).refine(id => id !== 0, {
+      message: "El tratamiento es obligatorio "
+    }),
+    appointment_date: z.string().min(1, {
+      message: "La fecha de la cita es obligatoria."
+    }),
+    expiration_date: z.string().min(1, {
+      message: "La fecha de vencimiento es obligatoria."
+    }),
+    medications: z.array(this.medicationSchema).nonempty({
+      message: "Debe haber al menos un medicamento."
+    })
+  });
+
+  private delivery: BehaviorSubject<DeliveryInterface> = new BehaviorSubject<DeliveryInterface>({
+    patient_id: 0,
+    patientidCard: 0,
+    treatment_id: 0,
+    appointment_date: "",
+    withdrawal_date: null,
+    expiration_date: "",
+    medications: []
+  });
 
   private apiURL = `${appSettings.apiUrl}delivery/`;
 
@@ -128,37 +156,55 @@ export class DeliveryService {
   }
   public onApoinmentDateChange(expirationDate: string): void {
     const currentDelivery = this.delivery.getValue();
-    console.log('holaaaa');
-    this.delivery.next({
-      ...currentDelivery,
-      appointment_date: expirationDate,
-    });
+    this.delivery.next({ ...currentDelivery, appointment_date: expirationDate });
   }
   public onWithdrawalDateChange(expirationDate: string): void {
     const currentDelivery = this.delivery.getValue();
     this.delivery.next({ ...currentDelivery, withdrawal_date: expirationDate });
   }
 
+
+  public validateDelivery(delivery: any): { success: boolean; messages?: string[] } {
+    try {
+      this.deliverySchema.parse(delivery); // Validar usando el esquema
+      return { success: true };
+    } catch (error) {
+      if (error instanceof ZodError) {
+        console.error('Error de validación:', error.errors);
+        const errorMessages = error.errors.map(err => err.message);
+        return { success: false, messages: errorMessages }; // Retorna los mensajes de error
+      } else {
+        console.error('Error inesperado:', error);
+        return { success: false, messages: ['Ocurrió un error inesperado'] };
+      }
+    }
+  }
+
+
   public saveDelivery(): Observable<any> {
     const delivery = this.delivery.getValue();
-    const { headerPost } = getCookieHeader();
+
+    const validationResult = this.validateDelivery(delivery);
+    if (!validationResult.success) {
+      return of({ success: false, messages: validationResult.messages });
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
 
     const data = {
       patient_id: delivery.patient_id,
       treatment_id: delivery.treatment_id,
       appointment_date: delivery.appointment_date,
-      withdrawal_date: delivery.withdrawal_date,
+      withdrawal_date: null,
       expiration_date: delivery.expiration_date,
-      medications: delivery.medications.map((med) => {
-        return {
-          medication_id: med.id,
-          quantity: med.delivery_details.quantity,
-        };
-      }),
+      medications: delivery.medications.map(med => ({
+        medication_id: med.id,
+        quantity: med.delivery_details.quantity
+      }))
     };
 
-    return this.http.post(`${this.apiURL}create`, data, {
-      headers: headerPost,
-    });
+    return this.http.post(`${this.apiURL}create`, data, { headers });
   }
 }

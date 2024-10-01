@@ -6,7 +6,9 @@ import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { FormsModule } from '@angular/forms';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { z, ZodError } from 'zod';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-paciente',
@@ -23,6 +25,26 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./form-paciente.component.css'],
 })
 export default class FormPacienteComponent {
+
+  private formSchema = z.object({
+    first_name: z.string().min(1, { message: "El nombre es obligatorio." }),
+    last_name: z.string().min(1, { message: "El apellido es obligatorio." }),
+    birth_date: z.string().refine(dateStr => {
+    const birthDate = new Date(dateStr);
+    const today = new Date();
+    return birthDate < today;
+  }, { message: "La fecha de nacimiento debe ser anterior a la fecha actual." }),
+    email: z.string().email({ message: "El correo electrónico no es válido." }),
+    id_card_prefix: z.string().min(1, { message: "El prefijo de la cédula es obligatorio." }),
+    id_card: z.string().min(1, { message: "El número de cédula es obligatorio." }),
+    phone: z.string().min(1, { message: "El teléfono es obligatorio." }),
+    address: z.string().min(1, { message: "La dirección es obligatoria." }),
+    gender: z.string().min(1, { message: "El género es obligatorio." }),
+    economic_status: z.string().min(1, { message: "El estado económico es obligatorio." }),
+    pathology_description: z.string().min(1, { message: "La descripción de la patología es obligatoria." }),
+    vulnerability_level: z.string().min(1, { message: "El nivel de vulnerabilidad es obligatorio." }),
+  });
+
   form: any = {
     first_name: '',
     last_name: '',
@@ -40,7 +62,10 @@ export default class FormPacienteComponent {
 
   pathologies: any[] = [];
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getPathologies();
@@ -54,7 +79,7 @@ export default class FormPacienteComponent {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // Imprime los datos en la consola
+        console.log(json);
         this.pathologies = json.data.pathologies.slice(0, 5).map((pathology: { id: any; name: any; }) => ({
           id: pathology.id,
           name: pathology.name,
@@ -69,21 +94,29 @@ export default class FormPacienteComponent {
   }
 
   createPaciente(): void {
-    console.log('Valor del campo id_card:', this.form.id_card);
-    if (
-      !this.form.first_name ||
-      !this.form.last_name ||
-      !this.form.birth_date ||
-      !this.form.email ||
-      !this.form.id_card ||
-      !this.form.phone ||
-      !this.form.address ||
-      !this.form.gender ||
-      !this.form.economic_status ||
-      !this.form.pathology_description
-    ) {
-      alert('Por favor, complete todos los campos');
+
+    const birthDate = new Date(this.form.birth_date);
+    const today = new Date();
+
+    if (isNaN(birthDate.getTime()) || birthDate > today) {
+        this.toastrService.error("La fecha de nacimiento debe ser anterior a la fecha actual.", 'Alerta');
+        return;
+    }
+
+    if (isNaN(Number(this.form.id_card))) {
+      this.toastrService.error("El número de cédula debe ser un número.", 'Alerta');
       return;
+    }
+
+    try {
+      this.formSchema.parse(this.form);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        error.errors.forEach((err) => {
+          this.toastrService.error(`${err.message}`, 'Alerta');
+        });
+        return;
+      }
     }
 
     const paciente = {
@@ -92,7 +125,7 @@ export default class FormPacienteComponent {
       birth_date: this.form.birth_date,
       email: this.form.email,
       cedula: this.form.id_card_prefix + this.form.id_card,
-      id_card: this.form.id_card, // Agrega este campo
+      id_card: this.form.id_card,
       phone: this.form.phone,
       address: this.form.address,
       gender: this.form.gender,
@@ -113,7 +146,7 @@ export default class FormPacienteComponent {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // Log the response from the API
+        console.log(json);
         this.ngZone.run(() => {
           alert('Paciente creado con éxito');
           this.form = {
@@ -133,7 +166,7 @@ export default class FormPacienteComponent {
         });
       })
       .catch((error) => {
-        console.error(error); // Log the error
+        console.error(error);
         this.ngZone.run(() => {
           alert('Error al crear el paciente');
         });

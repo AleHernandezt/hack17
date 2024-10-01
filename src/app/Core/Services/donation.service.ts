@@ -1,7 +1,8 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { PostDonationInterface } from '../Interfaces/donation.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { z, ZodError } from 'zod';
 import { appSettings } from '../../settings/appsettings';
 import { getCookieHeader } from '../../custom/getCookieHeader';
 
@@ -10,6 +11,40 @@ import { getCookieHeader } from '../../custom/getCookieHeader';
 })
 export class DonationService {
   private apiURL = `${appSettings.apiUrl}donation/`;
+
+
+  private dateSchema = z.string().refine(date => {
+    if (!date) {
+        return false;
+    }
+    const today = new Date();
+    const selectedDate = new Date(date);
+    return selectedDate >= today;
+}, {
+    message: "La fecha es obligatoria y no puede ser anterior a la fecha actual."
+});
+
+  private medicationSchema = z.object({
+    medication_id: z.number().int().positive().or(z.literal(0)).refine(id => id !== 0, {
+      message: "El ID del medicamento es requerido y debe ser un número positivo."
+    }),
+    quantity: z.number().int().nonnegative().refine(qty => qty > 0, {
+      message: "La cantidad debe ser un número positivo."
+    }),
+    expiration_date: this.dateSchema,
+  });
+
+  private donationSchema = z.object({
+    description: z.string().min(1, { message: "La descripción es requerida." }),
+    category_id: z.number().int().positive().or(z.literal(0)).refine(id => id !== 0, {
+      message: "La Categoria es Obligatoria"
+    }),
+    charity_id: z.number().int().positive().or(z.literal(0)).refine(id => id !== 0, {
+      message: "Debe seleccionar un Donador"
+    }),
+    medications: z.array(this.medicationSchema).nonempty({ message: "Se requiere al menos un medicamento." }),
+  });
+
 
   public donation: BehaviorSubject<PostDonationInterface> =
     new BehaviorSubject<PostDonationInterface>({
@@ -175,25 +210,49 @@ export class DonationService {
     return this.data;
   }
 
-  public saveDonation() {
+  public validateDonation(donation: any): { success: boolean; messages?: string[] } {
+    try {
+      this.donationSchema.parse(donation);
+      return { success: true };
+    } catch (error) {
+      if (error instanceof ZodError) {
+        console.error('Error de validación:', error.errors);
+        const errorMessages = error.errors.map(err => err.message);
+        return { success: false, messages: errorMessages };
+      } else {
+        console.error('Error inesperado:', error);
+        return { success: false, messages: ['Ocurrió un error inesperado'] };
+      }
+    }
+  }
+
+  public saveDonation(): Observable<any> {
     const donation = this.donation.getValue();
+
+
+    const validationResult = this.validateDonation(donation);
+    if (!validationResult.success) {
+      return of({ success: false, messages: validationResult.messages });
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
     const { headerPost } = getCookieHeader();
 
     const data = {
       description: donation.description,
       category_id: donation.category_id,
       charity_id: donation.charity_id,
-      medications: donation.medications.map((med) => {
-        return {
-          medication_id: med.medication_id,
-          quantity: med.quantity,
-          expiration_date: med.expiration_date,
-        };
-      }),
+      medications: donation.medications.map(med => ({
+        medication_id: med.medication_id,
+        quantity: med.quantity,
+        expiration_date: med.expiration_date
+      }))
     };
 
-    return this.http.post(`${this.apiURL}create`, data, {
-      headers: headerPost,
-    });
+
+    return this.http.post(`${this.apiURL}create`, data, { headers });
   }
+
 }

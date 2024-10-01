@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { z, ZodError } from 'zod';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-comunidad',
@@ -13,42 +15,58 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   styleUrls: ['./form-comunidad.component.css'],
 })
 export default class FormComunidadComponent {
+  private formSchema = z.object({
+    nombre: z.string().min(1, { message: "El nombre de la comunidad es obligatorio." }),
+    region: z.string().min(1, { message: "La región es obligatoria." }),
+  });
+
   form: any = {
     nombre: '',
     region: '',
   };
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
 
   createComunidad(): void {
-    if (this.form.nombre !== '' && this.form.region !== '') {
-      const comunidad = {
-        name: this.form.nombre,
-        region: this.form.region,
-      };
 
-      const { headerPost } = getCookieHeader();
-      fetch(`${appSettings.apiUrl}community/create`, {
-        headers: headerPost,
-        body: JSON.stringify(comunidad),
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          this.ngZone.run(() => {
-            alert('Comunidad creada con éxito');
-            this.form = {
-              nombre: '',
-              region: '',
-            };
-          });
-        })
-        .catch((error) => {
-          console.error(error); // Log the error
-          this.ngZone.run(() => {
-            alert('Error al crear la comunidad');
-          });
+    try {
+      this.formSchema.parse(this.form);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        error.errors.forEach((err) => {
+          this.toastrService.error(`${err.message}`, 'Alerta');
         });
+        return;
+      }
     }
+
+    const comunidad = {
+      name: this.form.nombre,
+      region: this.form.region,
+    };
+
+    const { headerPost } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}community/create`, {
+      method: 'POST',
+      headers: headerPost,
+      body: JSON.stringify(comunidad),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        this.ngZone.run(() => {
+          this.toastrService.success('Comunidad creada con éxito');
+          this.form = {
+            nombre: '',
+            region: '',
+          };
+        });
+      })
+      .catch((error) => {
+        console.error(error); // Log the error
+        this.ngZone.run(() => {
+          this.toastrService.error('Error al crear la comunidad', 'Error');
+        });
+      });
   }
 }
