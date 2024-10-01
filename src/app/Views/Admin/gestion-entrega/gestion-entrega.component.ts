@@ -5,6 +5,7 @@ import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.componen
 import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { appSettings } from '../../../settings/appsettings';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-entrega',
@@ -15,10 +16,14 @@ import { appSettings } from '../../../settings/appsettings';
 })
 export default class GestionEntregaComponent implements OnInit {
   entregas: any[] = [];
-  columnas: string[] = ['id', 'appointment_date', 'withdrawal_date', 'treatment_id', 'patient_id', 'expiration_date', 'status'];
-  encabezados: string[] = ['ID', 'Fecha de Entrega', 'Fecha de Retiro', 'ID de Tratamiento', 'ID de Paciente', 'Fecha de Expiración', 'Estado'];
+  columnas: string[] = ['appointment_date', 'treatment_id', 'patient_id', 'expiration_date', 'status'];
+  encabezados: string[] = ['Fecha de Entrega', 'ID de Tratamiento', 'ID de Paciente', 'Fecha de Expiración', 'Estado'];
 
-  constructor(private ngZone: NgZone) { }
+  verEntrega(item: any) {
+    console.log("pon tu ruta cisor");
+    this.router.navigate(['dashboard']);
+  }
+  constructor(private ngZone: NgZone, private router: Router) { }
 
   ngOnInit(): void {
     this.getEntregas();
