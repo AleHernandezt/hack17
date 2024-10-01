@@ -11,17 +11,22 @@ import { SearchbarComponent } from '../searchbar/searchbar.component';
   styleUrls: ['./table2.component.css'],
 })
 export class Table2Component<T extends Record<string, any>> {
-  //aray de objetos
+  // array of objects
 
   @Input()
   items: T[] = [];
 
-  //arreglo de columnas que se deben mostrar
+  // array of columns to display
 
   @Input()
   columns: string[] = [];
 
-  //se emiten eventos para capturar en el padre
+  // array of column headers in Spanish
+
+  @Input()
+  columnHeaders: string[] = [];
+
+  // emit events to capture in the parent
 
   @Input()
   showEdit: boolean = true;
