@@ -12,10 +12,12 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   standalone: true,
   imports: [H1Component, BtnComponent, SearchbarComponent, Table2Component],
   templateUrl: './devoluciones.component.html',
-  styleUrl: './devoluciones.component.css',
+  styleUrls: ['./devoluciones.component.css'],
 })
 export default class DevolucionesComponent implements OnInit {
   devoluciones: any[] = [];
+  columnas: string[] = ['patient_id', 'treatment_id', 'appointment_date', 'withdrawal_date', 'expiration_date', 'medications'];
+  encabezados: string[] = ['Cedula', 'ID Tratamiento', 'Fecha de Cita', 'Fecha de Retiro', 'Fecha de Caducidad', 'Medicamentos'];
 
   constructor(private ngZone: NgZone) {}
 
