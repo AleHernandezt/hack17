@@ -23,6 +23,32 @@ export default class GestionEntregaComponent implements OnInit {
     console.log("pon tu ruta cisor");
     this.router.navigate(['dashboard']);
   }
+
+  entregado(item: any) {
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}delivery/changeDelivered/${item.id}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify({ status: 'delivered' })
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        // Elimina el elemento de la tabla
+        this.entregas = this.entregas.filter((entrega) => entrega.id !== item.id);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   constructor(private ngZone: NgZone, private router: Router) { }
 
   ngOnInit(): void {

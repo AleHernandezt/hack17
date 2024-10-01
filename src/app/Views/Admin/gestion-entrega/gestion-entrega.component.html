@@ -12,11 +12,11 @@
   [showEdit]="false"
   [showDelete]="false"
   [showView]="true"
-  [showEntregado]="false"
-  [showProcesado]="true"
-  [showExpirado]="true"
+  [showEntregado]="true"
+  [showProcesado]="false"
+  [showExpirado]="false"
   [showCancelado]="false"
   (view)="verEntrega($event)"
-
+  (entregado)="entregado($event)"
 >
 </app-table2>
