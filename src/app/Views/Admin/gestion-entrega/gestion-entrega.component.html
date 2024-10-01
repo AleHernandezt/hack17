@@ -1,2 +1,16 @@
 <app-h1 title="Gestion Entrga"></app-h1>
-<p>gestion-entrega works!</p>
+
+<div class="horizontal">
+  <app-btn [label]="'Crear Entrega'" [route]="'/crearEntrega'"></app-btn>
+  <app-searchbar></app-searchbar>  
+</div>
+
+<app-table2
+  [items]="entregas"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
+  [showEdit]="false"
+  [showDelete]="false"
+  [showView]="false"
+>
+</app-table2>
