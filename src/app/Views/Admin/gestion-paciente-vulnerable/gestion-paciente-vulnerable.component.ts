@@ -1,4 +1,3 @@
-// gestion-paciente-vulnerable.component.ts
 import { Component, OnInit, NgZone } from '@angular/core';
 import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { TableComponent } from '../../../Shared/table/table.component';
@@ -24,6 +23,8 @@ import { Router } from '@angular/router';
 })
 export default class GestionPacienteVulnerableComponent implements OnInit {
   pacientes: any[] = [];
+  columnas: string[] = ['first_name', 'last_name', 'economic_status', 'vulnerability_level', 'phone', 'address'];
+  encabezados: string[] = ['Nombre', 'Apellido', 'Estado Económico', 'Nivel de Vulnerabilidad', 'Teléfono', 'Dirección'];
 
   constructor(private ngZone: NgZone, private router: Router) {}
 
