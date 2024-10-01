@@ -5,11 +5,12 @@ import { fullPatientData } from '../../../Core/Interfaces/fullPatientCard.interf
 import { CommonModule } from '@angular/common';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { BtnComponent } from '../../../Shared/btn/btn.component';
 
 @Component({
   selector: 'app-perfil-paciente',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BtnComponent],
   templateUrl: './perfil-paciente.component.html',
   styleUrls: ['./perfil-paciente.component.css'],
 })

@@ -5,11 +5,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './resumen-paciente.component.html',
-  styleUrl: './resumen-paciente.component.css'
+  styleUrl: './resumen-paciente.component.css',
 })
 export class ResumenPacienteComponent {
   @Input()
-  paciente: { patientName: string; patientId: string } = { patientName: '', patientId: '' };
+  paciente: { patientName: string; patientId: string } = {
+    patientName: '',
+    patientId: '',
+  };
 
   @Output() deletePatient = new EventEmitter<string>();
 

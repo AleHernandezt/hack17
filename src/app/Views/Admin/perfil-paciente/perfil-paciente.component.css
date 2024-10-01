@@ -136,6 +136,9 @@ hr{
     margin: 0 auto;
     align-items: center;
   }
+  .treatments:last-child{
+    margin-bottom: 2rem;
+  }
 
   .treatment-card {
     width: 100%;
@@ -217,4 +220,11 @@ hr{
 
   .treatment-item {
     margin: 1rem;
+  }
+
+  .item-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
   }
