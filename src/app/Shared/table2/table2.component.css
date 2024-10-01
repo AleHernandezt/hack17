@@ -100,8 +100,27 @@ td {
   border-radius: 5px;
   font-size: medium;
 }
+
 .view:hover{
   background-color: #136937;;
+  transform: scale(1.05);
+}
+
+.options{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #bd9425;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: medium;
+}
+
+.options:hover{
+  background-color: #9c7816;;
   transform: scale(1.05);
 }
 
