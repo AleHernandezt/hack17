@@ -8,6 +8,7 @@
     [idPaciente]="delivery!.patient_id"
     [id]="delivery!.patientidCard"
     (tratamientoSeleccionado)="onTratamientoSeleccionado($event)"
+    (deletePatient)="onDeletePaciente()"
   ></app-lista-tratamiento>
 
   <app-resumen-entrega></app-resumen-entrega>

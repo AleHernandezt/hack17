@@ -32,6 +32,10 @@ export default class FormDonacionComponent {
     this.donationService.updateCharity(charity.id!, charity.description);
   }
 
+  onDeleteDonante(){
+    this.donationService.removeCharity()
+  }
+
   onMedicinaSeleccionada(medicina: MedicationInterface) {
     this.donationService.addMedication(medicina.id!, medicina.name!, 1);
   }

@@ -28,7 +28,7 @@ app-btn {
   cursor: pointer;
   border: 2px solid dodgerblue;
   margin-right:  10px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   font-size: medium;

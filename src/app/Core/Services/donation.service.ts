@@ -77,6 +77,18 @@ export class DonationService {
     this.updateDonation(newDonation);
   }
 
+  public removeCharity(){
+    const currentDonation = this.donation.getValue();
+
+    const newDonation: PostDonationInterface = {
+      ...currentDonation,
+      charity_id: 0,
+      charity_name: '',
+    };
+
+    this.updateDonation(newDonation);
+  }
+
   public updateDescription(description: string): void {
     const currentDonation = this.donation.getValue();
     const newDonation = {

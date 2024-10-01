@@ -50,10 +50,11 @@ export class ListaPacientesComponent implements OnInit {
     this.pacienteSeleccionado.emit(paciente);
   }
 
-  realizarBusqueda(busqueda: string) {
+  realizarBusqueda(busqueda: number) {
     this.filteredPatients = this.pacientes.filter((paciente) =>
-      paciente.id_card.toLowerCase().includes(busqueda.toLowerCase())
+      paciente.id_card.toString().includes(busqueda.toString())
     );
+    console.log(this.filteredPatients)
   }
 
   limpiarBusqueda() {
