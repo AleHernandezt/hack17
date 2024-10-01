@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CategoryInterface } from '../../../Core/Interfaces/category.interface';
 import { HttpClient } from '@angular/common/http';
 import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-resumen-donacion',
@@ -46,11 +47,12 @@ export class ResumenDonacionComponent {
       });
     this.loadCategories();
   }
-
   loadCategories() {
+    const { headers } = getCookieHeader();
     this.http
       .get<{ data: { Category: CategoryInterface[] } }>(
-        `${appSettings.apiUrl}category/getAllActive`
+        `${appSettings.apiUrl}category/getAllActive`,
+        { headers }
       )
       .subscribe(
         (response) => {
@@ -111,10 +113,10 @@ export class ResumenDonacionComponent {
 
   saveDonation(): void {
     this.donationService.saveDonation().subscribe(
-      response => {
+      (response) => {
         console.log('Donation saved successfully:', response);
       },
-      error => {
+      (error) => {
         console.error('Error saving donation:', error);
       }
     );
