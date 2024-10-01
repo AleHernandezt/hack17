@@ -20,6 +20,12 @@ export class ListaMedicinasComponent implements OnInit {
 
   @Output() medicinaSeleccionada = new EventEmitter<MedicationInterface>();
 
+  @Output() deletePatient = new EventEmitter<string>();
+
+  delete() {
+    this.deletePatient.emit();
+  }
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {

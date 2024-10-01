@@ -25,8 +25,14 @@ export class ListaTratamientoComponent {
 
   @Output() tratamientoSeleccionado = new EventEmitter<TreatmentInterface>();
 
+  @Output() deletePatient = new EventEmitter<string>();
+
   constructor(private http: HttpClient) {
     this.loadTreatments();
+  }
+
+  delete() {
+    this.deletePatient.emit();
   }
 
   loadTreatments() {

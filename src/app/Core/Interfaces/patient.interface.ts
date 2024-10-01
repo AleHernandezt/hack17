@@ -7,7 +7,7 @@ export interface PatientInterface {
   last_name: string;
   birth_date: Date;
   email: string;
-  id_card: string;
+  id_card: number;
   phone: string;
   address: string;
   gender: string;

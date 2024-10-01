@@ -33,6 +33,11 @@ export default class FormTratamientoComponent implements OnInit {
     console.log(this.treatment)
   }
 
+  onDeletePaciente(){
+    alert("hola")
+    this.treatmentService.updatePatient(0, '')
+  }
+
   onMedicinaSeleccionada(medicina : MedicationInterface){
     this.treatmentService.addMedication(medicina.id!, medicina.name!, 1)
   }

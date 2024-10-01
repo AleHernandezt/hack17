@@ -1,7 +1,7 @@
 .cont{
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 5%;
 }
 
 .wrapper {

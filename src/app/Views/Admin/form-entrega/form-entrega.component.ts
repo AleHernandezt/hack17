@@ -42,6 +42,10 @@ export default class FormEntregaComponent {
     );
   }
 
+  onDeletePaciente(){
+    this.deliveryService.updatePatient(0,0,'')
+  }
+
   onTratamientoSeleccionado(tratamiento: TreatmentInterface) {
     this.deliveryService.updateDelivery({ treatment_id: tratamiento.id! });
     this.deliveryService.addMedicationsFromTreatment(tratamiento);

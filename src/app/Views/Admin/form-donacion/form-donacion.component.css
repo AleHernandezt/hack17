@@ -1,7 +1,7 @@
 .cont{
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 80px;
 }
 
 .wrapper {
@@ -37,4 +37,11 @@
   align-items: start;
   justify-content: start;
   flex-direction: column;
+}
+
+@media (min-width: 1500px) {
+
+  .cont{
+    gap: 100px;
+  }
 }

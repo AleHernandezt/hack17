@@ -21,7 +21,6 @@ export class SearchBarInputComponent {
   searchTerm: string = '';
 
   realizarBusqueda(event: Event) {
-    alert(this.searchTerm)
     event.preventDefault();
     this.search.emit(this.searchTerm);
     this.searchTerm = '';
