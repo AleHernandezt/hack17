@@ -13,8 +13,10 @@
   [items]="filteredCategoria.length > 0 ? filteredCategoria : categories"
   [columns]="columnas"
   [columnHeaders]="encabezados"
-  [showDelete]="false"
+  [showDelete]="true"
   [showEdit]="false"
   [showView]="false"
+  (delete)="deleteCategory($event)"
+
 >
 </app-table2>
