@@ -19,10 +19,12 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
     Table2Component,
   ],
   templateUrl: './medicamentos.component.html',
-  styleUrl: './medicamentos.component.css',
+  styleUrls: ['./medicamentos.component.css'],
 })
 export default class MedicamentosComponent implements OnInit {
   medicamentos: any[] = [];
+  columnas: string[] = ['name', 'quantity'];
+  encabezados: string[] = ['Nombre', 'Cantidad'];
 
   constructor(private ngZone: NgZone) {}
 
