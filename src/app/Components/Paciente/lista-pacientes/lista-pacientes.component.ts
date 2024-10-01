@@ -28,11 +28,11 @@ export class ListaPacientesComponent implements OnInit {
 
   loadPatients() {
     const apiUrl = `${appSettings.apiUrl}patient/getAll`;
-    const { headerPost } = getCookieHeader();
+    const { headers } = getCookieHeader();
     this.http
       .get<{ message: string; data: { Patients: PatientInterface[] } }>(
         apiUrl,
-        { headers: headerPost }
+        { headers }
       )
       .subscribe(
         (response) => {

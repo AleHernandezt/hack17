@@ -1,40 +1,46 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TreatmentInterface } from '../../../Core/Interfaces/treatment.interface';
-import { CardTratamientoComponent } from "../card-tratamiento/card-tratamiento.component";
+import { CardTratamientoComponent } from '../card-tratamiento/card-tratamiento.component';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { appSettings } from '../../../settings/appsettings';
+import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-lista-tratamiento',
   standalone: true,
   imports: [CardTratamientoComponent, CommonModule],
   templateUrl: './lista-tratamiento.component.html',
-  styleUrl: './lista-tratamiento.component.css'
+  styleUrl: './lista-tratamiento.component.css',
 })
 export class ListaTratamientoComponent {
+  @Input()
+  idPaciente: number | null = null;
+  @Input()
+  id: number | null = null;
 
-    @Input()
-    idPaciente : number | null = null
-    @Input()
-    id: number | null = null
-
-    treatments : TreatmentInterface[] | null = null
+  treatments: TreatmentInterface[] | null = null;
 
   filteredTreatments: TreatmentInterface[] = [];
 
-
   @Output() tratamientoSeleccionado = new EventEmitter<TreatmentInterface>();
 
-  constructor(private http : HttpClient) {
+  constructor(private http: HttpClient) {
     this.loadTreatments();
-
   }
 
   loadTreatments() {
-    this.http.get<{data: {Treatment : TreatmentInterface[]}}>('http://localhost:3000/api/treatment/getAll')
-      .subscribe(response => {
-        this.treatments = response.data.Treatment
-        console.log(this.treatments)
+    const { headers } = getCookieHeader();
+    this.http
+      .get<{ data: { Treatment: TreatmentInterface[] } }>(
+        `${appSettings.apiUrl}treatment/getAll`,
+        {
+          headers,
+        }
+      )
+      .subscribe((response) => {
+        this.treatments = response.data.Treatment;
+        console.log(this.treatments);
         this.filterTreatments();
       });
   }
@@ -49,11 +55,12 @@ export class ListaTratamientoComponent {
 
   filterTreatments() {
     if (this.idPaciente !== null) {
-      this.filteredTreatments = this.treatments!.filter(treatment => treatment.patient_id === this.idPaciente);
-      console.log(this.filterTreatments)
+      this.filteredTreatments = this.treatments!.filter(
+        (treatment) => treatment.patient_id === this.idPaciente
+      );
+      console.log(this.filterTreatments);
     } else {
-      return
+      return;
     }
   }
-
 }

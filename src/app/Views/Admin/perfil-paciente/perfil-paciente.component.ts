@@ -136,7 +136,7 @@ export default class PerfilPacienteComponent implements OnInit {
     this.http
       .get<{ data: { message: string; Patient: fullPatientData } }>(
         `${appSettings.apiUrl}patient/getFullPatient/${id}`,
-        { headers: headers }
+        { headers }
       )
       .subscribe(
         (data) => {

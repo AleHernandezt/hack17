@@ -20,10 +20,41 @@ export default class DasboardDonerComponent implements OnInit {
   mostDonatedMedicationsCopy: any[] = [];
   medicationsByCommunity: CommunityMedications[] = [];
   medicationsByCommunityCopy: CommunityMedications[] = [];
+  medicationsExpired: any[] = [];
+  medicationsExpiredCopy: any[] = [];
+  medicationsByExpiredSoon: any[] = [];
+  medicationsByExpiredSoonCopy: any[] = [];
+  medicationsUrgency: any[] = [];
+  medicationsUrgencyCopy: any[] = [];
 
   constructor(private reportesService: ReportesService) {}
+  tabs = [
+    { id: 'required', label: 'Medicamentos más requeridos' },
+    { id: 'donated', label: 'Medicamentos más donados' },
+    { id: 'expired', label: 'Medicamentos vencidos' },
+    { id: 'expiring-soon', label: 'Medicamentos cerca de vencer' },
+    { id: 'urgent', label: 'Medicamentos urgentes' },
+    { id: 'by-community', label: 'Medicamentos por comunidad' },
+  ];
+
+  contents = [
+    { id: 'required', text: 'Medicamentos más requeridos' },
+    { id: 'donated', text: 'Medicamentos más donados' },
+    { id: 'expired', text: 'Medicamentos vencidos' },
+    { id: 'expiring-soon', text: 'Medicamentos cerca de vencer' },
+    { id: 'urgent', text: 'Medicamentos urgentes' },
+    { id: 'by-community', text: 'Medicamentos por comunidad' },
+  ];
+
+  activeTab: string = '';
+
+  onTabClick(tabId: string): void {
+    this.activeTab = tabId;
+  }
 
   ngOnInit() {
+    this.activeTab = this.tabs[0].id;
+
     this.reportesService.getMostRequiredMedications().subscribe(
       (response) => {
         this.mostRequiredMedications = response.data.Medication_Treatment;
@@ -59,6 +90,39 @@ export default class DasboardDonerComponent implements OnInit {
           0,
           3
         );
+      },
+      (error) => {
+        console.error('Error al obtener los datos de comunidad:', error);
+      }
+    );
+
+    this.reportesService.getMedicationsExpired().subscribe(
+      (response) => {
+        this.medicationsExpired = response.data.Medication;
+        this.medicationsExpiredCopy = this.medicationsExpired.slice(0, 10);
+      },
+      (error) => {
+        console.error('Error al obtener los datos de comunidad:', error);
+      }
+    );
+
+    this.reportesService.getMedicationsExpiredSoon().subscribe(
+      (response) => {
+        this.medicationsByExpiredSoon = response.data.Medication;
+        this.medicationsByExpiredSoonCopy = this.medicationsByExpiredSoon.slice(
+          0,
+          3
+        );
+      },
+      (error) => {
+        console.error('Error al obtener los datos de comunidad:', error);
+      }
+    );
+
+    this.reportesService.getMedicationsUrgency().subscribe(
+      (response) => {
+        this.medicationsUrgency = response.data.Medication;
+        this.medicationsUrgencyCopy = this.medicationsUrgency.slice(0, 3);
       },
       (error) => {
         console.error('Error al obtener los datos de comunidad:', error);

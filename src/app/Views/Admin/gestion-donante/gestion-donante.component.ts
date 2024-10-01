@@ -6,6 +6,7 @@ import { H1Component } from '../../../Shared/h1/h1.component';
 import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-donante',
@@ -23,7 +24,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 export default class GestionDonanteComponent implements OnInit {
   donantes: any[] = [];
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
     console.log('holi');
@@ -51,5 +52,9 @@ export default class GestionDonanteComponent implements OnInit {
 
   deleteDonante(donante: any) {
     alert(donante.razon_social);
+  }
+
+  viewDonante(donante: any) {
+    this.router.navigate(['perfilDonador/', donante.id]);
   }
 }

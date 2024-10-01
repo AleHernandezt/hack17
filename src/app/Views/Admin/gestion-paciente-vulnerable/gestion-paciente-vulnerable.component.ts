@@ -42,7 +42,7 @@ export default class GestionPacienteVulnerableComponent implements OnInit {
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.pacientes = json.data.vulnerablePatients.slice(-10); // <--- Muestra los últimos 10 pacientes vulnerables
+          this.pacientes = json.data.vulnerablePatients.slice(0, 20); // <--- Muestra los últimos 10 pacientes vulnerables
         });
       });
   }
