@@ -5,7 +5,8 @@
 </div>
 <app-table2
   [items]="patologias"
-  [columns]="['name']"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
   (edit)="editPatologia($event)"
   (delete)="deletePatologia($event)"
 >

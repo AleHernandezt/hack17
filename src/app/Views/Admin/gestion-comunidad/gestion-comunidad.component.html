@@ -5,7 +5,8 @@
 </div>
 <app-table2
   [items]="comunidades"
-  [columns]="['name', 'region']"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
   (edit)="editComunidad($event)"
   (delete)="deleteComunidad($event)"
 ></app-table2>

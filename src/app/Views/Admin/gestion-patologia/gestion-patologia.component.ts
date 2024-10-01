@@ -16,6 +16,8 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 })
 export default class GestionPatologiaComponent implements OnInit {
   patologias: any[] = [];
+  columnas: string[] = ['name'];
+  encabezados: string[] = ['Nombre'];
 
   constructor(private ngZone: NgZone) {}
 
