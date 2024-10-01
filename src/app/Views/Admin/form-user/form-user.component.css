@@ -8,6 +8,11 @@
   background-color: #fff;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -22,12 +27,19 @@ input[type="text"],
 input[type="number"], 
 input[type="email"],
 input[type="password"],
-select {
+select,
+textarea {
   width: 100%;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: medium;
+}
+
+textarea {
+  min-height: 100px;
+  font-family: inherit;
+  resize: vertical;
 }
 
 .id-card-input {
@@ -84,6 +96,19 @@ select {
   text-align: center;
 }
 
+.donor-fields {
+  margin-top: 20px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  margin-left: 10px;
+}
+
 button[type="button"] {
   width: 100%;
   padding: 10px;
@@ -111,5 +136,4 @@ button[type="button"]:hover {
     width: 90%;
     padding: 15px;
   }
-
 }

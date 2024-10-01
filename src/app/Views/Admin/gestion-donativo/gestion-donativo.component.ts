@@ -1,3 +1,4 @@
+// gestion-donativo.component.ts
 import { Component, OnInit, NgZone } from '@angular/core';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { Table2Component } from '../../../Shared/table2/table2.component';
@@ -5,6 +6,7 @@ import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.componen
 import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-donativo',
@@ -14,17 +16,23 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   styleUrls: ['./gestion-donativo.component.css'],
 })
 export default class GestionDonativoComponent implements OnInit {
-deleteDonativo($event: any) {
-throw new Error('Method not implemented.');
-}
-editDonativo($event: any) {
-throw new Error('Method not implemented.');
-}
-  donativos: any[] = [];
-  columnas: string[] = ['id', 'donante_id', 'medicamento_id', 'cantidad'];
-  encabezados: string[] = ['ID', 'ID Donante', 'ID Medicamento', 'Cantidad'];
+  deleteDonativo($event: any) {
+    throw new Error('Method not implemented.');
+  }
 
-  constructor(private ngZone: NgZone) {}
+  editDonativo($event: any) {
+    throw new Error('Method not implemented.');
+  }
+
+  donativos: any[] = [];
+  columnas: string[] = ['id', 'descripcion', 'createdAt', 'categoria', 'charity'];
+  encabezados: string[] = ['ID', 'Descripción', 'Fecha de Creación', 'Categoría', 'Razón Social'];
+
+  verDonativo(item: any) {
+    console.log("pon tu ruta cisor");
+    this.router.navigate(['dashboard']);
+  }
+  constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
     this.getDonativos();
@@ -40,7 +48,13 @@ throw new Error('Method not implemented.');
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.donativos = json.data.Donation;
+          this.donativos = json.data.Donation.map((donation: { id: any; description: any; createdAt: any; category: { name: any; }; charity: { razon_social: any; }; }) => ({
+            id: donation.id,
+            descripcion: donation.description,
+            createdAt: donation.createdAt,
+            categoria: donation.category.name,
+            charity: donation.charity.razon_social, // <--- Extract razon social from charity object
+          }));
         });
       });
   }
