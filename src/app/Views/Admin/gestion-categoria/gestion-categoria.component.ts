@@ -21,6 +21,8 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   styleUrls: ['./gestion-categoria.component.css'],})
 export default class GestionCategoriaComponent implements OnInit {
   categories: any[] = [];
+  columnas: string[] = ['name', 'description'];
+  encabezados: string[] = ['Nombre', 'Descripción'];
 
   constructor(private ngZone: NgZone) {}
 
