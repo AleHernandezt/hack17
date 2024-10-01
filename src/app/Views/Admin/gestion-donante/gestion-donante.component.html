@@ -7,7 +7,8 @@
 
 <app-table2
   [items]="donantes"
-  [columns]="['razon_social', 'Descripcion', 'Status', 'identification', 'indentification_type', 'is_fundation']"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
   (edit)="editDonante($event)"
   (delete)="deleteDonante($event)"
   (view)="viewDonante($event)"
