@@ -112,10 +112,20 @@ export class ResumenDonacionComponent {
   saveDonation(): void {
     this.donationService.saveDonation().subscribe(
       response => {
-        console.log('Donation saved successfully:', response);
+        if (response.success === false) {
+          this.notificationService.error("La Donacion tiene errores", "Alerta");
+          response.messages?.forEach((message:any) => {
+            this.notificationService.error(message, "Alerta");
+          });
+        } else {
+
+          console.log('donation saved successfully:', response);
+          this.notificationService.success("La Donacion se guardó correctamente", "Éxito");
+        }
       },
       error => {
-        console.error('Error saving donation:', error);
+        console.log('Error recibido:', error);
+        this.notificationService.error("Ocurrió un error inesperado", "Alerta");
       }
     );
   }

@@ -55,6 +55,8 @@ import { FormsModule } from '@angular/forms';
 import { NgZone } from '@angular/core';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { z, ZodError } from 'zod';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-patologia',
@@ -64,13 +66,34 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   styleUrls: ['./form-patologia.component.css'],
 })
 export default class FormPatologiaComponent {
+
+  private patologiaSchema = z.object({
+    name: z.string().min(1, { message: "El nombre de la patología es obligatorio." }),
+  });
+
   patologia = {
     name: '',
   };
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    private toastrService: ToastrService
+  ) {}
 
   createPatologia() {
+
+    try {
+      this.patologiaSchema.parse(this.patologia);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        error.errors.forEach((err) => {
+          this.toastrService.error(`${err.message}`, 'Alerta')
+        });
+        return;
+      }
+    }
+
+
     const { headerPost } = getCookieHeader();
     fetch(`${appSettings.apiUrl}pathology/create`, {
       method: 'POST',
@@ -79,11 +102,11 @@ export default class FormPatologiaComponent {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // Log the response from the API
+        console.log(json);
         if (json.message === 'Contact the administrator: error') {
-          console.log('Error al crear la patología');
+          this.toastrService.error("Error inesperado", 'Error')
         } else {
-          console.log('Patología creada con éxito');
+          this.toastrService.success("Patologia Creada Correctamente")
           this.patologia = {
             name: '',
           };

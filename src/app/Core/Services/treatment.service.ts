@@ -1,15 +1,40 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { TreatmentInterface } from '../Interfaces/treatment.interface';
 import { MedicationInterface } from '../Interfaces/medication.interface';
 import { HttpClient } from '@angular/common/http';
 import { appSettings } from '../../settings/appsettings';
 import { getCookieHeader } from '../../custom/getCookieHeader';
+import { z } from 'zod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TreatmentService {
+
+
+  private medicationSchema = z.object({
+    id: z.number().int().positive(),
+    name: z.string().min(1, { message: "El nombre del medicamento es obligatorio." }),
+    quantity: z.number().int().nonnegative().refine(qty => qty > 0, {
+      message: "La cantidad debe ser un número positivo."
+    })
+  });
+
+  // Esquema de validación para el tratamiento
+  private treatmentSchema = z.object({
+    id: z.number().optional(),
+    patient_id: z.number().int().positive(),
+    patientName: z.string().optional(),
+    observation: z.string().min(1, { message: "La observación es obligatoria." }),
+    status: z.enum(["not supplied", "partially supplied", "supplied"]).optional(),
+    active: z.enum(["active", "inactive", "deleted"]).optional(),
+    medications: z.array(this.medicationSchema).nonempty({ message: "Debe haber al menos un medicamento." }).optional(),
+    createdAt: z.date().optional(),
+    updatedAt: z.date().optional()
+  });
+
+
   private apiURL = `${appSettings.apiUrl}treatment`;
 
   public treatment: BehaviorSubject<TreatmentInterface> =
@@ -141,22 +166,43 @@ export class TreatmentService {
     return this.data;
   }
 
-  public saveTreatment() {
+  public validateTreatment(treatment: any): { success: boolean; messages?: string[] } {
+    try {
+      this.treatmentSchema.parse(treatment); // Validar usando el esquema
+      return { success: true };
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error('Error de validación:', error.errors);
+        const errorMessages = error.errors.map(err => err.message);
+        return { success: false, messages: errorMessages }; // Retorna los mensajes de error
+      } else {
+        console.error('Error inesperado:', error);
+        return { success: false, messages: ['Ocurrió un error inesperado'] };
+      }
+    }
+  }
+
+  public saveTreatment(): Observable<any> {
     const treatment = this.treatment.getValue();
+
+
+    const validationResult = this.validateTreatment(treatment);
+    if (!validationResult.success) {
+      return of({ success: false, messages: validationResult.messages }); // Retorna errores de validación
+    }
+
     const { headerPost } = getCookieHeader();
 
     const data = {
       patient_id: treatment.patient_id,
       observation: treatment.observation,
-      medications: treatment.medications!.map((med) => {
-        return {
-          medication_id: med.id,
-          quantity: med.quantity,
-        };
-      }),
+      medications: treatment.medications!.map(med => ({
+        medication_id: med.id,
+        quantity: med.quantity,
+      })),
     };
 
-    console.log(data)
+    console.log(data);
     return this.http.post(`${this.apiURL}/create`, data, {
       headers: headerPost,
     });
