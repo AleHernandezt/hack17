@@ -29,6 +29,24 @@ export class ReportesService {
     });
   }
 
+  getMedicationsExpired(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getExpired`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getMedicationsExpiredSoon(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getExpireSoon`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getMedicationsUrgency(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getUrgency`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   getMedicationsByCommunity(): Observable<any> {
     return this.http.get(`${this.apiUrl}/getMostRequeriedByCommunity`, {
       headers: this.getHeaders(),
