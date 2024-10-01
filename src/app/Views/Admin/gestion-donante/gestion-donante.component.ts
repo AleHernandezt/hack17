@@ -29,11 +29,12 @@ export default class GestionDonanteComponent implements OnInit {
   ngOnInit(): void {
     console.log('holi');
     this.getDonantes();
+    console.log(this.donantes)
   }
 
   getDonantes() {
     const { headers } = getCookieHeader();
-    fetch(`${appSettings.apiUrl}charity/getAll`, {
+    fetch(`${appSettings.apiUrl}charity/getAllActive`, {
       method: 'GET',
       headers: headers,
     })
