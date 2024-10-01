@@ -1,7 +1,7 @@
 <app-h1 title="Donativos"></app-h1>
 
 <div class="horizontal">
-  <app-btn [label]="'Crear Donativo'" [route]="'/crearDonativo'"></app-btn>
+  <app-btn [label]="'Crear Donativo'" [route]="'/crearDonacion'"></app-btn>
   <app-searchbar></app-searchbar>  
 </div>
 
@@ -9,7 +9,10 @@
   [items]="donativos"
   [columns]="columnas"
   [columnHeaders]="encabezados"
+  [showEdit]="false"
+  [showDelete]="false"
+  [showView]="true"
   (edit)="editDonativo($event)"
-  (delete)="deleteDonativo($event)"
+  (view)="verDonativo($event)"
 >
 </app-table2>

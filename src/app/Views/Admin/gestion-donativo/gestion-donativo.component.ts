@@ -6,6 +6,7 @@ import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.componen
 import { BtnComponent } from '../../../Shared/btn/btn.component';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-donativo',
@@ -27,7 +28,11 @@ export default class GestionDonativoComponent implements OnInit {
   columnas: string[] = ['id', 'descripcion', 'createdAt', 'categoria', 'charity'];
   encabezados: string[] = ['ID', 'Descripción', 'Fecha de Creación', 'Categoría', 'Razón Social'];
 
-  constructor(private ngZone: NgZone) {}
+  verDonativo(item: any) {
+    console.log("pon tu ruta cisor");
+    this.router.navigate(['dashboard']);
+  }
+  constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
     this.getDonativos();
