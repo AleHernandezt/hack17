@@ -4,7 +4,6 @@ import { TableComponent } from '../../../Shared/table/table.component';
 import { Table2Component } from '../../../Shared/table2/table2.component';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
-import { NgForOf } from '@angular/common';
 import { NgZone } from '@angular/core';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { appSettings } from '../../../settings/appsettings';
@@ -18,28 +17,22 @@ import { appSettings } from '../../../settings/appsettings';
     TableComponent,
     Table2Component,
     SearchbarComponent,
-    NgForOf,
   ],
   templateUrl: './gestion-comunidad.component.html',
   styleUrls: ['./gestion-comunidad.component.css'],
 })
 export default class GestionComunidadComponent implements OnInit {
-  constructor(private ngZone: NgZone) {}
-
-  deleteComunidad($event: any) {
-    throw new Error('Method not implemented.');
-  }
-  editComunidad($event: any) {
-    throw new Error('Method not implemented.');
-  }
   comunidades: any[] = [];
+  filteredComunidad: any[] = [];
   columnas: string[] = ['name', 'region'];
   encabezados: string[] = ['Nombre', 'Región'];
 
+  constructor(private ngZone: NgZone) {}
+
   ngOnInit(): void {
-    console.log('asdf');
     this.getPost();
   }
+
   getPost() {
     const { headers } = getCookieHeader();
     fetch(`${appSettings.apiUrl}community/getAll`, {
@@ -50,8 +43,28 @@ export default class GestionComunidadComponent implements OnInit {
       .then((json) => {
         this.ngZone.run(() => {
           this.comunidades = json.data.Community;
+          this.filteredComunidad = this.comunidades
+
         });
         console.log(json);
       });
+  }
+
+  filterComunidades(search: string) {
+    this.filteredComunidad = this.comunidades.filter(comunidad =>
+      comunidad.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  cleanSearch() {
+    this.filteredComunidad = this.comunidades;
+  }
+
+  deleteComunidad($event: any) {
+    alert(`Eliminar comunidad con ID: ${$event.id}`);
+  }
+
+  editComunidad($event: any) {
+    alert(`Editar comunidad con ID: ${$event.id}`);
   }
 }

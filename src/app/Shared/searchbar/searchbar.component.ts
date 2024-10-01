@@ -10,7 +10,7 @@ import { BtnComponent } from "../btn/btn.component";
   standalone: true,
   imports: [InputIconModule, IconFieldModule, InputTextModule, FormsModule, BtnComponent],
   templateUrl: './searchbar.component.html',
-  styleUrls: ['./searchbar.component.css'], // Corrección aquí
+  styleUrls: ['./searchbar.component.css'],
 })
 export class SearchbarComponent {
   @Input()

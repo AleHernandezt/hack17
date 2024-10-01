@@ -2,11 +2,15 @@
 
 <div class="horizontal">
   <app-btn [label]="'Crear Donante'" [route]="'/crearDonante'"></app-btn>
-  <app-searchbar></app-searchbar>  
+  <app-searchbar
+    placeholder="Buscar por Rif"
+    (search)="filterDonantes($event)"
+    (clean)="cleanSearch()"
+  ></app-searchbar>
 </div>
 
 <app-table2
-  [items]="donantes"
+  [items]="filteredDonantes"
   [columns]="columnas"
   [columnHeaders]="encabezados"
   (edit)="editDonante($event)"

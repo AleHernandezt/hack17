@@ -21,6 +21,9 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
   styleUrls: ['./gestion-categoria.component.css'],})
 export default class GestionCategoriaComponent implements OnInit {
   categories: any[] = [];
+  filteredCategoria : any[] = []
+
+
   columnas: string[] = ['name', 'description'];
   encabezados: string[] = ['Nombre', 'Descripción'];
 
@@ -44,6 +47,19 @@ export default class GestionCategoriaComponent implements OnInit {
           this.categories = json.data.Category; // <--- Cambia esto
         });
       });
+  }
+
+  filterCategories(search: string) {
+    alert(search)
+    this.filteredCategoria = this.categories.filter(category =>
+      category.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    console.log(this.filteredCategoria)
+  }
+
+  cleanSearch(){
+    this.filteredCategoria = []
   }
 
   editCategory(category: any) {

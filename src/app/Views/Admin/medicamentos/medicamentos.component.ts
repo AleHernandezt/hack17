@@ -23,6 +23,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 })
 export default class MedicamentosComponent implements OnInit {
   medicamentos: any[] = [];
+  filteredMedicamentos: any[] = [];
   columnas: string[] = ['name', 'quantity'];
   encabezados: string[] = ['Nombre', 'Cantidad'];
 
@@ -40,7 +41,6 @@ export default class MedicamentosComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         if (
           json &&
           json.data &&
@@ -49,11 +49,22 @@ export default class MedicamentosComponent implements OnInit {
         ) {
           this.ngZone.run(() => {
             this.medicamentos = json.data.Medication.slice(0, 10);
+            this.filteredMedicamentos = this.medicamentos;
           });
         } else {
           console.error('La API no devolvió un arreglo de medicamentos');
         }
       });
+  }
+
+  filterMedicamentos(search: string) {
+    this.filteredMedicamentos = this.medicamentos.filter(medicamento =>
+      medicamento.name.toLowerCase().includes(search.toLowerCase()) // Filtra por nombre
+    );
+  }
+
+  cleanSearch() {
+    this.filteredMedicamentos = this.medicamentos;
   }
 
   editMedicamento(medicamento: any) {

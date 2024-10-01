@@ -1,10 +1,14 @@
 <app-h1 title="Medicamentos"></app-h1>
 <div class="horizontal">
   <app-btn [label]="'Crear Medicamento'" [route]="'/crearMedicamento'"></app-btn>
-  <app-searchbar></app-searchbar>  
+  <app-searchbar
+    placeholder="Buscar por Nombre"
+    (search)="filterMedicamentos($event)"
+    (clean)="cleanSearch()"
+  ></app-searchbar>
 </div>
 <app-table2
-  [items]="medicamentos"
+  [items]="filteredMedicamentos"
   [columns]="columnas"
   [columnHeaders]="encabezados"
   (edit)="editMedicamento($event)"

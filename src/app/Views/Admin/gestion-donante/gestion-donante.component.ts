@@ -23,15 +23,14 @@ import { Router } from '@angular/router';
 })
 export default class GestionDonanteComponent implements OnInit {
   donantes: any[] = [];
-  columnas: string[] = ['razon_social','indentification_type',  'identification', 'is_fundation'];
-  encabezados: string[] = ['Razón Social', 'Tipo de Identificación','Cedula',  'Es Fundación'];
+  filteredDonantes: any[] = [];
+  columnas: string[] = ['razon_social', 'indentification_type', 'identification', 'is_fundation'];
+  encabezados: string[] = ['Razón Social', 'Tipo de Identificación', 'Cédula', 'Es Fundación'];
 
   constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('holi');
     this.getDonantes();
-    console.log(this.donantes)
   }
 
   getDonantes() {
@@ -42,11 +41,21 @@ export default class GestionDonanteComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.donantes = json.data.Charity; // <--- Asigna el arreglo de objetos a la variable
+          this.donantes = json.data.Charity;
+          this.filteredDonantes = this.donantes;
         });
       });
+  }
+
+  filterDonantes(search: string) {
+    this.filteredDonantes = this.donantes.filter(donante =>
+      donante.identification.toString().includes(search)
+    );
+  }
+
+  cleanSearch() {
+    this.filteredDonantes = this.donantes;
   }
 
   editDonante(donante: any) {

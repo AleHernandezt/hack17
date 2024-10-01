@@ -17,14 +17,13 @@ import { Router } from '@angular/router';
 })
 export default class GestionPacienteComponent implements OnInit {
   pacientes: any[] = [];
+  filteredPacientes: any[] = [];
   columnHeaders: string[] = ['Nombre', 'Apellido', 'Email', 'Telefono', 'Direccion', 'Cedula'];
   columns: string[] = ['first_name', 'last_name', 'email', 'phone', 'address', 'id_card'];
 
   constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('dios');
-
     this.getPost();
   }
 
@@ -36,21 +35,31 @@ export default class GestionPacienteComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
         if (
           json &&
           json.data &&
           json.data.Patients &&
           Array.isArray(json.data.Patients)
         ) {
-          const pacientesOrdenados = json.data.Patients.sort((a: { id: number; }, b: { id: number; }) => b.id - a.id);
+          const pacientesOrdenados = json.data.Patients.sort((a: { id: number }, b: { id: number }) => b.id - a.id);
           this.ngZone.run(() => {
-            this.pacientes = pacientesOrdenados.slice(0, 10); // Obtener los últimos 10 elementos
+            this.pacientes = pacientesOrdenados.slice(0, 10);
+            this.filteredPacientes = this.pacientes;
           });
         } else {
           console.error('La API no devolvió un arreglo de pacientes');
         }
       });
+  }
+
+  filterPacientes(search: string) {
+    this.filteredPacientes = this.pacientes.filter(paciente =>
+      paciente.id_card.toString().includes(search) // Filtra por cédula
+    );
+  }
+
+  cleanSearch() {
+    this.filteredPacientes = this.pacientes;
   }
 
   editPaciente(paciente: any) {

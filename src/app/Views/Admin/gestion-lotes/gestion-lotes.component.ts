@@ -15,6 +15,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 })
 export default class GestionLotesComponent implements OnInit {
   lotes: any[] = [];
+  filteredLotes: any[] = [];
   columnas: string[] = ['medication_id', 'expiration_date', 'quantity'];
   encabezados: string[] = ['Medicamento', 'Fecha de Caducidad', 'Cantidad'];
 
@@ -32,10 +33,21 @@ export default class GestionLotesComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.lotes = json.data.MedicationExpirationDate.slice(-10); // <--- Muestra los últimos 10 lotes de medicamentos
+          this.lotes = json.data.MedicationExpirationDate.slice(-10);
+          this.filteredLotes = this.lotes;
         });
       });
+  }
+
+  filterLotes(search: string) {
+    console.log(this.filteredLotes)
+    this.filteredLotes = this.lotes.filter(lote =>
+      lote.medication.name.toLowerCase().includes(search.toLowerCase()) // Filtra por nombre de medicamento
+    );
+  }
+
+  cleanSearch() {
+    this.filteredLotes = this.lotes;
   }
 }

@@ -1,10 +1,14 @@
 <app-h1 title="Gestion Paciente"></app-h1>
 <div class="horizontal">
   <app-btn [label]="'Crear Paciente'" [route]="'/crearPaciente'"></app-btn>
-  <app-searchbar></app-searchbar>  
+  <app-searchbar
+    placeholder="Buscar por Cédula"
+    (search)="filterPacientes($event)"
+    (clean)="cleanSearch()"
+  ></app-searchbar>
 </div>
 <app-table2
-  [items]="pacientes"
+  [items]="filteredPacientes"
   [columns]="columns"
   [columnHeaders]="columnHeaders"
   [showEdit]="false"

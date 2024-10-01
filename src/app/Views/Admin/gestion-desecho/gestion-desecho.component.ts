@@ -4,7 +4,6 @@ import { TableComponent } from '../../../Shared/table/table.component';
 import { Table2Component } from '../../../Shared/table2/table2.component';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
-import { NgForOf } from '@angular/common';
 import { NgZone } from '@angular/core';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { appSettings } from '../../../settings/appsettings';
@@ -18,28 +17,22 @@ import { appSettings } from '../../../settings/appsettings';
     TableComponent,
     Table2Component,
     SearchbarComponent,
-    NgForOf,
   ],
   templateUrl: './gestion-desecho.component.html',
   styleUrls: ['./gestion-desecho.component.css'],
 })
 export default class GestionDesechoComponent implements OnInit {
-  constructor(private ngZone: NgZone) {}
-
-  deleteDesecho($event: any) {
-    throw new Error('Method not implemented.');
-  }
-  editDesecho($event: any) {
-    throw new Error('Method not implemented.');
-  }
   desechos: any[] = [];
+  filteredDesechos: any[] = [];
   columnas: string[] = ['nombre', 'cantidadDesechada', 'razon'];
   encabezados: string[] = ['Nombre', 'Cantidad Desechada', 'Razón'];
 
+  constructor(private ngZone: NgZone) {}
+
   ngOnInit(): void {
-    console.log('asdf');
     this.getPost();
   }
+
   getPost() {
     const { headers } = getCookieHeader();
     fetch(`${appSettings.apiUrl}medication_disposal/getAll`, {
@@ -52,21 +45,37 @@ export default class GestionDesechoComponent implements OnInit {
         const medicamentos: { nombre: any; cantidadDesechada: any; razon: any; }[] = [];
         desechos.forEach((desecho: { medication_id: any; medication: any; quantity: any; reason: any; }) => {
           const medicamentoId = desecho.medication_id;
-          console.log('Medicamento ID:', medicamentoId);
           const medicamento = desecho.medication;
           if (medicamento) {
-            this.ngZone.run(() => {
-              medicamentos.push({
-                nombre: medicamento.name,
-                cantidadDesechada: desecho.quantity,
-                razon: desecho.reason,
-              });
+            medicamentos.push({
+              nombre: medicamento.name,
+              cantidadDesechada: desecho.quantity,
+              razon: desecho.reason,
             });
           }
         });
         this.ngZone.run(() => {
           this.desechos = medicamentos.slice(-10);
+          this.filteredDesechos = this.desechos;
         });
       });
+  }
+
+  filterDesechos(search: string) {
+    this.filteredDesechos = this.desechos.filter(desecho =>
+      desecho.nombre.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  cleanSearch() {
+    this.filteredDesechos = this.desechos;
+  }
+
+  deleteDesecho($event: any) {
+    alert(`Eliminar desecho con ID: ${$event.id}`);
+  }
+
+  editDesecho($event: any) {
+    alert(`Editar desecho con ID: ${$event.id}`);
   }
 }

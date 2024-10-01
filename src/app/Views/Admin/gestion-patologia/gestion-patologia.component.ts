@@ -16,6 +16,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 })
 export default class GestionPatologiaComponent implements OnInit {
   patologias: any[] = [];
+  filteredPatologias: any[] = [];
   columnas: string[] = ['name'];
   encabezados: string[] = ['Nombre'];
 
@@ -33,7 +34,6 @@ export default class GestionPatologiaComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         if (
           json &&
           json.data &&
@@ -41,9 +41,10 @@ export default class GestionPatologiaComponent implements OnInit {
           Array.isArray(json.data.pathologies)
         ) {
           const patologias = json.data.pathologies;
-          const ultimos10 = patologias.slice(-10); // <--- Carga los últimos 10 registros
+          const ultimos10 = patologias.slice(-10);
           this.ngZone.run(() => {
             this.patologias = ultimos10;
+            this.filteredPatologias = this.patologias;
           });
         } else {
           console.error('La API no devolvió un arreglo de patologías');
@@ -51,11 +52,21 @@ export default class GestionPatologiaComponent implements OnInit {
       });
   }
 
+  filterPatologias(search: string) {
+    this.filteredPatologias = this.patologias.filter(patologia =>
+      patologia.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  cleanSearch() {
+    this.filteredPatologias = this.patologias;
+  }
+
   editPatologia(patologia: any) {
-    alert(patologia);
+    alert(patologia.name);
   }
 
   deletePatologia(patologia: any) {
-    alert(patologia);
+    alert(patologia.name);
   }
 }

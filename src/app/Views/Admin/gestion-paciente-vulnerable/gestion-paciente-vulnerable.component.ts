@@ -23,13 +23,13 @@ import { Router } from '@angular/router';
 })
 export default class GestionPacienteVulnerableComponent implements OnInit {
   pacientes: any[] = [];
+  filteredPacientes: any[] = [];
   columnas: string[] = ['first_name', 'last_name', 'economic_status', 'vulnerability_level', 'phone', 'address'];
   encabezados: string[] = ['Nombre', 'Apellido', 'Estado Económico', 'Nivel de Vulnerabilidad', 'Teléfono', 'Dirección'];
 
   constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('holi');
     this.getPacientes();
   }
 
@@ -41,11 +41,21 @@ export default class GestionPacienteVulnerableComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.pacientes = json.data.vulnerablePatients.slice(0, 20); // <--- Muestra los últimos 10 pacientes vulnerables
+          this.pacientes = json.data.vulnerablePatients.slice(0, 20);
+          this.filteredPacientes = this.pacientes;
         });
       });
+  }
+
+  filterPacientes(search: string) {
+    this.filteredPacientes = this.pacientes.filter(paciente =>
+      paciente.id_card.toString().includes(search)
+    );
+  }
+
+  cleanSearch() {
+    this.filteredPacientes = this.pacientes;
   }
 
   onView(paciente: any) {
