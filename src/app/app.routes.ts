@@ -58,12 +58,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'crearDonacion',
-    loadComponent: () =>
-      import('./Views/Admin/form-donacion/form-donacion.component'),
-    canActivate: [authGuard],
-  },
-  {
     path: 'gestionCategoria',
     loadComponent: () =>
       import('./Views/Admin/gestion-categoria/gestion-categoria.component'),
@@ -73,18 +67,6 @@ export const routes: Routes = [
     path: 'gestionComunidad',
     loadComponent: () =>
       import('./Views/Admin/gestion-comunidad/gestion-comunidad.component'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'crearMedicina',
-    loadComponent: () =>
-      import('./Views/Admin/form-medicina/form-medicina.component'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'crearEntrega',
-    loadComponent: () =>
-      import('./Views/Admin/form-entrega/form-entrega.component'),
     canActivate: [authGuard],
   },
   {
