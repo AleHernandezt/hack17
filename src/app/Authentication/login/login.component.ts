@@ -37,6 +37,7 @@ export default class LoginComponent {
   constructor(
     private toastrService : ToastrService
   ){}
+
   private accesoService = inject(AccesoService);
   private router = inject(Router);
   public formBuild = inject(FormBuilder);
