@@ -15,6 +15,7 @@ import { BtnComponent } from '../../Shared/btn/btn.component';
 import { CardModule } from 'primeng/card';
 import { setCookie } from './cookies';
 import { InputTextComponent } from '../../Shared/input-text/input-text.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,10 @@ import { InputTextComponent } from '../../Shared/input-text/input-text.component
   styleUrl: './login.component.css',
 })
 export default class LoginComponent {
+
+  constructor(
+    private toastrService : ToastrService
+  ){}
   private accesoService = inject(AccesoService);
   private router = inject(Router);
   public formBuild = inject(FormBuilder);
@@ -55,11 +60,12 @@ export default class LoginComponent {
           setCookie('access_token', data.data.token);
           this.router.navigate(['dashboard']);
         } else {
-          alert('Credenciales son incorrectas');
+          this.toastrService.error('Las Credenciales son incorrectas');
         }
       },
       error: (error) => {
-        console.log(error.message);
+        this.toastrService.error('Las Credenciales son incorrectas');
+        console.log(error.message)
       },
     });
   }
