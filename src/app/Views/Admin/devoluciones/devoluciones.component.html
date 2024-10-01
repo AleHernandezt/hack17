@@ -5,7 +5,8 @@
 </div>
 <app-table2
   [items]="devoluciones"
-  [columns]="['patient_id', 'treatment_id', 'appointment_date', 'withdrawal_date', 'expiration_date', 'medications']"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
   (edit)="editDevolucion($event)"
   (delete)="deleteDevolucion($event)"
 >

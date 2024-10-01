@@ -1,13 +1,14 @@
-<app-h1 title="Categoria"></app-h1>
+<app-h1 title="Categoría"></app-h1>
 
 <div class="horizontal">
-  <app-btn [label]="'Crear Categoria'" [route]="'/crearCategoria'"></app-btn>
+  <app-btn [label]="'Crear Categoría'" [route]="'/crearCategoria'"></app-btn>
   <app-searchbar></app-searchbar>  
 </div>
 
 <app-table2
   [items]="categories"
-  [columns]="['name', 'description']"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
   [showDelete]="false"
   [showEdit]="false"
   [showView]="false"

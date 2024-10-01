@@ -23,6 +23,8 @@ import { Router } from '@angular/router';
 })
 export default class GestionDonanteComponent implements OnInit {
   donantes: any[] = [];
+  columnas: string[] = ['razon_social','indentification_type',  'identification', 'is_fundation'];
+  encabezados: string[] = ['Razón Social', 'Tipo de Identificación','Cedula',  'Es Fundación'];
 
   constructor(private ngZone: NgZone, private router: Router) {}
 

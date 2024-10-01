@@ -7,26 +7,32 @@ import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 
 @Component({
-  selector: 'app-gestion-lotes',
+  selector: 'app-gestion-donativo',
   standalone: true,
   imports: [H1Component, Table2Component, SearchbarComponent, BtnComponent],
-  templateUrl: './gestion-lotes.component.html',
-  styleUrls: ['./gestion-lotes.component.css'],
+  templateUrl: './gestion-donativo.component.html',
+  styleUrls: ['./gestion-donativo.component.css'],
 })
-export default class GestionLotesComponent implements OnInit {
-  lotes: any[] = [];
-  columnas: string[] = ['medication_id', 'expiration_date', 'quantity'];
-  encabezados: string[] = ['Medicamento', 'Fecha de Caducidad', 'Cantidad'];
+export default class GestionDonativoComponent implements OnInit {
+deleteDonativo($event: any) {
+throw new Error('Method not implemented.');
+}
+editDonativo($event: any) {
+throw new Error('Method not implemented.');
+}
+  donativos: any[] = [];
+  columnas: string[] = ['id', 'donante_id', 'medicamento_id', 'cantidad'];
+  encabezados: string[] = ['ID', 'ID Donante', 'ID Medicamento', 'Cantidad'];
 
   constructor(private ngZone: NgZone) {}
 
   ngOnInit(): void {
-    this.getLotes();
+    this.getDonativos();
   }
 
-  getLotes() {
+  getDonativos() {
     const { headers } = getCookieHeader();
-    fetch(`${appSettings.apiUrl}medication_expiration/getAll`, {
+    fetch(`${appSettings.apiUrl}donation/getAll`, {
       method: 'GET',
       headers: headers,
     })
@@ -34,7 +40,7 @@ export default class GestionLotesComponent implements OnInit {
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.lotes = json.data.MedicationExpirationDate.slice(-10); // <--- Muestra los últimos 10 lotes de medicamentos
+          this.donativos = json.data.Donation;
         });
       });
   }

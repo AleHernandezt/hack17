@@ -16,7 +16,7 @@
 }
 .cards-cont{
   display: grid;
-  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
   gap: 55px;
   align-items: start;
   overflow-y: scroll;
@@ -30,5 +30,11 @@
   .card{
     min-width: 290px;
     max-width: 290px;
+  }
+}
+@media (width > 1300px) {
+  .cards-cont{
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+
   }
 }

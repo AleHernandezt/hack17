@@ -1,4 +1,3 @@
-// gestion-paciente.component.ts
 import { Component, OnInit } from '@angular/core';
 import { H1Component } from '../../../Shared/h1/h1.component';
 import { BtnComponent } from '../../../Shared/btn/btn.component';
@@ -18,6 +17,9 @@ import { Router } from '@angular/router';
 })
 export default class GestionPacienteComponent implements OnInit {
   pacientes: any[] = [];
+  columnHeaders: string[] = ['Nombre', 'Apellido', 'Email', 'Telefono', 'Direccion', 'Cedula'];
+  columns: string[] = ['first_name', 'last_name', 'email', 'phone', 'address', 'id_card'];
+
   constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {

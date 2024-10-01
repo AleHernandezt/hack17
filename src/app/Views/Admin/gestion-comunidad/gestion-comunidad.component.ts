@@ -19,9 +19,10 @@ import { appSettings } from '../../../settings/appsettings';
     Table2Component,
     SearchbarComponent,
     NgForOf,
-  ], // <--- Add NgForOf
+  ],
   templateUrl: './gestion-comunidad.component.html',
-  styleUrls: ['./gestion-comunidad.component.css'],})
+  styleUrls: ['./gestion-comunidad.component.css'],
+})
 export default class GestionComunidadComponent implements OnInit {
   constructor(private ngZone: NgZone) {}
 
@@ -32,7 +33,8 @@ export default class GestionComunidadComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
   comunidades: any[] = [];
-  items: any;
+  columnas: string[] = ['name', 'region'];
+  encabezados: string[] = ['Nombre', 'Región'];
 
   ngOnInit(): void {
     console.log('asdf');

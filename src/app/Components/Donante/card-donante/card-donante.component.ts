@@ -6,9 +6,10 @@ import { CharityInterface } from '../../../Core/Interfaces/charity.interface';
   standalone: true,
   imports: [],
   templateUrl: './card-donante.component.html',
-  styleUrl: './card-donante.component.css'
+  styleUrl: './card-donante.component.css',
 })
 export class CardDonanteComponent {
   @Input()
-  charity : CharityInterface | null = null
+  charity: CharityInterface | null = null;
+  id_card = `${this.charity?.indentification_type}-${this.charity?.identification}`;
 }

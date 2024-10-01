@@ -1,0 +1,15 @@
+<app-h1 title="Donativos"></app-h1>
+
+<div class="horizontal">
+  <app-btn [label]="'Crear Donativo'" [route]="'/crearDonativo'"></app-btn>
+  <app-searchbar></app-searchbar>  
+</div>
+
+<app-table2
+  [items]="donativos"
+  [columns]="columnas"
+  [columnHeaders]="encabezados"
+  (edit)="editDonativo($event)"
+  (delete)="deleteDonativo($event)"
+>
+</app-table2>
