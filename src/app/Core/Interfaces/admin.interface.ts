@@ -9,6 +9,9 @@ export interface Admin {
   confirm_password: string;
   status?: 'active' | 'inactive' | 'deleted';
   userType: 'admin' | 'donor';
+  razon_social?: string;
+  description?: string;
+  is_fundation?: boolean;
 }
 
 export interface Login {

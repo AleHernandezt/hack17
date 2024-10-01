@@ -7,11 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { Admin } from '../../../Core/Interfaces/admin.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-usuario',
   standalone: true,
   imports: [
+    CommonModule,
     H1Component,
     CardComponent,
     InputTextComponent,
@@ -31,6 +33,9 @@ export default class FormUserComponent {
     password: '',
     confirm_password: '',
     userType: 'donor',
+    razon_social: '',
+    description: '',
+    is_fundation: false,
   };
 
   selectUserType(type: 'admin' | 'donor') {
@@ -57,6 +62,15 @@ export default class FormUserComponent {
       return;
     }
 
+    if (this.form.userType === 'donor') {
+      if (!this.form.razon_social || !this.form.description) {
+        alert(
+          'Por favor, complete todos los campos adicionales para el tipo de usuario "donor"'
+        );
+        return;
+      }
+    }
+
     const user = {
       first_name: this.form.first_name,
       last_name: this.form.last_name,
@@ -64,6 +78,11 @@ export default class FormUserComponent {
       cedula: this.form.id_card_prefix + this.form.id_card,
       password: this.form.password,
       userType: this.form.userType,
+      ...(this.form.userType === 'donor' && {
+        razon_social: this.form.razon_social,
+        description: this.form.description,
+        is_fundation: this.form.is_fundation,
+      }),
     };
 
     const { headerPost } = getCookieHeader();
@@ -86,6 +105,9 @@ export default class FormUserComponent {
             password: '',
             confirm_password: '',
             userType: 'admin',
+            razon_social: '',
+            description: '',
+            is_fundation: false,
           };
         });
       })
