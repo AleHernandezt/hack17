@@ -15,6 +15,8 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 })
 export default class GestionLotesComponent implements OnInit {
   lotes: any[] = [];
+  columnas: string[] = ['medication_id', 'expiration_date', 'quantity'];
+  encabezados: string[] = ['Medicamento', 'Fecha de Caducidad', 'Cantidad'];
 
   constructor(private ngZone: NgZone) {}
 
