@@ -8,7 +8,7 @@ import { getCookieHeader } from '../../custom/getCookieHeader';
   providedIn: 'root',
 })
 export class ReportesService {
-  private apiUrl = `${appSettings.apiUrl}medication`; // URL de tu API
+  private apiUrl = `${appSettings.apiUrl}`;
 
   constructor(private http: HttpClient) {}
 
@@ -18,37 +18,58 @@ export class ReportesService {
   }
 
   getMostRequiredMedications(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getMostRequired`, {
+    return this.http.get(`${this.apiUrl}medication/getMostRequired`, {
       headers: this.getHeaders(),
     });
   }
 
   getMostDonatedMedications(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getMostDonated`, {
+    return this.http.get(`${this.apiUrl}medication/getMostDonated`, {
       headers: this.getHeaders(),
     });
   }
 
   getMedicationsExpired(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getExpired`, {
+    return this.http.get(`${this.apiUrl}medication/getExpired`, {
       headers: this.getHeaders(),
     });
   }
 
   getMedicationsExpiredSoon(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getExpireSoon`, {
+    return this.http.get(`${this.apiUrl}medication/getExpireSoon`, {
       headers: this.getHeaders(),
     });
   }
 
   getMedicationsUrgency(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getUrgency`, {
+    return this.http.get(`${this.apiUrl}medication/getUrgency`, {
       headers: this.getHeaders(),
     });
   }
 
   getMedicationsByCommunity(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getMostRequeriedByCommunity`, {
+    return this.http.get(
+      `${this.apiUrl}medication/getMostRequeriedByCommunity`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  getCommunitiesMostDelivered(): Observable<any> {
+    return this.http.get(`${this.apiUrl}delivery/getCommunitiesMostDelivered`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getDeliveredMedications(): Observable<any> {
+    return this.http.get(`${this.apiUrl}delivery/getDeliveredMedications`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getMostDeliveredPatients(): Observable<any> {
+    return this.http.get(`${this.apiUrl}delivery/getMostDeliveredPatients`, {
       headers: this.getHeaders(),
     });
   }

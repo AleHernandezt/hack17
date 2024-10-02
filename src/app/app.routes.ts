@@ -12,7 +12,12 @@ export const routes: Routes = [
       import('./Views/Admin/dash-admin/dash-admin.component'),
     canActivate: [authGuard],
   },
-
+  {
+    path: 'dashboardEntregas',
+    loadComponent: () =>
+      import('./Views/Admin/dasboard-delivered/dasboard-delivered.component'),
+    canActivate: [authGuard],
+  },
   {
     path: 'crearCategoria',
     loadComponent: () =>
