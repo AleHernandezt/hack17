@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { getUserInfoFromToken } from '../../custom/getJwtInfo';
+import { appSettings } from '../../settings/appsettings';
+import { getCookieHeader } from '../../custom/getCookieHeader';
 
 @Component({
   selector: 'app-notification-modal',
@@ -36,8 +38,9 @@ export class NotificationModalComponent {
   }
 
   private getExpireSoonMedicines() {
+    const { headers } = getCookieHeader();
     this.http
-      .get<any>('http://localhost:3000/api/medication/getExpireSoon')
+      .get<any>(`${appSettings.apiUrl}medication/getExpireSoon`, { headers })
       .subscribe({
         next: (response) => {
           const medications = response.data.Medication;
