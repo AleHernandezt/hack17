@@ -35,7 +35,16 @@ export default class GestionLotesComponent implements OnInit {
       .then((json) => {
         console.log('Datos recibidos:', json); // Agrega este console.log
         this.ngZone.run(() => {
-          this.lotes = json.data.MedicationExpirationDate.slice(0, 20);
+          this.lotes = json.data.MedicationExpirationDate.slice(0, 20).map((lote: { expiration_date: string | number | Date; }) => {
+            return {
+              ...lote,
+              expiration_date: new Date(lote.expiration_date).toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              }),
+            };
+          });
           this.filteredLotes = this.lotes;
         });
       });
