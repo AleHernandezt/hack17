@@ -68,7 +68,7 @@ export default class GestionPatologiaComponent implements OnInit {
 
   deletePatologia(patologia: any) {
     const { headers } = getCookieHeader();
-    fetch(`${appSettings.apiUrl}pathology/${patologia.id}`, {
+    fetch(`${appSettings.apiUrl}pathology/delete/${patologia.id}`, {
       method: 'DELETE',
       headers: headers,
     })
