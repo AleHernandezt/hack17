@@ -5,41 +5,39 @@ import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resume
 import { DeliveryInterface } from '../../../Core/Interfaces/delivery.interface';
 import { CardMedicamentoEntregaComponent } from "../../Medicinas/card-medicamento-entrega/card-medicamento-entrega.component";
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-resumen-entrega',
   standalone: true,
   imports: [CommonModule, ResumenPacienteComponent, CardMedicamentoEntregaComponent],
   templateUrl: './resumen-entrega.component.html',
-  styleUrl: './resumen-entrega.component.css'
+  styleUrls: ['./resumen-entrega.component.css'] // Corregido el nombre de la propiedad
 })
 export class ResumenEntregaComponent {
+  delivery: DeliveryInterface | null = null;
 
-  delivery : DeliveryInterface | null = null
-
-  constructor(private deliveryService : DeliveryService, private toastService : ToastrService){
-  }
+  constructor(
+    private deliveryService: DeliveryService,
+    private toastService: ToastrService,
+    private router: Router // Inyectar el Router
+  ) {}
 
   ngOnInit() {
     this.deliveryService.getDelivery().subscribe(delivery => {
       this.delivery = delivery;
     });
-
   }
 
   onMedicineDeleted(medicineId: number) {
-    //eliminación de medicina
     this.deliveryService.removeMedication(medicineId);
-
   }
 
   onQuantityIncreased(medicineId: number) {
-    //aumento de cantidad
     this.deliveryService.increaseMedicationQuantity(medicineId);
   }
 
   onQuantityDecreased(medicineId: number) {
-    //disminución de cantidad
     this.deliveryService.decreaseMedicationQuantity(medicineId);
   }
 
@@ -48,8 +46,7 @@ export class ResumenEntregaComponent {
     if (target && target.value) {
       this.deliveryService.updateExpirationDate(target.value);
     }
-
-    console.log(this.delivery)
+    console.log(this.delivery);
   }
 
   onWithdrawalDateChange(event: Event) {
@@ -57,8 +54,7 @@ export class ResumenEntregaComponent {
     if (target && target.value) {
       this.deliveryService.onWithdrawalDateChange(target.value);
     }
-
-    console.log(this.delivery)
+    console.log(this.delivery);
   }
 
   onApoinmentDateChange(event: Event) {
@@ -66,16 +62,15 @@ export class ResumenEntregaComponent {
     if (target && target.value) {
       this.deliveryService.onApoinmentDateChange(target.value);
     }
-
-    console.log(this.delivery)
+    console.log(this.delivery);
   }
 
-  deletePatient(){
-    const id= 0;
-    const idCard=0;
-    const name = ''
-    this.deliveryService.updatePatient(id,idCard, name)
-    this.toastService.success("eliminado", "alerta")
+  deletePatient() {
+    const id = 0;
+    const idCard = 0;
+    const name = '';
+    this.deliveryService.updatePatient(id, idCard, name);
+    this.toastService.success("Eliminado", "Alerta");
   }
 
   public saveDelivery(): void {
@@ -89,6 +84,7 @@ export class ResumenEntregaComponent {
         } else {
           console.log('Delivery saved successfully:', response);
           this.toastService.success("La entrega se guardó correctamente", "Éxito");
+          this.router.navigate(['/gestionEntrega']);
         }
       },
       error => {
