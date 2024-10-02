@@ -6,6 +6,7 @@ import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { z, ZodError } from 'zod';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-comunidad',
@@ -25,7 +26,7 @@ export default class FormComunidadComponent {
     region: '',
   };
 
-  constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
+  constructor(private ngZone: NgZone, private toastrService: ToastrService, private router: Router) {}
 
   createComunidad(): void {
     try {
@@ -59,6 +60,7 @@ export default class FormComunidadComponent {
             nombre: '',
             region: '',
           };
+          this.router.navigate(['/gestionComunidad']); // Redirigir a gestionComunidad
         });
       })
       .catch((error) => {
