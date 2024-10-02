@@ -15,8 +15,18 @@ import { appSettings } from '../../../settings/appsettings';
 })
 export default class GestionEntregadoComponent implements OnInit {
   entregados: any[] = [];
-  columnas: string[] = ['appointment_date', 'patient_id', 'expiration_date'];
-  encabezados: string[] = ['Fecha de Entrega', 'ID del Paciente', 'Fecha de Expiración'];
+  columnas: string[] = [
+    'patient_name',
+    'patient_id_card',
+    'appointment_date',
+    'expiration_date',
+  ];
+  encabezados: string[] = [
+    'Nombre del Paciente',
+    'Cedula', // Agrega esta línea
+    'Fecha de Entrega',
+    'Fecha de Expiración',
+  ];
 
   constructor(private ngZone: NgZone) { }
 
@@ -43,8 +53,9 @@ export default class GestionEntregadoComponent implements OnInit {
               month: 'long',
               day: 'numeric',
             }),
-            treatment_id: entregado.treatment_id,
+            patient_name: entregado.patient ? entregado.patient.first_name : '', // Agrega esta línea
             patient_id: entregado.patient_id,
+            patient_id_card: entregado.patient ? entregado.patient.id_card : '', // Agrega esta línea
             expiration_date: new Date(entregado.expiration_date).toLocaleDateString('es-ES', {
               year: 'numeric',
               month: 'long',

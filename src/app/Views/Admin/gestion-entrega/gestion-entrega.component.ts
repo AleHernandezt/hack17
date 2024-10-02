@@ -18,13 +18,13 @@ export default class GestionEntregaComponent implements OnInit {
   entregas: any[] = [];
   columnas: string[] = [
     'appointment_date',
-    'patient_id',
+    'patient_id_card', // Agrega esta línea
     'expiration_date',
     'status',
   ];
   encabezados: string[] = [
     'Fecha de Entrega',
-    'ID de Paciente',
+    'Cedula', // Agrega esta línea
     'Fecha de Expiración',
     'Estado',
   ];
@@ -119,6 +119,7 @@ export default class GestionEntregaComponent implements OnInit {
             }),
             treatment_id: entrega.treatment_id,
             patient_id: entrega.patient_id,
+            patient_id_card: entrega.patient ? entrega.patient.id_card : '', // Agrega esta línea
             expiration_date: new Date(entrega.expiration_date).toLocaleDateString('es-ES', {
               year: 'numeric',
               month: 'long',

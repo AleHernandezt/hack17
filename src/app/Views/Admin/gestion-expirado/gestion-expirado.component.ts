@@ -15,8 +15,18 @@ import { appSettings } from '../../../settings/appsettings';
 })
 export default class GestionExpiradoComponent implements OnInit {
   expirados: any[] = [];
-  columnas: string[] = ['appointment_date', 'patient_id', 'expiration_date'];
-  encabezados: string[] = ['Fecha de Entrega', 'ID del Paciente', 'Fecha de Expiración'];
+  columnas: string[] = [
+    'patient_name',
+    'patient_id_card',
+    'appointment_date',
+    'expiration_date',
+  ];
+  encabezados: string[] = [
+    'Nombre del Paciente',
+    'Cedula',
+    'Fecha de Entrega',
+    'Fecha de Expiración',
+  ];
 
   constructor(private ngZone: NgZone) { }
 
@@ -43,8 +53,9 @@ export default class GestionExpiradoComponent implements OnInit {
               month: 'long',
               day: 'numeric',
             }),
-            treatment_id: expirado.treatment_id,
+            patient_name: expirado.patient ? expirado.patient.first_name : '',
             patient_id: expirado.patient_id,
+            patient_id_card: expirado.patient ? expirado.patient.id_card : '',
             expiration_date: new Date(expirado.expiration_date).toLocaleDateString('es-ES', {
               year: 'numeric',
               month: 'long',
