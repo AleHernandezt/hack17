@@ -16,11 +16,9 @@
     </div>
   </div>
 </div>
-<div class="button-container">
-  <p>{{notifications.length}}</p>
-  <div class="modalbutton-container" (click)="showModal()">
+<div *ngIf="menuVisible === true" class="notifications-container">
+  <button class="notifications-button" (click)="showModal()">
     <i class="pi pi-bell"></i>
-  </div>
-
-
+    <span class="notifications-count">{{notifications.length}}</span>
+  </button>
 </div>
