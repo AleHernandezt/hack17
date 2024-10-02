@@ -35,7 +35,7 @@ export default class GestionComunidadComponent implements OnInit {
 
   getPost() {
     const { headers } = getCookieHeader();
-    fetch(`${appSettings.apiUrl}community/getAllActives`, {
+    fetch(`${appSettings.apiUrl}community/getAll`, {
       method: 'GET',
       headers: headers,
     })
@@ -50,7 +50,7 @@ export default class GestionComunidadComponent implements OnInit {
   }
 
   filterComunidades(search: string) {
-    this.filteredComunidad = this.comunidades.filter(comunidad =>
+    this.filteredComunidad = this.comunidades.filter((comunidad) =>
       comunidad.name.toLowerCase().includes(search.toLowerCase())
     );
   }

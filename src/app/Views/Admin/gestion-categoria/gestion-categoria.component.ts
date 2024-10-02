@@ -8,7 +8,6 @@ import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-gestion-categoria',
   standalone: true,
@@ -20,11 +19,11 @@ import { ToastrService } from 'ngx-toastr';
     SearchbarComponent,
   ],
   templateUrl: './gestion-categoria.component.html',
-  styleUrls: ['./gestion-categoria.component.css'],})
+  styleUrls: ['./gestion-categoria.component.css'],
+})
 export default class GestionCategoriaComponent implements OnInit {
   categories: any[] = [];
-  filteredCategoria : any[] = []
-
+  filteredCategoria: any[] = [];
 
   columnas: string[] = ['name', 'description'];
   encabezados: string[] = ['Nombre', 'Descripción'];
@@ -35,7 +34,7 @@ export default class GestionCategoriaComponent implements OnInit {
     console.log('holi');
     this.getPost();
   }
-  
+
   getPost() {
     const { headers } = getCookieHeader();
     fetch(`${appSettings.apiUrl}category/getAllActive`, {
@@ -52,16 +51,15 @@ export default class GestionCategoriaComponent implements OnInit {
   }
 
   filterCategories(search: string) {
-    alert(search)
-    this.filteredCategoria = this.categories.filter(category =>
+    this.filteredCategoria = this.categories.filter((category) =>
       category.name.toLowerCase().includes(search.toLowerCase())
     );
 
-    console.log(this.filteredCategoria)
+    console.log(this.filteredCategoria);
   }
 
-  cleanSearch(){
-    this.filteredCategoria = []
+  cleanSearch() {
+    this.filteredCategoria = [];
   }
 
   editCategory(category: any) {
@@ -79,7 +77,7 @@ export default class GestionCategoriaComponent implements OnInit {
         console.log(json);
         this.ngZone.run(() => {
           this.toastrService.success('Categoría eliminada con éxito');
-          this.getPost(); // Actualiza la lista de categorías
+          this.getPost();
         });
       })
       .catch((error) => {
