@@ -1,1 +1,10 @@
-<p>notification-modal works!</p>
+<div [ngClass]="{'modal-container': true, 'active': visible}">
+  <div class="wrapper">
+    <div class="notificationssection">
+
+      <p>Notificaciones aquí</p>
+    </div>
+  </div>
+</div>
+
+<div class="modalbutton-container" (click)="showModal()">Abrir</div>

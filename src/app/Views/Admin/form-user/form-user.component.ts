@@ -8,6 +8,7 @@ import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { Admin } from '../../../Core/Interfaces/admin.interface';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-usuario',
@@ -42,7 +43,10 @@ export default class FormUserComponent {
     this.form.userType = type;
   }
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    private toastrService : ToastrService
+  ) {}
 
   createUser(): void {
     if (this.form.password !== this.form.confirm_password) {
@@ -58,14 +62,14 @@ export default class FormUserComponent {
       !this.form.password ||
       !this.form.confirm_password
     ) {
-      alert('Por favor, complete todos los campos');
+      this.toastrService.error('Por favor Complete Todos los Campos', 'Error')
       return;
     }
 
     if (this.form.userType === 'donor') {
       if (!this.form.razon_social || !this.form.description) {
-        alert(
-          'Por favor, complete todos los campos adicionales para el tipo de usuario "donor"'
+        this.toastrService.error(
+          'Por favor, complete todos los campos adicionales para el tipo de usuario "donor"' , 'Error'
         );
         return;
       }
@@ -95,7 +99,7 @@ export default class FormUserComponent {
       .then((json) => {
         console.log(json); // Log the response from the API
         this.ngZone.run(() => {
-          alert('Usuario creado con éxito');
+          this.toastrService.success('Usuario creado con éxito', 'Exito');
           this.form = {
             first_name: '',
             last_name: '',
@@ -114,7 +118,7 @@ export default class FormUserComponent {
       .catch((error) => {
         console.error(error); // Log the error
         this.ngZone.run(() => {
-          alert('Error al crear el usuario');
+          this.toastrService.success('Error al crear el usuario', 'Error');
         });
       });
   }
