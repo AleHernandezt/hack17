@@ -47,7 +47,7 @@ export default class FormUserComponent {
     id_card_prefix: z.string().min(1, 'El prefijo de la cédula es requerido'),
     id_card: z.string()
       .min(1, 'La cédula es requerida')
-      .regex(/^\d+$/, 'La cédula debe contener solo números'), // Verifica que la cédula contenga solo números
+      .regex(/^\d+$/, 'La cédula debe contener solo números'),
     password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
     confirm_password: z.string().min(6, 'La confirmación de la contraseña debe tener al menos 6 caracteres'),
     razon_social: z.string().optional(),

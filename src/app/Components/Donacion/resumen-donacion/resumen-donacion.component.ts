@@ -13,6 +13,7 @@ import { CategoryInterface } from '../../../Core/Interfaces/category.interface';
 import { HttpClient } from '@angular/common/http';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { Router } from '@angular/router'; // Importar Router
 
 @Component({
   selector: 'app-resumen-donacion',
@@ -36,7 +37,8 @@ export class ResumenDonacionComponent {
   constructor(
     private donationService: DonationService,
     private notificationService: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router // Inyectar Router
   ) {}
 
   ngOnInit() {
@@ -47,6 +49,7 @@ export class ResumenDonacionComponent {
       });
     this.loadCategories();
   }
+
   loadCategories() {
     const { headers } = getCookieHeader();
     this.http
@@ -72,18 +75,15 @@ export class ResumenDonacionComponent {
   }
 
   onMedicineDeleted(medicineId: number) {
-    // Eliminación de medicina
     this.notificationService.warning('Eliminado', 'Alerta');
     this.donationService.removeMedication(medicineId);
   }
 
   onQuantityIncreased(medicineId: number) {
-    // Aumento de cantidad
     this.donationService.increaseMedicationQuantity(medicineId);
   }
 
   onQuantityDecreased(medicineId: number) {
-    // Disminución de cantidad
     this.donationService.decreaseMedicationQuantity(medicineId);
   }
 
@@ -94,7 +94,6 @@ export class ResumenDonacionComponent {
   onCategorySelected(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedCategoryId = selectElement.value;
-
     this.donationService.updateCategory(+selectedCategoryId);
   }
 
@@ -108,7 +107,7 @@ export class ResumenDonacionComponent {
   deleteCharity() {
     const id = 0;
     const name = '';
-    const razon_social = ''
+    const razon_social = '';
     this.donationService.updateCharity(id, name, razon_social);
   }
 
@@ -116,14 +115,14 @@ export class ResumenDonacionComponent {
     this.donationService.saveDonation().subscribe(
       response => {
         if (response.success === false) {
-          this.notificationService.error("La Donacion tiene errores", "Alerta");
-          response.messages?.forEach((message:any) => {
+          this.notificationService.error("La Donación tiene errores", "Alerta");
+          response.messages?.forEach((message: any) => {
             this.notificationService.error(message, "Alerta");
           });
         } else {
-
-          console.log('donation saved successfully:', response);
-          this.notificationService.success("La Donacion se guardó correctamente", "Éxito");
+          console.log('Donación guardada correctamente:', response);
+          this.notificationService.success("La Donación se guardó correctamente", "Éxito");
+          this.router.navigate(['/dashboardMedicinas']);
         }
       },
       error => {

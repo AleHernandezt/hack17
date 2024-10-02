@@ -1,25 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ResumenMedicinaComponent } from "../../Medicinas/resumen-medicina/resumen-medicina.component";
 import { CommonModule } from '@angular/common';
 import { TreatmentService } from '../../../Core/Services/treatment.service';
 import { ResumenPacienteComponent } from "../../Paciente/resumen-paciente/resumen-paciente.component";
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router'; // Importar Router
 
 @Component({
   selector: 'app-resumen-tratamiento',
   standalone: true,
   imports: [ResumenMedicinaComponent, CommonModule, ResumenPacienteComponent],
   templateUrl: './resumen-tratamiento.component.html',
-  styleUrl: './resumen-tratamiento.component.css'
+  styleUrls: ['./resumen-tratamiento.component.css'] // Corregido el nombre de la propiedad
 })
 export class ResumenTratamientoComponent {
-
-
   treatment: any = {};
 
   constructor(
     private treatmentService: TreatmentService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router // Inyectar Router
   ) {}
 
   ngOnInit() {
@@ -29,17 +29,14 @@ export class ResumenTratamientoComponent {
   }
 
   onMedicineDeleted(medicineId: string) {
-    //eliminación de medicina
     this.treatmentService.removeMedication(medicineId);
   }
 
   onQuantityIncreased(medicineId: string) {
-    //aumento de cantidad
     this.treatmentService.increaseMedicationQuantity(medicineId);
   }
 
   onQuantityDecreased(medicineId: string) {
-    //disminución de cantidad
     this.treatmentService.decreaseMedicationQuantity(medicineId);
   }
 
@@ -50,11 +47,10 @@ export class ResumenTratamientoComponent {
     }
   }
 
-  deletePatient(){
-    const id= 0;
-    const name = ''
-    this.treatmentService.updatePatient(id, name)
-
+  deletePatient() {
+    const id = 0;
+    const name = '';
+    this.treatmentService.updatePatient(id, name);
   }
 
   saveTreatment() {
@@ -66,8 +62,9 @@ export class ResumenTratamientoComponent {
             this.toastrService.error(message, "Alerta");
           });
         } else {
-          console.log('Delivery saved successfully:', response);
+          console.log('Tratamiento guardado correctamente:', response);
           this.toastrService.success("El tratamiento se guardó correctamente", "Éxito");
+          this.router.navigate(['/dashboardMedicinas']);
         }
       },
       error => {
@@ -77,6 +74,3 @@ export class ResumenTratamientoComponent {
     );
   }
 }
-
-
-

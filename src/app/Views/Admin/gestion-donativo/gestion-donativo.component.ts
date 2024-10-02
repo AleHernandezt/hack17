@@ -68,8 +68,15 @@ export default class GestionDonativoComponent implements OnInit {
               charity: { razon_social: any };
             }) => ({
               id: donation.id,
-              descripcion: donation.description,
-              createdAt: donation.createdAt,
+              descripcion: donation.description.substring(0, 150), // <--- Limita la longitud de la descripción a 150 caracteres
+              createdAt: new Date(donation.createdAt).toLocaleDateString(
+                'es-ES',
+                {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                }
+              ),
               categoria: donation.category.name,
               charity: donation.charity.razon_social, // <--- Extract razon social from charity object
             })
