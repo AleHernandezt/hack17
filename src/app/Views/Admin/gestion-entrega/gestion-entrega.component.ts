@@ -32,7 +32,7 @@ export default class GestionEntregaComponent implements OnInit {
   ];
 
   verEntrega(item: any) {
-    this.router.navigate(['dashboard']);
+    this.router.navigate([`gestionEntrega/${item.id}`]);
   }
 
   entregado(item: any) {

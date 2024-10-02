@@ -34,7 +34,7 @@ export class Side2Component implements OnInit {
 
     this.items = [
       {
-        label: 'Gestion',
+        label: 'Gestión',
         icon: 'pi pi-file',
         items: [
           {

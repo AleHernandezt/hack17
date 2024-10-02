@@ -153,6 +153,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'gestionDonativo/:id',
+    loadComponent: () =>
+      import('./Views/Admin/perfil-donativo/perfil-donativo.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: 'medicamentosEntrada',
     loadComponent: () =>
       import(
