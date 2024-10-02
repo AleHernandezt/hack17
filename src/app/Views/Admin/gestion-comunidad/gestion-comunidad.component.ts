@@ -43,8 +43,7 @@ export default class GestionComunidadComponent implements OnInit {
       .then((json) => {
         this.ngZone.run(() => {
           this.comunidades = json.data.Community;
-          this.filteredComunidad = this.comunidades
-
+          this.filteredComunidad = this.comunidades.slice(-10).reverse(); // Obtener los últimos 10 elementos en orden inverso
         });
         console.log(json);
       });

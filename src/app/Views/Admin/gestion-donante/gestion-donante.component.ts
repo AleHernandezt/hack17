@@ -63,7 +63,32 @@ export default class GestionDonanteComponent implements OnInit {
   }
 
   deleteDonante(donante: any) {
-    alert(donante.razon_social);
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}charity/delete/${donante.id}`, {
+      method: 'DELETE',
+      headers: headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        this.ngZone.run(() => {
+          // Actualiza la lista de donantes
+          this.getDonantes();
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        this.ngZone.run(() => {
+          // Muestra un mensaje de error
+          alert('Error al eliminar el donante');
+        });
+      });
   }
 
   viewDonante(donante: any) {

@@ -33,9 +33,39 @@ export default class GestionLotesComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log('Datos recibidos:', json); // Agrega este console.log
         this.ngZone.run(() => {
           this.lotes = json.data.MedicationExpirationDate.slice(-10);
           this.filteredLotes = this.lotes;
+        });
+      });
+  }
+  
+  deleteLote(lote: any) {
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}medication_expiration/delete/${lote.id}`, {
+      method: 'DELETE',
+      headers: headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        this.ngZone.run(() => {
+          // Actualiza la lista de lotes
+          this.getLotes();
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        this.ngZone.run(() => {
+          // Muestra un mensaje de error
+          alert('Error al eliminar el lote');
         });
       });
   }

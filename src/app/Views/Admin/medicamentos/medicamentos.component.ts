@@ -72,6 +72,31 @@ export default class MedicamentosComponent implements OnInit {
   }
 
   deleteMedicamento(medicamento: any) {
-    alert(medicamento.name);
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}medication/delete/${medicamento.id}`, {
+      method: 'DELETE',
+      headers: headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        this.ngZone.run(() => {
+          // Actualiza la lista de medicamentos
+          this.getMedicamentos();
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        this.ngZone.run(() => {
+          // Muestra un mensaje de error
+          alert('Error al eliminar el medicamento');
+        });
+      });
   }
 }
