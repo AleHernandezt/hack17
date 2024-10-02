@@ -9,6 +9,7 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { Admin } from '../../../Core/Interfaces/admin.interface';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { z } from 'zod';
 
 @Component({
   selector: 'app-form-usuario',
@@ -39,40 +40,53 @@ export default class FormUserComponent {
     is_fundation: false,
   };
 
+  private userSchema = z.object({
+    first_name: z.string().min(1, 'El primer nombre es requerido'),
+    last_name: z.string().min(1, 'El apellido es requerido'),
+    email: z.string().email('El correo electrónico no es válido'),
+    id_card_prefix: z.string().min(1, 'El prefijo de la cédula es requerido'),
+    id_card: z.string()
+      .min(1, 'La cédula es requerida')
+      .regex(/^\d+$/, 'La cédula debe contener solo números'), // Verifica que la cédula contenga solo números
+    password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
+    confirm_password: z.string().min(6, 'La confirmación de la contraseña debe tener al menos 6 caracteres'),
+    razon_social: z.string().optional(),
+    description: z.string().optional(),
+  });
+
   selectUserType(type: 'admin' | 'donor') {
     this.form.userType = type;
   }
 
-  constructor(
-    private ngZone: NgZone,
-    private toastrService : ToastrService
-  ) {}
+  constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
 
   createUser(): void {
-    if (this.form.password !== this.form.confirm_password) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
+    const validationResult = this.userSchema.safeParse({
+      ...this.form,
+      cedula: this.form.id_card_prefix + this.form.id_card,
+    });
 
-    if (
-      !this.form.first_name ||
-      !this.form.last_name ||
-      !this.form.email ||
-      !this.form.id_card ||
-      !this.form.password ||
-      !this.form.confirm_password
-    ) {
-      this.toastrService.error('Por favor Complete Todos los Campos', 'Error')
+    if (!validationResult.success) {
+      validationResult.error.errors.forEach((error) => {
+        this.toastrService.error(error.message, 'Error');
+      });
       return;
     }
 
     if (this.form.userType === 'donor') {
-      if (!this.form.razon_social || !this.form.description) {
-        this.toastrService.error(
-          'Por favor, complete todos los campos adicionales para el tipo de usuario "donor"' , 'Error'
-        );
+      if (!this.form.razon_social || this.form.razon_social.trim().length === 0) {
+        this.toastrService.error('La razón social es requerida para el tipo de usuario "donor"', 'Error');
         return;
       }
+      if (!this.form.description || this.form.description.trim().length === 0) {
+        this.toastrService.error('La descripción es requerida para el tipo de usuario "donor"', 'Error');
+        return;
+      }
+    }
+
+    if (this.form.password !== this.form.confirm_password) {
+      this.toastrService.error('Las contraseñas no coinciden', 'Error');
+      return;
     }
 
     const user = {
@@ -89,6 +103,8 @@ export default class FormUserComponent {
       }),
     };
 
+    console.log(user)
+
     const { headerPost } = getCookieHeader();
     fetch(`${appSettings.apiUrl}admin/create`, {
       method: 'POST',
@@ -97,9 +113,9 @@ export default class FormUserComponent {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json); // Log the response from the API
+        console.log(json)
         this.ngZone.run(() => {
-          this.toastrService.success('Usuario creado con éxito', 'Exito');
+          this.toastrService.success('Usuario creado con éxito', 'Éxito');
           this.form = {
             first_name: '',
             last_name: '',
@@ -118,7 +134,7 @@ export default class FormUserComponent {
       .catch((error) => {
         console.error(error); // Log the error
         this.ngZone.run(() => {
-          this.toastrService.success('Error al crear el usuario', 'Error');
+          this.toastrService.error('Error al crear el usuario', 'Error');
         });
       });
   }
