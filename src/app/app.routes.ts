@@ -102,6 +102,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'gestionEntrega/:id',
+    loadComponent: () =>
+      import('./Views/Admin/perfil-entrega/perfil-entrega.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: 'gestionEntregado',
     loadComponent: () =>
       import('./Views/Admin/gestion-entregado/gestion-entregado.component'),
