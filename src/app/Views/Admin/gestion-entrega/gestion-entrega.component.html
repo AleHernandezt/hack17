@@ -14,9 +14,10 @@
   [showView]="true"
   [showEntregado]="true"
   [showProcesado]="false"
-  [showExpirado]="false"
+  [showExpirado]="true"
   [showCancelado]="false"
   (view)="verEntrega($event)"
   (entregado)="entregado($event)"
+  (expirado)="expirado($event)"
 >
 </app-table2>

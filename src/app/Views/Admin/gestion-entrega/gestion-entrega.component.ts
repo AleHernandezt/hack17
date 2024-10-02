@@ -62,6 +62,35 @@ export default class GestionEntregaComponent implements OnInit {
       });
   }
 
+  expirado(item: any) {
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}delivery/changeExpired/${item.id}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify({ status: 'expired' }),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        // Elimina el elemento de la tabla
+        this.entregas = this.entregas.filter(
+          (entrega) => entrega.id !== item.id
+        );
+        // Navega al elemento que se está dando a changeExpired
+        this.router.navigate(['/gestion-expirado']);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {

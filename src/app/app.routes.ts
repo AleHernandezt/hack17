@@ -203,6 +203,12 @@ export const routes: Routes = [
       import('./Views/Admin/gestion-desecho/gestion-desecho.component'),
     canActivate: [authGuard],
   },
+  {
+    path: 'gestionExpirado',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-expirado/gestion-expirado.component'),
+    canActivate: [authGuard],
+  },
 
   //! esta no esta siendo mostrada
 
