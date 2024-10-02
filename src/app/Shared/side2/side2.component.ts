@@ -7,16 +7,18 @@ import { Router } from '@angular/router';
 import { AccesoService } from '../../Core/Services/auth.service';
 import { deleteCookie } from '../../Authentication/login/cookies';
 import { getUserInfoFromToken } from '../../custom/getJwtInfo';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-side2',
   standalone: true,
-  imports: [SidebarModule, ButtonModule, PanelMenuModule],
+  imports: [SidebarModule, ButtonModule, PanelMenuModule, CommonModule],
   templateUrl: './side2.component.html',
   styleUrl: './side2.component.css',
 })
 export class Side2Component implements OnInit {
   sidebarVisible: boolean = false;
+  menuVisible: boolean = false;
   name: string = 'Usuario';
   items: MenuItem[] | undefined;
   logoutItem: MenuItem | undefined;
@@ -24,7 +26,10 @@ export class Side2Component implements OnInit {
 
   constructor(private router: Router) {}
   ngOnInit() {
-    const { name } = getUserInfoFromToken();
+    const { name, userType } = getUserInfoFromToken();
+    userType === 'donor'
+      ? (this.menuVisible = false)
+      : (this.menuVisible = true);
     this.name = name;
 
     this.items = [
@@ -113,7 +118,7 @@ export class Side2Component implements OnInit {
               {
                 label: 'Estadisticas',
                 icon: 'pi pi-file',
-                command: () => this.navigateToRoute('/'),
+                command: () => this.navigateToRoute('/dashboardMedicinas'),
               },
             ],
           },
@@ -206,5 +211,5 @@ export class Side2Component implements OnInit {
   goToDashboard() {
     this.closeSidebar();
     this.router.navigate(['/DashboardDoner']);
-}
+  }
 }

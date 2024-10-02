@@ -130,11 +130,11 @@ hr{
 
   .treatments{
     display: flex;
-    flex-direction: column;
+    gap: 1rem;
+    flex-wrap: wrap;
     width: 85%;
-    text-align: center;
     margin: 0 auto;
-    align-items: center;
+    justify-content: center;
   }
   .treatments:last-child{
     margin-bottom: 2rem;

@@ -1,15 +1,14 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+
+  h1{
+    text-align: center;
+    color: dodgerblue;
+    margin-top: 0;
   }
   
   .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
+    margin-bottom: 1rem;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
