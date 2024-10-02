@@ -25,12 +25,23 @@ export default class GestionDonativoComponent implements OnInit {
   }
 
   donativos: any[] = [];
-  columnas: string[] = ['id', 'descripcion', 'createdAt', 'categoria', 'charity'];
-  encabezados: string[] = ['ID', 'Descripción', 'Fecha de Creación', 'Categoría', 'Razón Social'];
+  columnas: string[] = [
+    'id',
+    'descripcion',
+    'createdAt',
+    'categoria',
+    'charity',
+  ];
+  encabezados: string[] = [
+    'ID',
+    'Descripción',
+    'Fecha de Creación',
+    'Categoría',
+    'Razón Social',
+  ];
 
   verDonativo(item: any) {
-    console.log("pon tu ruta cisor");
-    this.router.navigate(['dashboard']);
+    this.router.navigate([`gestionDonativo/${item.id}`]);
   }
   constructor(private ngZone: NgZone, private router: Router) {}
 
@@ -48,17 +59,28 @@ export default class GestionDonativoComponent implements OnInit {
       .then((json) => {
         console.log(json); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.donativos = json.data.Donation.map((donation: { id: any; description: any; createdAt: any; category: { name: any; }; charity: { razon_social: any; }; }) => ({
-            id: donation.id,
-            descripcion: donation.description.substring(0, 150), // <--- Limita la longitud de la descripción a 150 caracteres
-            createdAt: new Date(donation.createdAt).toLocaleDateString('es-ES', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            }),
-            categoria: donation.category.name,
-            charity: donation.charity.razon_social, // <--- Extract razon social from charity object
-          }));
+          this.donativos = json.data.Donation.map(
+            (donation: {
+              id: any;
+              description: any;
+              createdAt: any;
+              category: { name: any };
+              charity: { razon_social: any };
+            }) => ({
+              id: donation.id,
+              descripcion: donation.description.substring(0, 150), // <--- Limita la longitud de la descripción a 150 caracteres
+              createdAt: new Date(donation.createdAt).toLocaleDateString(
+                'es-ES',
+                {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                }
+              ),
+              categoria: donation.category.name,
+              charity: donation.charity.razon_social, // <--- Extract razon social from charity object
+            })
+          );
         });
       });
   }

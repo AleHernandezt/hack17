@@ -2,14 +2,14 @@
   <section class="patient-card">
     <div class="patient-card-header">
       <h2>{{ delivery?.patientData?.id_card }}</h2>
-      <p class="id-card">{{delivery?.patientData?.economic_status }}</p>
-      <p class="id-card">{{ delivery?.patientData?.vulnerability_level }}</p>
+      <p class="id-card">Status económico - {{delivery?.patientData?.economic_status }}</p>
+      <p class="id-card">Vulnerabilidad - {{ delivery?.patientData?.vulnerability_level }}</p>
     </div>
     <div class="patient-card-body">
       <div class="contact-info">
         <div class="info_flex">
           <p>Dirección <span>{{ delivery?.patientData?.address }}</span></p>
-          <p>Fecha de nacimiento <span>{{ delivery?.patientData?.gender }}</span></p>
+          <p>Género <span>{{ delivery?.patientData?.gender }}</span></p>
         </div>
         <div class="info_flex">
           <p>Teléfono <span>{{ delivery?.patientData?.phone }}</span></p>
