@@ -18,14 +18,12 @@ export default class GestionEntregaComponent implements OnInit {
   entregas: any[] = [];
   columnas: string[] = [
     'appointment_date',
-    'treatment_id',
     'patient_id',
     'expiration_date',
     'status',
   ];
   encabezados: string[] = [
     'Fecha de Entrega',
-    'ID de Tratamiento',
     'ID de Paciente',
     'Fecha de Expiración',
     'Estado',

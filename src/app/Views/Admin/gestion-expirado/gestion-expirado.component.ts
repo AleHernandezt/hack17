@@ -15,8 +15,8 @@ import { appSettings } from '../../../settings/appsettings';
 })
 export default class GestionExpiradoComponent implements OnInit {
   expirados: any[] = [];
-  columnas: string[] = ['appointment_date', 'treatment_id', 'patient_id', 'expiration_date'];
-  encabezados: string[] = ['Fecha de Entrega', 'ID del Tratamiento', 'ID del Paciente', 'Fecha de Expiración'];
+  columnas: string[] = ['appointment_date', 'patient_id', 'expiration_date'];
+  encabezados: string[] = ['Fecha de Entrega', 'ID del Paciente', 'Fecha de Expiración'];
 
   constructor(private ngZone: NgZone) { }
 
