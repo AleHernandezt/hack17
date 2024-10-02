@@ -7,6 +7,8 @@ import { getCookieHeader } from '../../../custom/getCookieHeader';
 import { appSettings } from '../../../settings/appsettings';
 import { z, ZodError } from 'zod';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-form-categoria',
@@ -26,7 +28,7 @@ export default class FormCategoriaComponent implements OnInit {
     description: '',
   };
 
-  constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
+  constructor(private ngZone: NgZone, private toastrService: ToastrService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -58,6 +60,7 @@ export default class FormCategoriaComponent implements OnInit {
             name: '',
             description: '',
           };
+          this.router.navigate(['/gestionCategoria']); // Navegar a gestionCategoria
         });
       })
       .catch((error) => {

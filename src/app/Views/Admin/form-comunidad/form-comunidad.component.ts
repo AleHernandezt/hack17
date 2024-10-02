@@ -28,7 +28,6 @@ export default class FormComunidadComponent {
   constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
 
   createComunidad(): void {
-
     try {
       this.formSchema.parse(this.form);
     } catch (error) {

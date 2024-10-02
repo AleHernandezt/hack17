@@ -6,6 +6,8 @@ import { H1Component } from '../../../Shared/h1/h1.component';
 import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
 import { appSettings } from '../../../settings/appsettings';
 import { getCookieHeader } from '../../../custom/getCookieHeader';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-gestion-categoria',
@@ -27,13 +29,13 @@ export default class GestionCategoriaComponent implements OnInit {
   columnas: string[] = ['name', 'description'];
   encabezados: string[] = ['Nombre', 'Descripción'];
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private toastrService: ToastrService) {}
 
   ngOnInit(): void {
     console.log('holi');
     this.getPost();
   }
-
+  
   getPost() {
     const { headers } = getCookieHeader();
     fetch(`${appSettings.apiUrl}category/getAllActive`, {
@@ -44,7 +46,7 @@ export default class GestionCategoriaComponent implements OnInit {
       .then((json) => {
         console.log(json.data); // <--- Agrega esta línea para imprimir los datos en la consola
         this.ngZone.run(() => {
-          this.categories = json.data.Category; // <--- Cambia esto
+          this.categories = json.data.Category.slice(-10).reverse(); // <--- Cambia esto
         });
       });
   }
@@ -67,6 +69,24 @@ export default class GestionCategoriaComponent implements OnInit {
   }
 
   deleteCategory(category: any) {
-    alert(category.id);
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}category/delete/${category.id}`, {
+      method: 'DELETE',
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        this.ngZone.run(() => {
+          this.toastrService.success('Categoría eliminada con éxito');
+          this.getPost(); // Actualiza la lista de categorías
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        this.ngZone.run(() => {
+          this.toastrService.error('Error al eliminar la categoría', 'Error');
+        });
+      });
   }
 }
