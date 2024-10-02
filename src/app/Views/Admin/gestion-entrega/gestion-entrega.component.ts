@@ -105,6 +105,7 @@ export default class GestionEntregaComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log('Datos recibidos:', json); // Agrega este console.log
         this.ngZone.run(() => {
           this.entregas = json.data.Delivery.map((entrega: any) => ({
             id: entrega.id,
