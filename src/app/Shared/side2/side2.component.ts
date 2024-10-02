@@ -35,25 +35,25 @@ export class Side2Component implements OnInit {
     this.items = [
       {
         label: 'Gestión',
-        icon: 'pi pi-file',
+        icon: 'pi pi-arrow-right-arrow-left',
         items: [
           {
             label: 'Paciente',
-            icon: 'pi pi-mobile',
+            icon: 'pi pi-user',
             items: [
               {
                 label: 'General',
-                icon: 'pi pi-mobile',
+                icon: 'pi pi-desktop',
                 command: () => this.navigateToRoute('/gestionPaciente'),
               },
               {
                 label: 'Tratamiento',
-                icon: 'pi pi-mobile',
+                icon: 'pi pi-face-smile',
                 command: () => this.navigateToRoute('/crearTratamiento'),
               },
               {
                 label: 'Vulnerable',
-                icon: 'pi pi-mobile',
+                icon: 'pi pi-exclamation-triangle',
                 command: () =>
                   this.navigateToRoute('/gestionPacienteVulnerable'),
               },
@@ -61,75 +61,75 @@ export class Side2Component implements OnInit {
           },
           {
             label: 'Donante',
-            icon: 'pi pi-file',
+            icon: 'pi pi-warehouse',
             items: [
               {
                 label: 'General',
-                icon: 'pi pi-file',
+                icon: 'pi pi-desktop',
                 command: () => this.navigateToRoute('/gestionDonante'),
               },
               {
                 label: 'Categorias',
-                icon: 'pi pi-file',
+                icon: 'pi pi-tags',
                 command: () => this.navigateToRoute('/gestionCategoria'),
               },
               {
                 label: 'Estadisticas',
-                icon: 'pi pi-file',
+                icon: 'pi pi-chart-line',
                 command: () => this.navigateToRoute('/DashboardDoner'),
               },
               {
                 label: 'Lotes',
-                icon: 'pi pi-file',
+                icon: 'pi pi-box',
                 command: () => this.navigateToRoute('/gestionLotes'),
               },
             ],
           },
           {
             label: 'Donativo',
-            icon: 'pi pi-file',
+            icon: 'pi pi-angle-double-down',
             items: [
               {
                 label: 'General',
-                icon: 'pi pi-file',
+                icon: 'pi pi-desktop',
                 command: () => this.navigateToRoute('gestionDonativo'),
               },
             ],
           },
           {
             label: 'Medicamentos',
-            icon: 'pi pi-file',
+            icon: 'pi pi-shield',
             items: [
               {
                 label: 'General',
-                icon: 'pi pi-file',
+                icon: 'pi pi-desktop',
                 command: () => this.navigateToRoute('/gestionMedicamentos'),
               },
               {
                 label: 'Desecho',
-                icon: 'pi pi-file',
+                icon: 'pi pi-trash',
                 command: () => this.navigateToRoute('/gestionDesecho'),
               },
               {
                 label: 'Estadisticas',
-                icon: 'pi pi-file',
+                icon: 'pi pi-chart-line',
                 command: () => this.navigateToRoute('/dashboardMedicinas'),
               },
             ],
           },
           {
             label: 'Patologia',
-            icon: 'pi pi-file',
+            icon: 'pi pi-heart',
             command: () => this.navigateToRoute('/gestionPatologia'),
           },
           {
             label: 'Comunidades',
-            icon: 'pi pi-file',
+            icon: 'pi pi-users',
             command: () => this.navigateToRoute('/gestionComunidad'),
           },
           {
             label: 'Usuarios',
-            icon: 'pi pi-file',
+            icon: 'pi pi-user',
             command: () => this.navigateToRoute('/User'),
           },
         ],
@@ -137,26 +137,26 @@ export class Side2Component implements OnInit {
 
       {
         label: 'Entrega',
-        icon: 'pi pi-file',
+        icon: 'pi pi-truck',
         items: [
           {
             label: 'General',
-            icon: 'pi pi-file',
+            icon: 'pi pi-desktop',
             command: () => this.navigateToRoute('/gestionEntrega'),
           },
           {
             label: 'Entregado',
-            icon: 'pi pi-file',
+            icon: 'pi pi-ticket',
             command: () => this.navigateToRoute('/gestionEntregado'),
           },
           {
             label: 'Expirado',
-            icon: 'pi pi-file',
+            icon: 'pi pi-times',
             command: () => this.navigateToRoute('/gestionExpirado'),
           },
           {
             label: 'Estadisticas',
-            icon: 'pi pi-file',
+            icon: 'pi pi-chart-line',
             command: () => this.navigateToRoute('/dashboardEntregas'),
           },
         ],
