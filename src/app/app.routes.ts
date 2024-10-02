@@ -7,7 +7,7 @@ export const routes: Routes = [
     loadComponent: () => import('./Authentication/login/login.component'),
   },
   {
-    path: 'dashboard',
+    path: 'dashboardMedicinas',
     loadComponent: () =>
       import('./Views/Admin/dash-admin/dash-admin.component'),
     canActivate: [authGuard],
@@ -102,6 +102,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'gestionEntregado',
+    loadComponent: () =>
+      import('./Views/Admin/gestion-entregado/gestion-entregado.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: 'gestionPaciente',
     loadComponent: () =>
       import('./Views/Admin/gestion-paciente/gestion-paciente.component'),
@@ -138,12 +144,6 @@ export const routes: Routes = [
     path: 'gestionDonativo',
     loadComponent: () =>
       import('./Views/Admin/gestion-donativo/gestion-donativo.component'),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'gestionEntregado',
-    loadComponent: () =>
-      import('./Views/Admin/gestion-entregado/gestion-entregado.component'),
     canActivate: [authGuard],
   },
   {

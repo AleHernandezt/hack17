@@ -4,6 +4,7 @@ import { H1Component } from '../../../Shared/h1/h1.component';
 import { ReportesService } from '../../../Core/Services/reportes.service';
 import { CommonModule } from '@angular/common';
 import { CommunityMedications } from '../../../Core/Interfaces/reportes.interface';
+import { getUserInfoFromToken } from '../../../custom/getJwtInfo';
 
 @Component({
   selector: 'app-dashboard-doner',
@@ -14,6 +15,7 @@ import { CommunityMedications } from '../../../Core/Interfaces/reportes.interfac
 })
 export default class DasboardDonerComponent implements OnInit {
   // Propiedades para almacenar los datos
+  name: string = 'usuario';
   mostRequiredMedications: any[] = [];
   mostRequiredMedicationsCopy: any[] = [];
   mostDonatedMedications: any[] = [];
@@ -53,7 +55,9 @@ export default class DasboardDonerComponent implements OnInit {
   }
 
   ngOnInit() {
+    const { name } = getUserInfoFromToken();
     this.activeTab = this.tabs[0].id;
+    this.name = name;
 
     this.reportesService.getMostRequiredMedications().subscribe(
       (response) => {

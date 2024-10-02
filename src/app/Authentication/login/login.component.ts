@@ -33,10 +33,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './login.component.css',
 })
 export default class LoginComponent {
-
-  constructor(
-    private toastrService : ToastrService
-  ){}
+  constructor(private toastrService: ToastrService) {}
 
   private accesoService = inject(AccesoService);
   private router = inject(Router);
@@ -59,14 +56,14 @@ export default class LoginComponent {
       next: (data) => {
         if (data.data.Admin) {
           setCookie('access_token', data.data.token);
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['DashboardDoner']);
         } else {
           this.toastrService.error('Las Credenciales son incorrectas');
         }
       },
       error: (error) => {
         this.toastrService.error('Las Credenciales son incorrectas');
-        console.log(error.message)
+        console.log(error.message);
       },
     });
   }
