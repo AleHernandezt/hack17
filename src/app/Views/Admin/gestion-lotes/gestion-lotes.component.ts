@@ -35,7 +35,7 @@ export default class GestionLotesComponent implements OnInit {
       .then((json) => {
         console.log('Datos recibidos:', json); // Agrega este console.log
         this.ngZone.run(() => {
-          this.lotes = json.data.MedicationExpirationDate.slice(-10);
+          this.lotes = json.data.MedicationExpirationDate.slice(0, 20);
           this.filteredLotes = this.lotes;
         });
       });
@@ -71,9 +71,10 @@ export default class GestionLotesComponent implements OnInit {
   }
 
   filterLotes(search: string) {
-    console.log(this.filteredLotes)
-    this.filteredLotes = this.lotes.filter(lote =>
-      lote.medication.name.toLowerCase().includes(search.toLowerCase()) // Filtra por nombre de medicamento
+    console.log(this.filteredLotes);
+    this.filteredLotes = this.lotes.filter(
+      (lote) =>
+        lote.medication.name.toLowerCase().includes(search.toLowerCase()) // Filtra por nombre de medicamento
     );
   }
 

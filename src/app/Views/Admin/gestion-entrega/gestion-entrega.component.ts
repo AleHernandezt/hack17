@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { H1Component } from "../../../Shared/h1/h1.component";
+import { H1Component } from '../../../Shared/h1/h1.component';
 import { Table2Component } from '../../../Shared/table2/table2.component';
 import { SearchbarComponent } from '../../../Shared/searchbar/searchbar.component';
 import { BtnComponent } from '../../../Shared/btn/btn.component';
@@ -12,15 +12,26 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [H1Component, Table2Component, SearchbarComponent, BtnComponent],
   templateUrl: './gestion-entrega.component.html',
-  styleUrls: ['./gestion-entrega.component.css']
+  styleUrls: ['./gestion-entrega.component.css'],
 })
 export default class GestionEntregaComponent implements OnInit {
   entregas: any[] = [];
-  columnas: string[] = ['appointment_date', 'treatment_id', 'patient_id', 'expiration_date', 'status'];
-  encabezados: string[] = ['Fecha de Entrega', 'ID de Tratamiento', 'ID de Paciente', 'Fecha de Expiración', 'Estado'];
+  columnas: string[] = [
+    'appointment_date',
+    'treatment_id',
+    'patient_id',
+    'expiration_date',
+    'status',
+  ];
+  encabezados: string[] = [
+    'Fecha de Entrega',
+    'ID de Tratamiento',
+    'ID de Paciente',
+    'Fecha de Expiración',
+    'Estado',
+  ];
 
   verEntrega(item: any) {
-    console.log("pon tu ruta cisor");
     this.router.navigate(['dashboard']);
   }
 
@@ -29,7 +40,7 @@ export default class GestionEntregaComponent implements OnInit {
     fetch(`${appSettings.apiUrl}delivery/changeDelivered/${item.id}`, {
       method: 'PUT',
       headers: headers,
-      body: JSON.stringify({ status: 'delivered' })
+      body: JSON.stringify({ status: 'delivered' }),
     })
       .then((response) => {
         console.log(response);
@@ -42,7 +53,9 @@ export default class GestionEntregaComponent implements OnInit {
       .then((json) => {
         console.log(json);
         // Elimina el elemento de la tabla
-        this.entregas = this.entregas.filter((entrega) => entrega.id !== item.id);
+        this.entregas = this.entregas.filter(
+          (entrega) => entrega.id !== item.id
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -54,7 +67,7 @@ export default class GestionEntregaComponent implements OnInit {
     fetch(`${appSettings.apiUrl}delivery/changeExpired/${item.id}`, {
       method: 'PUT',
       headers: headers,
-      body: JSON.stringify({ status: 'expired' })
+      body: JSON.stringify({ status: 'expired' }),
     })
       .then((response) => {
         console.log(response);
@@ -67,7 +80,9 @@ export default class GestionEntregaComponent implements OnInit {
       .then((json) => {
         console.log(json);
         // Elimina el elemento de la tabla
-        this.entregas = this.entregas.filter((entrega) => entrega.id !== item.id);
+        this.entregas = this.entregas.filter(
+          (entrega) => entrega.id !== item.id
+        );
         // Navega al elemento que se está dando a changeExpired
         this.router.navigate(['/gestion-expirado']);
       })
@@ -76,7 +91,7 @@ export default class GestionEntregaComponent implements OnInit {
       });
   }
 
-  constructor(private ngZone: NgZone, private router: Router) { }
+  constructor(private ngZone: NgZone, private router: Router) {}
 
   ngOnInit(): void {
     this.getEntregas();
@@ -90,6 +105,7 @@ export default class GestionEntregaComponent implements OnInit {
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log('Datos recibidos:', json); // Agrega este console.log
         this.ngZone.run(() => {
           this.entregas = json.data.Delivery.map((entrega: any) => ({
             id: entrega.id,

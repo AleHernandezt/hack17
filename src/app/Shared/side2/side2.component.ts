@@ -94,11 +94,6 @@ export class Side2Component implements OnInit {
                 icon: 'pi pi-file',
                 command: () => this.navigateToRoute('gestionDonativo'),
               },
-              {
-                label: 'Estadisticas',
-                icon: 'pi pi-file',
-                command: () => this.navigateToRoute('/'),
-              },
             ],
           },
           {
@@ -150,11 +145,6 @@ export class Side2Component implements OnInit {
             command: () => this.navigateToRoute('/gestionEntrega'),
           },
           {
-            label: 'Devolucion',
-            icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/gestionDevoluciones'),
-          },
-          {
             label: 'Entregado',
             icon: 'pi pi-file',
             command: () => this.navigateToRoute('/gestionEntregado'),
@@ -171,17 +161,7 @@ export class Side2Component implements OnInit {
           },
         ],
       },
-      {
-        label: 'Administrador',
-        icon: 'pi pi-file',
-        items: [
-          {
-            label: 'Estadisticas',
-            icon: 'pi pi-file',
-            command: () => this.navigateToRoute('/'),
-          },
-        ],
-      },
+      
     ];
 
     this.logoutItem = {

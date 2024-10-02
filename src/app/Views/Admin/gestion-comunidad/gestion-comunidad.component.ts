@@ -35,7 +35,7 @@ export default class GestionComunidadComponent implements OnInit {
 
   getPost() {
     const { headers } = getCookieHeader();
-    fetch(`${appSettings.apiUrl}community/getAll`, {
+    fetch(`${appSettings.apiUrl}community/getAllActives`, {
       method: 'GET',
       headers: headers,
     })
@@ -60,7 +60,32 @@ export default class GestionComunidadComponent implements OnInit {
   }
 
   deleteComunidad($event: any) {
-    alert(`Eliminar comunidad con ID: ${$event.id}`);
+    const { headers } = getCookieHeader();
+    fetch(`${appSettings.apiUrl}community/delete/${$event.id}`, {
+      method: 'DELETE',
+      headers: headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      })
+      .then((json) => {
+        console.log(json);
+        this.ngZone.run(() => {
+          // Actualiza la lista de comunidades
+          this.getPost();
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        this.ngZone.run(() => {
+          // Muestra un mensaje de error
+          alert('Error al eliminar la comunidad');
+        });
+      });
   }
 
   editComunidad($event: any) {

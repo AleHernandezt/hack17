@@ -11,6 +11,7 @@
   [items]="filteredComunidad"
   [columns]="columnas"
   [columnHeaders]="encabezados"
-  (edit)="editComunidad($event)"
+  [showEdit]="false"
+  [showView]="false"
   (delete)="deleteComunidad($event)"
 ></app-table2>
