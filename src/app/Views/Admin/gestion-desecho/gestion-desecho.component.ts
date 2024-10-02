@@ -50,7 +50,7 @@ export default class GestionDesechoComponent implements OnInit {
             medicamentos.push({
               nombre: medicamento.name,
               cantidadDesechada: desecho.quantity,
-              razon: desecho.reason,
+              razon: desecho.reason.length > 150 ? desecho.reason.substring(0, 150) + '...' : desecho.reason,
             });
           }
         });

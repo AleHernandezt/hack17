@@ -109,11 +109,23 @@ export default class GestionEntregaComponent implements OnInit {
         this.ngZone.run(() => {
           this.entregas = json.data.Delivery.map((entrega: any) => ({
             id: entrega.id,
-            appointment_date: entrega.appointment_date,
-            withdrawal_date: entrega.withdrawal_date,
+            appointment_date: new Date(entrega.appointment_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
+            withdrawal_date: new Date(entrega.withdrawal_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
             treatment_id: entrega.treatment_id,
             patient_id: entrega.patient_id,
-            expiration_date: entrega.expiration_date,
+            expiration_date: new Date(entrega.expiration_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
             status: entrega.status,
           }));
         });

@@ -38,10 +38,18 @@ export default class GestionEntregadoComponent implements OnInit {
         this.ngZone.run(() => {
           console.log(json.data.Delivery); // Verificar la estructura de la respuesta
           this.entregados = json.data.Delivery.map((entregado: any) => ({
-            appointment_date: entregado.appointment_date,
+            appointment_date: new Date(entregado.appointment_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
             treatment_id: entregado.treatment_id,
             patient_id: entregado.patient_id,
-            expiration_date: entregado.expiration_date,
+            expiration_date: new Date(entregado.expiration_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
           }));
           console.log(this.entregados); // Verificar la asignación de variables
         });

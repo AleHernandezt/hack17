@@ -38,10 +38,18 @@ export default class GestionExpiradoComponent implements OnInit {
         this.ngZone.run(() => {
           console.log(json.data.Delivery); // Verificar la estructura de la respuesta
           this.expirados = json.data.Delivery.map((expirado: any) => ({
-            appointment_date: expirado.appointment_date,
+            appointment_date: new Date(expirado.appointment_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
             treatment_id: expirado.treatment_id,
             patient_id: expirado.patient_id,
-            expiration_date: expirado.expiration_date,
+            expiration_date: new Date(expirado.expiration_date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
           }));
           console.log(this.expirados); // Verificar la asignación de variables
         });
